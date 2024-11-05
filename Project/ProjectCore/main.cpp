@@ -1,10 +1,7 @@
-#include <iostream>
-#include <SFML/Graphics.hpp>
+#include "pch.h"
 
 int main()
 {
-	std::cout << "Hello World!\n";
-
 	sf::RenderWindow window(sf::VideoMode(800, 600), "My window");
 	while (window.isOpen()) {
 		sf::Event event;
