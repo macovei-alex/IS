@@ -1,7 +1,10 @@
 #include "pch.h"
+#include "Logger.h"
 
 int main()
 {
+	Logger::cout.Info("Hello, World!");
+
 	sf::RenderWindow window(sf::VideoMode(800, 600), "My window");
 	while (window.isOpen()) {
 		sf::Event event;
