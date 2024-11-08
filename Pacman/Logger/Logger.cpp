@@ -6,20 +6,20 @@
 namespace chr = std::chrono;
 
 
-Logger Logger::cout(std::cout);
+pac::Logger pac::Logger::cout(std::cout);
 
 
-static std::string_view LogLevelToString(Logger::Level level)
+static std::string_view LogLevelToString(pac::Logger::Level level)
 {
 	switch (level)
 	{
-	case Logger::Level::Debug:
+	case pac::Logger::Level::Debug:
 		return "Debug";
-	case Logger::Level::Info:
+	case pac::Logger::Level::Info:
 		return "Info";
-	case Logger::Level::Warning:
+	case pac::Logger::Level::Warning:
 		return "Warning";
-	case Logger::Level::Error:
+	case pac::Logger::Level::Error:
 		return "Error";
 	default:
 		return "";
@@ -34,7 +34,7 @@ static chr::time_point<chr::system_clock, chr::seconds> NowInSeconds()
 }
 
 
-Logger::Logger(std::ostream& os, Level minimumLevel)
+pac::Logger::Logger(std::ostream& os, Level minimumLevel)
 	: mOutStream(os),
 	mMinimumLevel(minimumLevel)
 {
@@ -42,7 +42,7 @@ Logger::Logger(std::ostream& os, Level minimumLevel)
 }
 
 
-Logger::Logger(std::string_view filename, Level minimumLevel)
+pac::Logger::Logger(std::string_view filename, Level minimumLevel)
 	: mMinimumLevel(minimumLevel),
 	mTempFileStream(std::string(filename), std::ios::trunc),
 	mOutStream(mTempFileStream)
@@ -51,7 +51,7 @@ Logger::Logger(std::string_view filename, Level minimumLevel)
 }
 
 
-void Logger::Log(std::string_view message, Level level)
+void pac::Logger::Log(std::string_view message, Level level)
 {
 	if ((int)level < (int)mMinimumLevel) {
 		return;
