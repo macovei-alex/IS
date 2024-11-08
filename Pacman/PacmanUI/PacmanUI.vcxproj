@@ -22,9 +22,9 @@
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{48da6f3f-97c7-419b-a495-31a5c2887ae7}</ProjectGuid>
-    <RootNamespace>PacmanCore</RootNamespace>
+    <RootNamespace>PacmanUI</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>PacmanCore</ProjectName>
+    <ProjectName>PacmanUI</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
