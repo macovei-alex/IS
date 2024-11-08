@@ -1,9 +1,11 @@
 #include "pch.h"
-#include "Logger.h"
+#include "Logger/Logger.h"
+#include "PacmanEngine/Game.h"
 
 int main()
 {
-	Logger::cout.Info("Hello, World!");
+	pac::Game game;
+	game.TestFunc();
 
 	sf::RenderWindow window(sf::VideoMode(800, 600), "My window");
 	while (window.isOpen()) {
