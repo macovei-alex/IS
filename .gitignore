@@ -398,3 +398,5 @@ FodyWeavers.xsd
 *.sln.iml
 
 !_external/**/*
+*.lck
+*vpp.bak*
