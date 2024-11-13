@@ -140,6 +140,8 @@
     <ClInclude Include="ISubject.h" />
     <ClInclude Include="KeyCode.h" />
     <ClInclude Include="KeyPressedEvent.h" />
+    <ClInclude Include="Point.h" />
+    <ClInclude Include="Poisition.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logger\Logger.vcxproj">

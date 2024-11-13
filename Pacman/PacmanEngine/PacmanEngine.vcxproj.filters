@@ -13,11 +13,11 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\Events">
-      <UniqueIdentifier>{3f5b533e-0358-4b0a-92d4-248b3bc60adb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Observer">
       <UniqueIdentifier>{8f67d418-b994-48e1-a8b4-21cfc9e5f7c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Structs">
+      <UniqueIdentifier>{54b6f53f-a205-43c8-adac-b39186d83a10}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -43,6 +43,12 @@
     </ClInclude>
     <ClInclude Include="KeyPressedEvent.h">
       <Filter>Header Files\Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="Point.h">
+      <Filter>Header Files\Structs</Filter>
+    </ClInclude>
+    <ClInclude Include="Poisition.h">
+      <Filter>Header Files\Structs</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
