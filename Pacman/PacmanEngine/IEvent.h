@@ -12,9 +12,10 @@ namespace pac
 		SceneOver
 	};
 
-
 	class IEvent
 	{
+	public:
 		virtual EventType GetType() const = 0;
+		virtual ~IEvent() = default;
 	};
 }

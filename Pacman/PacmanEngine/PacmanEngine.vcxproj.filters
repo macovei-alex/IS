@@ -16,6 +16,9 @@
     <Filter Include="Header Files\Events">
       <UniqueIdentifier>{3f5b533e-0358-4b0a-92d4-248b3bc60adb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Observer">
+      <UniqueIdentifier>{8f67d418-b994-48e1-a8b4-21cfc9e5f7c1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -29,11 +32,17 @@
     <ClInclude Include="KeyCode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="IListener.h">
+      <Filter>Header Files\Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="ISubject.h">
+      <Filter>Header Files\Observer</Filter>
+    </ClInclude>
     <ClInclude Include="IEvent.h">
-      <Filter>Header Files\Events</Filter>
+      <Filter>Header Files\Observer</Filter>
     </ClInclude>
     <ClInclude Include="KeyPressedEvent.h">
-      <Filter>Header Files\Events</Filter>
+      <Filter>Header Files\Observer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
