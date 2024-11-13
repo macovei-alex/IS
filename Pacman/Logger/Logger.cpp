@@ -53,7 +53,7 @@ pac::Logger::Logger(std::string_view filename, Level minimumLevel)
 
 void pac::Logger::Log(std::string_view message, Level level)
 {
-	if ((int)level < (int)mMinimumLevel) {
+	if (level < mMinimumLevel) {
 		return;
 	}
 
