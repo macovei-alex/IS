@@ -154,6 +154,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="_guide.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
