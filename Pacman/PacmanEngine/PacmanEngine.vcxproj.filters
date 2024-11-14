@@ -24,6 +24,12 @@
     <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Maze.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Maze.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -47,7 +53,7 @@
     <ClInclude Include="Point.h">
       <Filter>Header Files\Structs</Filter>
     </ClInclude>
-    <ClInclude Include="Poisition.h">
+    <ClInclude Include="Position.h">
       <Filter>Header Files\Structs</Filter>
     </ClInclude>
   </ItemGroup>
