@@ -138,8 +138,10 @@
   <ItemGroup>
     <ClInclude Include="Game.h" />
     <ClInclude Include="IEvent.h" />
+    <ClInclude Include="IGame.h" />
     <ClInclude Include="IListener.h" />
     <ClInclude Include="ISubject.h" />
+    <ClInclude Include="IWindow.h" />
     <ClInclude Include="KeyCode.h" />
     <ClInclude Include="KeyPressedEvent.h" />
     <ClInclude Include="Point.h" />

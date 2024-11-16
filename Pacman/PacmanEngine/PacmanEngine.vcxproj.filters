@@ -56,5 +56,11 @@
     <ClInclude Include="Position.h">
       <Filter>Header Files\Structs</Filter>
     </ClInclude>
+    <ClInclude Include="IWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IGame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
