@@ -6,5 +6,8 @@ namespace pac
 	{
 	public:
 		void TestFunc();
+
+	private:
+
 	};
 }

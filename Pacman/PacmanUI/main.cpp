@@ -15,12 +15,11 @@ int main() {
 	cells.push_back({ pac::CellType::Wall, pac::CellType::PowerUp, pac::CellType::Coin, pac::CellType::Coin, pac::CellType::Wall });
 	cells.push_back({ pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall });
 
-    sf::RenderWindow window(sf::VideoMode(800, 600), "Pacman Game");
+    sf::RenderWindow window(sf::VideoMode(1500, 1000), "Pacman Game");
 
     pac::Maze maze;
     maze.InitCells(std::move(cells));
 
-    //TODO: this should be relative path
 	pac::AssetManager assetManager = pac::AssetManager(currentPath.string());
 
     pac::SFMLWindow gameWindow(window, maze, assetManager);
@@ -34,7 +33,9 @@ int main() {
         }
 
         window.clear();
-        gameWindow.Draw();
+		gameWindow.DrawTexture();
+        gameWindow.DrawLine();
+		gameWindow.DrawText(10);
         window.display();
     }
 
