@@ -25,6 +25,7 @@ namespace pac
 		void EatCell(Position pos);
 		Position GetGhostSpawnPosition() const;
 		Position GetPacmanSpawnPosition() const;
+		std::tuple<int, int> GetSize() const;
 	private:
 		std::vector<std::vector<CellType>> mCells;
 		Position mGhostSpawn;

@@ -87,3 +87,8 @@ pac::Position pac::Maze::GetPacmanSpawnPosition() const
 
 	return mPacmanSpawn;
 }
+
+std::tuple<int, int> pac::Maze::GetSize() const
+{
+	return { (int)mCells.size(), (int)mCells[0].size() };
+}
