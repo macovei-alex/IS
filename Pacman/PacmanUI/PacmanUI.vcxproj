@@ -146,14 +146,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AssetManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">pch.h</PrecompiledHeaderFile>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="SFMLWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AssetManager.h" />
+    <ClInclude Include="SFMLWindow.h" />
     <ClInclude Include="_guide.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
@@ -164,6 +168,13 @@
     <ProjectReference Include="..\PacmanEngine\PacmanEngine.vcxproj">
       <Project>{bf1c9624-54f2-4ce4-8076-a4ae71439bb6}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="coin.png" />
+    <Image Include="ghost.png" />
+    <Image Include="pacman.png" />
+    <Image Include="powerup.png" />
+    <Image Include="wall.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
