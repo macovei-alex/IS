@@ -1,9 +1,6 @@
 #include "pch.h"
 #include "AssetManager.h"
 
-#include <filesystem>
-#include <fstream>
-
 pac::AssetManager::AssetManager(std::string_view folderPath)
 {
 	mPacmanTexture.loadFromFile(std::string(folderPath) + "\\pacman.png");
