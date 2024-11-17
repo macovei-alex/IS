@@ -1,7 +1,8 @@
 #pragma once
 
-#include <memory>
 #include "IEvent.h"
+
+#include <memory>
 
 
 namespace pac
