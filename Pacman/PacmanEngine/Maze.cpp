@@ -2,6 +2,10 @@
 
 #include <stdexcept>
 #include <format>
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <filesystem>
 
 
 pac::Maze::Maze() :
@@ -91,4 +95,33 @@ pac::Position pac::Maze::GetPacmanSpawnPosition() const
 std::tuple<int, int> pac::Maze::GetSize() const
 {
 	return { (int)mCells.size(), (int)mCells[0].size() };
+}
+
+void pac::Maze::ReadMazeFromFile(const std::string& filename)
+{
+	std::ifstream file("assets" + filename);
+	std::string line;
+
+	while (std::getline(file, line))
+	{
+		std::vector<pac::CellType> row;
+		std::istringstream stream(line);
+		int value;
+
+		while (stream >> value)
+		{
+			switch (value)
+			{
+				case 0: row.push_back(CellType::Empty); break;
+				case 1: row.push_back(CellType::Wall); break;
+				case 2: row.push_back(CellType::Coin); break;
+				case 3: row.push_back(CellType::PowerUp); break;
+				case 4: row.push_back(CellType::PacmanSpawn); break;
+				case 5: row.push_back(CellType::GhostSpawn); break;
+				default: throw std::runtime_error(std::format("Invalid cell value: {}", value));
+			}
+		}
+
+		mCells.push_back(std::move(row));
+	}
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <string>
 #include "Position.h"
 
 
@@ -26,6 +27,7 @@ namespace pac
 		Position GetGhostSpawnPosition() const;
 		Position GetPacmanSpawnPosition() const;
 		std::tuple<int, int> GetSize() const;
+		void ReadMazeFromFile(const std::string& filename);
 	private:
 		std::vector<std::vector<CellType>> mCells;
 		Position mGhostSpawn;
