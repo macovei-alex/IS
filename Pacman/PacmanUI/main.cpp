@@ -6,17 +6,17 @@
 int main() {
 	//TODO: This should be from the backend through the IWindow interface and then using Game
 
-    std::vector<std::vector<pac::CellType>> cells;
+    /*std::vector<std::vector<pac::CellType>> cells;
 	cells.push_back({ pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall });
 	cells.push_back({ pac::CellType::Wall, pac::CellType::Coin, pac::CellType::Coin, pac::CellType::GhostSpawn, pac::CellType::Wall });
 	cells.push_back({ pac::CellType::Wall, pac::CellType::Coin, pac::CellType::PacmanSpawn, pac::CellType::Coin, pac::CellType::Wall });
 	cells.push_back({ pac::CellType::Wall, pac::CellType::PowerUp, pac::CellType::Coin, pac::CellType::Coin, pac::CellType::Wall });
-	cells.push_back({ pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall });
+	cells.push_back({ pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall });*/
 
     sf::RenderWindow window(sf::VideoMode(1500, 1000), "Pacman Game");
 
     pac::Maze maze;
-    maze.InitCells(std::move(cells));
+    maze.ReadMazeFromFile("\\maze.txt");
 
 	pac::AssetManager assetManager = pac::AssetManager("assets");
 
