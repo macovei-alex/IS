@@ -16,6 +16,9 @@
     <Filter Include="Assets">
       <UniqueIdentifier>{1ea4f106-bf97-495d-a30d-2c5d5f58a743}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Build events">
+      <UniqueIdentifier>{1d27ed0e-6ab3-4b44-aa8a-fa5729a99d3c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -61,5 +64,13 @@
     <Image Include="wall.png">
       <Filter>Assets</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="build-events\postbuild-debug.bat">
+      <Filter>Resource Files\Build events</Filter>
+    </None>
+    <None Include="build-events\postbuild-release.bat">
+      <Filter>Resource Files\Build events</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -17,11 +17,11 @@ void pac::SFMLWindow::DrawLine()
 
     for (size_t i = 0; i < height; ++i) {
         for (size_t j = 0; j < width; ++j) {
-            if (mMaze.GetCellType(Position(i, j)) == CellType::Wall)
+            if (mMaze.GetCellType(Position((uint16_t)i, (uint16_t)j)) == CellType::Wall)
             {
                 sf::Sprite sprite;
                 sprite = mAssetManager.GetWallSprite();
-                sprite.setPosition(j * a + 20, i * a + 20);
+                sprite.setPosition(j * a + 20.0f, i * a + 20.0f);
                 sprite.setScale(0.2f, 0.2f);
                 mWindow.draw(sprite);
             }
@@ -57,25 +57,25 @@ void pac::SFMLWindow::DrawTexture()
     for (size_t i = 0; i < height; ++i) {
         for (size_t j = 0; j < width; ++j) {
             sf::Sprite sprite;
-            switch (mMaze.GetCellType(Position(i, j))) {
+            switch (mMaze.GetCellType(Position((uint16_t)i, (uint16_t)j))) {
             case CellType::PacmanSpawn:
                 sprite = mAssetManager.GetPacmanSprite();
-                sprite.setPosition(j * a + 20, i * a+20);
+                sprite.setPosition(j * a + 20.0f, i * a + 20.0f);
                 sprite.setScale(0.03f, 0.03f);
                 break;
             case CellType::GhostSpawn:
                 sprite = mAssetManager.GetGhostSprite();
-                sprite.setPosition(j * a + 20, i * a + 20);
+                sprite.setPosition(j * a + 20.0f, i * a + 20.0f);
                 sprite.setScale(0.08f, 0.08f);
                 break;
             case CellType::Coin:
                 sprite = mAssetManager.GetCoinSprite();
-                sprite.setPosition(j * a + 20, i * a + 20);
+                sprite.setPosition(j * a + 20.0f, i * a + 20.0f);
                 sprite.setScale(0.02f, 0.02f);
                 break;
             case CellType::PowerUp:
                 sprite = mAssetManager.GetPowerUpSprite();
-                sprite.setPosition(j * a + 20, i * a + 20);
+                sprite.setPosition(j * a + 20.0f, i * a + 20.0f);
                 sprite.setScale(0.02f, 0.02f);
                 break;
             }

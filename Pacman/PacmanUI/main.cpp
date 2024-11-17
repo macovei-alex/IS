@@ -4,8 +4,6 @@
 #include "SFMLWindow.h"
 
 int main() {
-    std::filesystem::path currentPath = std::filesystem::current_path();
-
 	//TODO: This should be from the backend through the IWindow interface and then using Game
 
     std::vector<std::vector<pac::CellType>> cells;
@@ -20,7 +18,7 @@ int main() {
     pac::Maze maze;
     maze.InitCells(std::move(cells));
 
-	pac::AssetManager assetManager = pac::AssetManager(currentPath.string());
+	pac::AssetManager assetManager = pac::AssetManager("assets");
 
     pac::SFMLWindow gameWindow(window, maze, assetManager);
 
