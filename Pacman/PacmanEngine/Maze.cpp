@@ -8,9 +8,9 @@
 #include <filesystem>
 
 
-pac::Maze::Maze() :
-	mGhostSpawn(pac::Position::Invalid()),
-	mPacmanSpawn(pac::Position::Invalid())
+pac::Maze::Maze()
+	: mGhostSpawn(pac::Position::Invalid())
+	, mPacmanSpawn(pac::Position::Invalid())
 {
 	// empty
 }
@@ -31,7 +31,10 @@ void pac::Maze::InitCells(std::vector<std::vector<pac::CellType>>&& cells)
 						"Multiple ghost spawns found: ( {}, {} ) and ( {}, {} )",
 						mGhostSpawn.row, mGhostSpawn.col, row, col));
 				}
-				mGhostSpawn = { (uint16_t)row, (uint16_t)col };
+				mGhostSpawn = {
+					static_cast<decltype(Position::row)>(row),
+					static_cast<decltype(Position::row)>(col)
+				};
 			}
 			else if (mCells[row][col] == CellType::PacmanSpawn)
 			{
@@ -41,7 +44,10 @@ void pac::Maze::InitCells(std::vector<std::vector<pac::CellType>>&& cells)
 						"Multiple pacman spawns found: ( {}, {} ) and ( {}, {} )",
 						mPacmanSpawn.row, mPacmanSpawn.col, row, col));
 				}
-				mPacmanSpawn = { (uint16_t)row, (uint16_t)col };
+				mPacmanSpawn = {
+					static_cast<decltype(Position::row)>(row),
+					static_cast<decltype(Position::row)>(col)
+				};
 			}
 		}
 	}
@@ -92,14 +98,22 @@ pac::Position pac::Maze::GetPacmanSpawnPosition() const
 	return mPacmanSpawn;
 }
 
-std::tuple<int, int> pac::Maze::GetSize() const
+pac::Dimensions pac::Maze::GetDimensions() const
 {
-	return { (int)mCells.size(), (int)mCells[0].size() };
+	if (mCells.size() == 0)
+	{
+		return {};
+	}
+
+	return {
+		static_cast<decltype(Dimensions::rows)>(mCells.size()),
+		static_cast<decltype(Dimensions::cols)>(mCells[0].size())
+	};
 }
 
-void pac::Maze::ReadMazeFromFile(const std::string& filename)
+void pac::Maze::ReadMazeFromFile(std::string_view filename)
 {
-	std::ifstream file("assets" + filename);
+	std::ifstream file(filename.data());
 	std::string line;
 
 	while (std::getline(file, line))
@@ -112,13 +126,13 @@ void pac::Maze::ReadMazeFromFile(const std::string& filename)
 		{
 			switch (value)
 			{
-				case 0: row.push_back(CellType::Empty); break;
-				case 1: row.push_back(CellType::Wall); break;
-				case 2: row.push_back(CellType::Coin); break;
-				case 3: row.push_back(CellType::PowerUp); break;
-				case 4: row.push_back(CellType::PacmanSpawn); break;
-				case 5: row.push_back(CellType::GhostSpawn); break;
-				default: throw std::runtime_error(std::format("Invalid cell value: {}", value));
+			case (int)CellType::Empty: row.push_back(CellType::Empty); break;
+			case (int)CellType::Wall: row.push_back(CellType::Wall); break;
+			case (int)CellType::Coin: row.push_back(CellType::Coin); break;
+			case (int)CellType::PowerUp: row.push_back(CellType::PowerUp); break;
+			case (int)CellType::PacmanSpawn: row.push_back(CellType::PacmanSpawn); break;
+			case (int)CellType::GhostSpawn: row.push_back(CellType::GhostSpawn); break;
+			default: throw std::runtime_error(std::format("Invalid cell value ( {} )", value));
 			}
 		}
 

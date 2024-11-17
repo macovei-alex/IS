@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include "Position.h"
+#include "Dimensions.h"
 
 
 namespace pac
@@ -26,8 +27,8 @@ namespace pac
 		void EatCell(Position pos);
 		Position GetGhostSpawnPosition() const;
 		Position GetPacmanSpawnPosition() const;
-		std::tuple<int, int> GetSize() const;
-		void ReadMazeFromFile(const std::string& filename);
+		Dimensions GetDimensions() const;
+		void ReadMazeFromFile(std::string_view filename);
 	private:
 		std::vector<std::vector<CellType>> mCells;
 		Position mGhostSpawn;

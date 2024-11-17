@@ -96,4 +96,9 @@
       <Filter>Header Files\Observer</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Dimensions.h">
+      <Filter>Header Files\Structs</Filter>
+    </None>
+  </ItemGroup>
 </Project>

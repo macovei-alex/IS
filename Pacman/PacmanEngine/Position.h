@@ -1,14 +1,17 @@
 #pragma once
 
-#include <cstdint>
+
+#include "Dimensions.h"
+
 #include <limits>
+
 
 namespace pac
 {
 	struct Position
 	{
-		uint16_t row = 0;
-		uint16_t col = 0;
+		decltype(Dimensions::rows) row = 0;
+		decltype(Dimensions::cols) col = 0;
 
 		inline static Position Invalid()
 		{

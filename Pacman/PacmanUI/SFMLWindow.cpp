@@ -11,7 +11,7 @@ pac::SFMLWindow::SFMLWindow(sf::RenderWindow& window, const Maze& maze, const As
 
 void pac::SFMLWindow::DrawLine()
 {
-    auto [height, width] = mMaze.GetSize();
+    auto [height, width] = mMaze.GetDimensions();
 
     int a = 50;
 
@@ -50,7 +50,7 @@ void pac::SFMLWindow::DrawText(uint16_t score)
 
 void pac::SFMLWindow::DrawTexture()
 {
-    auto [height, width] = mMaze.GetSize();
+    auto [height, width] = mMaze.GetDimensions();
 
     int a = 55;
 
