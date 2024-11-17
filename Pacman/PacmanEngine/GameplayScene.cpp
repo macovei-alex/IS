@@ -19,15 +19,19 @@ void pac::GameplayScene::AddListener(std::shared_ptr<IListener> listener, EventT
 
 void pac::GameplayScene::RemoveListener(std::shared_ptr<IListener> listener, EventType eventType)
 {
-	auto& vec = mListeners[eventType];
-	auto foundIterator = std::find(vec.begin(), vec.end(), listener);
+	auto& listeners = mListeners[eventType];
+	auto foundIterator = std::find_if(listeners.begin(), listeners.end(),
+		[&listener](const std::weak_ptr<IListener>& listenerElement)
+		{
+			return listenerElement.lock().get() == listener.get();
+		});
 
-	if (foundIterator == vec.end())
+	if (foundIterator == listeners.end())
 	{
 		Logger::cout.Info(std::format("Listener for event type ( {} ) could not be found", GetEventTypeName(eventType)));
 	}
 
-	vec.erase(foundIterator);
+	listeners.erase(foundIterator);
 	Logger::cout.Debug(std::format("An event listener for event type ( {} ) has successfuly been removed", GetEventTypeName(eventType)));
 }
 

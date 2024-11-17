@@ -17,7 +17,7 @@ namespace pac
 		_Count
 	};
 
-	std::string_view GetEventTypeName(EventType type)
+	inline std::string_view GetEventTypeName(EventType type)
 	{
 		static const std::array<std::string, static_cast<size_t>(EventType::_Count)> names = {
 			"KeyPressed",

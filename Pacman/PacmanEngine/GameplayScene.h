@@ -30,7 +30,7 @@ namespace pac
 		Maze mMaze;
 		Pacman mPacman;
 		GameplaySettings mSettings;
-		// TODO: Add ghosts and GameplaySettings
+		// TODO: Add ghosts
 		std::unordered_map<EventType, std::vector<std::weak_ptr<IListener>>> mListeners;
 	};
 }
