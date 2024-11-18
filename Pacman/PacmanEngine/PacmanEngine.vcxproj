@@ -132,7 +132,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="EventType.cpp" />
-    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameplayScene.cpp" />
     <ClCompile Include="GameplayScene.h" />
     <ClCompile Include="Maze.cpp" />
@@ -143,7 +142,6 @@
   <ItemGroup>
     <ClInclude Include="EventType.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameplaySettings.h" />
     <ClInclude Include="IEvent.h" />
     <ClInclude Include="IGame.h" />
