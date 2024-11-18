@@ -7,8 +7,9 @@ namespace pac
 {
 	struct GameplaySettings
 	{
-		uint16_t ticksPerSecond;
-		uint8_t ghostMoveTicks;
-		uint8_t ghostFearedMoveTicks;
+		uint16_t mTicksPerSecond;
+		uint16_t mPacmanTicksPerMove;
+		uint16_t mGhostTicksPerMove;
+		uint16_t mGhostFearedTicksPerMove;
 	};
 }

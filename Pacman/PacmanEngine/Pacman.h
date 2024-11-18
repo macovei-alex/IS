@@ -4,31 +4,34 @@
 #include "KeyCode.h"
 #include "IListener.h"
 #include "Maze.h"
+#include "GameplaySettings.h"
+
 
 namespace pac
 {
-	enum class Direction : uint8_t
+	struct Direction
 	{
-		Up,
-		Down,
-		Left,
-		Right,
-		Unknown
+		int8_t row = 0;
+		int8_t col = 0;
+
+		inline static Direction Invalid() { return { 0, 0 }; }
+
+		inline bool IsInvalid(Direction d) { return d.row == 0 && d.col == 0; }
 	};
 
 	class Pacman : public IListener
 	{
 	public:
-		Pacman(uint16_t ticksPerMove);
+		Pacman(decltype(GameplaySettings::mPacmanTicksPerMove) ticksPerMove);
 		void TryMove(const Maze& maze);
-		Position GetCurrentPosition();
+		Position GetCurrentPosition() const;
 		void OnEvent(std::shared_ptr<IEvent> event) override;
 
 	private:
 		Position mCurrentPosition;
 		Direction mCurrentDirection;
 		Direction mNextDirection;
-		uint16_t mTicksSinceLastMove;
-		uint16_t mTicksPerMove;
+		decltype(GameplaySettings::mPacmanTicksPerMove) mTicksSinceLastMove;
+		decltype(GameplaySettings::mPacmanTicksPerMove) mTicksPerMove;
 	};
 }

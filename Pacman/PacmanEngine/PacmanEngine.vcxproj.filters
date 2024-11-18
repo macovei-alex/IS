@@ -109,6 +109,5 @@
     <None Include="Dimensions.h">
       <Filter>Header Files\Structs</Filter>
     </None>
-    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

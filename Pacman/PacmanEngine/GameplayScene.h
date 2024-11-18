@@ -28,7 +28,7 @@ namespace pac
 	private:
 		std::shared_ptr<IWindow> mWindow;
 		Maze mMaze;
-		Pacman mPacman;
+		std::shared_ptr<Pacman> mPacman;
 		GameplaySettings mSettings;
 		// TODO: Add ghosts
 		std::unordered_map<EventType, std::vector<std::weak_ptr<IListener>>> mListeners;

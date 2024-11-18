@@ -1,6 +1,7 @@
 #include "GameplayScene.h"
 
 #include "Logger/Logger.h"
+
 #include <format>
 
 
@@ -8,8 +9,9 @@ pac::GameplayScene::GameplayScene(std::shared_ptr<IWindow> window, Maze&& maze, 
 	: mWindow(window)
 	, mMaze(std::move(maze))
 	, mSettings(settings)
+	, mPacman(std::make_shared<Pacman>(settings.mPacmanTicksPerMove))
 {
-	// empty
+	AddListener(mPacman, EventType::KeyPressed);
 }
 
 void pac::GameplayScene::AddListener(std::shared_ptr<IListener> listener, EventType eventType)

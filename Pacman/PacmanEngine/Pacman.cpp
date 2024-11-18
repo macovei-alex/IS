@@ -2,8 +2,14 @@
 #include "Logger/Logger.h"
 #include "KeyPressedEvent.h"
 
-pac::Pacman::Pacman(uint16_t ticksPerMove) : mCurrentPosition(), mCurrentDirection(Direction::Right), mNextDirection(Direction::Right), mTicksSinceLastMove(0), mTicksPerMove(ticksPerMove)
+pac::Pacman::Pacman(decltype(GameplaySettings::mPacmanTicksPerMove) ticksPerMove)
+	: mCurrentPosition()
+	, mCurrentDirection()
+	, mNextDirection()
+	, mTicksSinceLastMove(0)
+	, mTicksPerMove(ticksPerMove)
 {
+	// empty
 }
 
 void pac::Pacman::TryMove(const Maze& maze)
@@ -11,7 +17,7 @@ void pac::Pacman::TryMove(const Maze& maze)
 	if (maze.GetCellType(mCurrentPosition) == CellType::Wall)
 	{
 		mCurrentDirection = mNextDirection;
-		mNextDirection = Direction::Unknown;
+		mNextDirection = Direction::Invalid();
 		return;
 	}
 
@@ -22,29 +28,11 @@ void pac::Pacman::TryMove(const Maze& maze)
 	}
 	
 	mTicksSinceLastMove = 1;
-	Position moveDirection;
 
-	switch (mCurrentDirection)
-	{
-	case Direction::Up:
-		moveDirection.row = -1;
-		break;
-	case Direction::Down:
-		moveDirection.row = 1;
-		break;
-	case Direction::Left:
-		moveDirection.col = -1;
-		break;
-	case Direction::Right:
-		moveDirection.col = 1;
-		break;
-	case Direction::Unknown:
-		Logger::cout.Debug("Pacman stopped");
-		break;
-	}
+	// TODO: Implement the movement logic
 }
 
-pac::Position pac::Pacman::GetCurrentPosition()
+pac::Position pac::Pacman::GetCurrentPosition() const
 {
 	return mCurrentPosition;
 }
@@ -58,16 +46,16 @@ void pac::Pacman::OnEvent(std::shared_ptr<IEvent> event)
 		switch (keyEvent->GetKeyCode())
 		{
 		case KeyCode::Up:
-			mNextDirection = Direction::Up;
+			mNextDirection = { -1, 0 };
 			break;
 		case KeyCode::Down:
-			mNextDirection = Direction::Down;
+			mNextDirection = { 1, 0 };
 			break;
 		case KeyCode::Left:
-			mNextDirection = Direction::Left;
+			mNextDirection = { 0, -1 };
 			break;
 		case KeyCode::Right:
-			mNextDirection = Direction::Right;
+			mNextDirection = { 0, 1 };
 			break;
 		case KeyCode::Unknown:
 			Logger::cout.Warning("Unknown key pressed");
