@@ -11,6 +11,7 @@ namespace pac
 		KeyPressed,
 		PowerUp,
 		SceneOver,
+		WindowClosed,
 		_Count
 	};
 

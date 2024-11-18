@@ -1,27 +1,25 @@
-#include "pch.h"
 #include "AssetManager.h"
+
+#include <string>
+
 
 pac::AssetManager::AssetManager(std::string_view folderPath)
 {
-	sf::Texture texture;
-	texture.loadFromFile(std::string(folderPath) + "\\pacman.png");
-	mTextures[pac::Textures::Pacman] = texture;
+	const std::string folderStr(folderPath);
+
+	mTextures[pac::Textures::Pacman].loadFromFile(folderStr + "\\pacman.png");
 	mSprites[pac::Textures::Pacman].setTexture(mTextures[pac::Textures::Pacman]);
 
-	texture.loadFromFile(std::string(folderPath) + "\\ghost.png");
-	mTextures[pac::Textures::Ghost] = texture;
+	mTextures[pac::Textures::Ghost].loadFromFile(folderStr + "\\ghost.png");
 	mSprites[pac::Textures::Ghost].setTexture(mTextures[pac::Textures::Ghost]);
 
-	texture.loadFromFile(std::string(folderPath) + "\\wall.png");
-	mTextures[pac::Textures::Wall] = texture;
+	mTextures[pac::Textures::Wall].loadFromFile(folderStr + "\\wall.png");
 	mSprites[pac::Textures::Wall].setTexture(mTextures[pac::Textures::Wall]);
 
-	texture.loadFromFile(std::string(folderPath) + "\\coin.png");
-	mTextures[pac::Textures::Coin] = texture;
+	mTextures[pac::Textures::Coin].loadFromFile(folderStr + "\\coin.png");
 	mSprites[pac::Textures::Coin].setTexture(mTextures[pac::Textures::Coin]);
 
-	texture.loadFromFile(std::string(folderPath) + "\\powerup.png");
-	mTextures[pac::Textures::PowerUp] = texture;
+	mTextures[pac::Textures::PowerUp].loadFromFile(folderStr + "\\coin.png");
 	mSprites[pac::Textures::PowerUp].setTexture(mTextures[pac::Textures::PowerUp]);
 }
 

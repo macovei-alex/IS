@@ -1,6 +1,11 @@
 #pragma once
-#include "pch.h"
-#include <PacmanEngine/Textures.h>
+
+#include "PacmanEngine/Textures.h"
+
+#include <SFML/Graphics.hpp>
+#include <unordered_map>
+#include <string_view>
+
 
 namespace pac
 {

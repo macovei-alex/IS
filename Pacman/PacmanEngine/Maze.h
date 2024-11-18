@@ -1,11 +1,9 @@
 #pragma once
 
-#include <vector>
-#include <string>
-#include <memory>
-#include "Position.h"
-#include "Dimensions.h"
 #include "IWindow.h"
+#include "Dimensions.h"
+
+#include <memory>
 
 
 namespace pac

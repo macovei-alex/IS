@@ -1,12 +1,14 @@
 #include "Game.h"
 
+#include "GameplayScene.h"
 #include "Logger/Logger.h"
 
-pac::Game::Game(std::shared_ptr<pac::IWindow> window, std::shared_ptr<pac::IScene> currentScene)
+
+pac::Game::Game(std::shared_ptr<IWindow> window, Maze&& maze, const GameplaySettings& settings)
+	: mWindow(window)
+	, mScenes({ std::make_shared<GameplayScene>(window, std::move(maze), settings) })
 {
-	mWindow = window;
-	mCurrentScene = currentScene;
-	mScenes.push_back(currentScene);
+	// empty
 }
 
 void pac::Game::AddScene(std::shared_ptr<pac::IScene> scene)
@@ -14,23 +16,29 @@ void pac::Game::AddScene(std::shared_ptr<pac::IScene> scene)
 	mScenes.push_back(scene);
 }
 
-void pac::Game::TestFunc()
-{
-	Logger::cout.Info("Hello, World!");
-}
-
 void pac::Game::Run()
 {
-	//while (true)
-	//{
-	//	//mCurrentScene->NextTick();
-	//	
-	//}
+	while (mWindow->IsOpen())
+	{
+		auto events = mWindow->GetEvents();
 
-	mCurrentScene->Draw();
+		if (mWindow->ShouldClose())
+		{
+			mWindow->Close();
+			break;
+		}
+
+		mScenes[mCurrentSceneIndex]->NextTick();
+
+		mWindow->Clear();
+		mScenes[mCurrentSceneIndex]->Draw();
+		mWindow->Display();
+	}
+
+	Logger::cout.Debug("Game closed successfully");
 }
 
 std::shared_ptr<pac::IScene> pac::Game::GetCurrentScene() const
 {
-	return mCurrentScene;
+	return mScenes[mCurrentSceneIndex];
 }

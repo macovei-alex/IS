@@ -159,6 +159,7 @@
     <ClInclude Include="PathFinder.h" />
     <ClInclude Include="Position.h" />
     <ClInclude Include="Textures.h" />
+    <ClInclude Include="WindowCloseEvent.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logger\Logger.vcxproj">

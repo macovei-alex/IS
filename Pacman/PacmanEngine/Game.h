@@ -1,23 +1,26 @@
 #pragma once
 
-#include <vector>
 #include "IScene.h"
 #include "IWindow.h"
 #include "IGame.h"
+#include "Maze.h"
+#include "GameplaySettings.h"
+
+#include <vector>
+
 
 namespace pac
 {
 	class Game : public IGame
 	{
 	public:
-		Game(std::shared_ptr<pac::IWindow> window, std::shared_ptr<pac::IScene> currentScene);
-		void AddScene(std::shared_ptr<pac::IScene> scene);
-		void TestFunc();
+		Game(std::shared_ptr<IWindow> window, Maze&& maze, const GameplaySettings& settings);
+		void AddScene(std::shared_ptr<IScene> scene);
 		void Run() override;
-		std::shared_ptr<pac::IScene> GetCurrentScene() const;
+		std::shared_ptr<IScene> GetCurrentScene() const;
 	private:
-		std::vector<std::shared_ptr<pac::IScene>> mScenes;
-		std::shared_ptr<pac::IScene> mCurrentScene;
-		std::shared_ptr<pac::IWindow> mWindow;
+		std::shared_ptr<IWindow> mWindow;
+		std::vector<std::shared_ptr<IScene>> mScenes;
+		size_t mCurrentSceneIndex = 0;
 	};
 }
