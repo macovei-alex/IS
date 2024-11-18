@@ -37,7 +37,7 @@ void pac::GameplayScene::RemoveListener(std::shared_ptr<IListener> listener, Eve
 	Logger::cout.Debug(std::format("An event listener for event type ( {} ) has successfuly been removed", GetEventTypeName(eventType)));
 }
 
-void pac::GameplayScene::Notify(std::shared_ptr<IEvent> event)
+void pac::GameplayScene::Notify(std::shared_ptr<IEvent> event) const
 {
 	auto foundIterator = mListeners.find(event->GetType());
 	if (foundIterator == mListeners.end())
@@ -45,6 +45,7 @@ void pac::GameplayScene::Notify(std::shared_ptr<IEvent> event)
 		return;
 	}
 
+	/*
 	std::vector<std::weak_ptr<IListener>>& listeners = foundIterator->second;
 	auto from = std::remove_if(listeners.begin(), listeners.end(),
 		[](const std::weak_ptr<IListener> listener) -> bool
@@ -60,7 +61,9 @@ void pac::GameplayScene::Notify(std::shared_ptr<IEvent> event)
 		Logger::cout.Debug(std::format("( {} ) listeners were removed for events of type ( {} )",
 			count, GetEventTypeName(event->GetType())));
 	}
+	*/
 
+	const auto& listeners = foundIterator->second;
 	for (const auto& listener : listeners)
 	{
 		auto locked = listener.lock();

@@ -11,6 +11,7 @@ namespace pac
 		Pacman,
 		Ghost,
 		Coin,
-		PowerUp
+		PowerUp,
+		_Count
 	};
 }
