@@ -134,24 +134,29 @@
     <ClCompile Include="EventType.cpp" />
     <ClCompile Include="GameplayScene.cpp" />
     <ClCompile Include="GameplayScene.h" />
+    <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="Maze.cpp" />
     <ClCompile Include="Maze.h" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Pacman.cpp" />
+    <ClCompile Include="PathFinder.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EventType.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameplaySettings.h" />
+    <ClInclude Include="Ghost.h" />
     <ClInclude Include="IEvent.h" />
     <ClInclude Include="IGame.h" />
     <ClInclude Include="IListener.h" />
+    <ClInclude Include="IPathFinder.h" />
     <ClInclude Include="IScene.h" />
     <ClInclude Include="ISubject.h" />
     <ClInclude Include="IWindow.h" />
     <ClInclude Include="KeyCode.h" />
     <ClInclude Include="KeyPressedEvent.h" />
     <ClInclude Include="Pacman.h" />
+    <ClInclude Include="PathFinder.h" />
     <ClInclude Include="Position.h" />
     <ClInclude Include="Textures.h" />
   </ItemGroup>
