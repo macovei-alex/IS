@@ -19,6 +19,7 @@ namespace pac
 		uint64_t GetTicksSinceLastMove();
 		Position GetPosition();
 		Direction GetDirection();
+
 	private:
 		Position position;
 		Direction direction;

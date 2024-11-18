@@ -154,8 +154,8 @@
     <ClInclude Include="KeyCode.h" />
     <ClInclude Include="KeyPressedEvent.h" />
     <ClInclude Include="Pacman.h" />
-    <ClInclude Include="Point.h" />
     <ClInclude Include="Position.h" />
+    <ClInclude Include="Textures.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logger\Logger.vcxproj">

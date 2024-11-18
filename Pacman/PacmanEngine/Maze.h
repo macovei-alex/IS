@@ -29,6 +29,7 @@ namespace pac
 		Position GetPacmanSpawnPosition() const;
 		Dimensions GetDimensions() const;
 		void ReadMazeFromFile(std::string_view filename);
+
 	private:
 		std::vector<std::vector<CellType>> mCells;
 		Position mGhostSpawn;

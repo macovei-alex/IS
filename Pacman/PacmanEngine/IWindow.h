@@ -1,11 +1,16 @@
 #pragma once
 
-class IWindow
+
+namespace pac
 {
-public:
-	//TODO: GetEvents when Events are implemented
-	//virtual void GetEvents() = 0;
-	virtual void DrawLine() = 0;
-	virtual void DrawText(uint16_t score) = 0;
-	virtual void DrawTexture() = 0;
-};
+	class IWindow
+	{
+	public:
+		//TODO: GetEvents when Events are implemented
+		//virtual void GetEvents() = 0;
+		virtual void DrawLine() = 0;
+		virtual void DrawText(uint16_t score) = 0;
+		virtual void DrawTexture() = 0;
+		~IWindow() = default;
+	};
+}

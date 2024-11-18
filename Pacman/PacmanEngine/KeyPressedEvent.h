@@ -12,6 +12,7 @@ namespace pac
 		KeyPressedEvent(KeyCode keyCode) : mKeyCode(keyCode) { }
 		EventType GetType() const override { return EventType::KeyPressed; }
 		KeyCode GetKeyCode() const { return mKeyCode; }
+
 	private:
 		KeyCode mKeyCode;
 	};
