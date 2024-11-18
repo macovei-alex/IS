@@ -2,6 +2,10 @@
 #include "Logger/Logger.h"
 #include "AssetManager.h"
 #include "SFMLWindow.h"
+#include <PacmanEngine/IScene.h>
+#include <PacmanEngine/IGame.h>
+#include <PacmanEngine/GameplayScene.h>
+#include <PacmanEngine/Game.h>
 
 int main() {
 	//TODO: This should be from the backend through the IWindow interface and then using Game
@@ -22,6 +26,12 @@ int main() {
 
     std::shared_ptr<pac::IWindow> swindow = std::make_shared<pac::SFMLWindow>(window, assetManager);
 
+	pac::GameplaySettings settings;
+
+	std::shared_ptr<pac::IScene> scene = std::make_shared<pac::GameplayScene>(swindow, std::move(maze), settings);
+
+	std::shared_ptr<pac::IGame> game = std::make_shared<pac::Game>(swindow, scene);
+
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
@@ -33,7 +43,7 @@ int main() {
         
 
         window.clear();
-        maze.DrawMaze(swindow);
+		game->Run();
         window.display();
     }
 
