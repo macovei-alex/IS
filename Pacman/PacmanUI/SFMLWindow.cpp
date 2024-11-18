@@ -1,35 +1,14 @@
 #include "pch.h"
 #include "SFMLWindow.h"
 
-pac::SFMLWindow::SFMLWindow(sf::RenderWindow& window, const Maze& maze, const AssetManager& assetManager)
+pac::SFMLWindow::SFMLWindow(sf::RenderWindow& window, const AssetManager& assetManager)
 	: mWindow(window)
-	, mMaze(maze)
 	, mAssetManager(assetManager)
 {
 	// EMPTY
 }
 
-void pac::SFMLWindow::DrawLine()
-{
-    auto [height, width] = mMaze.GetDimensions();
-
-    int a = 50;
-
-    for (size_t i = 0; i < height; ++i) {
-        for (size_t j = 0; j < width; ++j) {
-            if (mMaze.GetCellType(Position((uint16_t)i, (uint16_t)j)) == CellType::Wall)
-            {
-                sf::Sprite sprite;
-                sprite = mAssetManager.GetWallSprite();
-                sprite.setPosition(j * a + 20.0f, i * a + 20.0f);
-                sprite.setScale(0.2f, 0.2f);
-                mWindow.draw(sprite);
-            }
-        }
-    }
-}
-
-void pac::SFMLWindow::DrawText(uint16_t score)
+void pac::SFMLWindow::DrawScore(const std::string& score)
 {
 	sf::Font font;
 	if (!font.loadFromFile("C:/Windows/Fonts/arial.ttf"))
@@ -39,7 +18,7 @@ void pac::SFMLWindow::DrawText(uint16_t score)
 
 	sf::Text text;
 	text.setFont(font);
-	text.setString(std::to_string(score));
+	text.setString(score);
 	text.setCharacterSize(20);
 	text.setFillColor(sf::Color::Blue);
 	text.setStyle(sf::Text::Bold);
@@ -48,41 +27,34 @@ void pac::SFMLWindow::DrawText(uint16_t score)
 	mWindow.draw(text);
 }
 
-void pac::SFMLWindow::DrawTexture()
+void pac::SFMLWindow::DrawTexture(pac::Position position, pac::Textures texture)
 {
-    auto [height, width] = mMaze.GetDimensions();
+    int a = 50;
 
-    int a = 55;
-
-    for (size_t i = 0; i < height; ++i) {
-        for (size_t j = 0; j < width; ++j) {
-            sf::Sprite sprite;
-            switch (mMaze.GetCellType(Position((uint16_t)i, (uint16_t)j))) {
-            case CellType::PacmanSpawn:
-                sprite = mAssetManager.GetPacmanSprite();
-                sprite.setPosition(j * a + 20.0f, i * a + 20.0f);
-                sprite.setScale(0.03f, 0.03f);
-                break;
-            case CellType::GhostSpawn:
-                sprite = mAssetManager.GetGhostSprite();
-                sprite.setPosition(j * a + 20.0f, i * a + 20.0f);
-                sprite.setScale(0.08f, 0.08f);
-                break;
-            case CellType::Coin:
-                sprite = mAssetManager.GetCoinSprite();
-                sprite.setPosition(j * a + 20.0f, i * a + 20.0f);
-                sprite.setScale(0.02f, 0.02f);
-                break;
-            case CellType::PowerUp:
-                sprite = mAssetManager.GetPowerUpSprite();
-                sprite.setPosition(j * a + 20.0f, i * a + 20.0f);
-                sprite.setScale(0.02f, 0.02f);
-                break;
-            }
-
-            mWindow.draw(sprite);
-        }
+    sf::Sprite sprite;
+    sprite = mAssetManager.GetSprite(texture);
+    sprite.setPosition(position.col * a + 20.0f, position.row * a + 20.0f);
+    switch (texture)
+    {
+    case pac::Textures::Wall:
+        sprite.setScale(0.2f, 0.2f);
+        break;
+    case pac::Textures::Pacman:
+        sprite.setScale(0.03f, 0.03f);
+        break;
+    case pac::Textures::Ghost:
+        sprite.setScale(0.08f, 0.08f);
+        break;
+    case pac::Textures::Coin:
+        sprite.setScale(0.02f, 0.02f);
+        break;
+    case pac::Textures::PowerUp:
+        sprite.setScale(0.02f, 0.02f);
+        break;
+    default:
+        break;
     }
+    mWindow.draw(sprite);
 }
 
 //void pac::SFMLWindow::Draw()

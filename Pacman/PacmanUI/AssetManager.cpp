@@ -3,43 +3,29 @@
 
 pac::AssetManager::AssetManager(std::string_view folderPath)
 {
-	mPacmanTexture.loadFromFile(std::string(folderPath) + "\\pacman.png");
-	mPacmanSprite.setTexture(mPacmanTexture);
+	sf::Texture texture;
+	texture.loadFromFile(std::string(folderPath) + "\\pacman.png");
+	mTextures[pac::Textures::Pacman] = texture;
+	mSprites[pac::Textures::Pacman].setTexture(mTextures[pac::Textures::Pacman]);
 
-	mGhostTexture.loadFromFile(std::string(folderPath) + "\\ghost.png");
-	mGhostSprite.setTexture(mGhostTexture);
+	texture.loadFromFile(std::string(folderPath) + "\\ghost.png");
+	mTextures[pac::Textures::Ghost] = texture;
+	mSprites[pac::Textures::Ghost].setTexture(mTextures[pac::Textures::Ghost]);
 
-	mWallTexture.loadFromFile(std::string(folderPath) + "\\wall.png");
-	mWallSprite.setTexture(mWallTexture);
+	texture.loadFromFile(std::string(folderPath) + "\\wall.png");
+	mTextures[pac::Textures::Wall] = texture;
+	mSprites[pac::Textures::Wall].setTexture(mTextures[pac::Textures::Wall]);
 
-	mCoinTexture.loadFromFile(std::string(folderPath) + "\\coin.png");
-	mCoinSprite.setTexture(mCoinTexture);
+	texture.loadFromFile(std::string(folderPath) + "\\coin.png");
+	mTextures[pac::Textures::Coin] = texture;
+	mSprites[pac::Textures::Coin].setTexture(mTextures[pac::Textures::Coin]);
 
-	mPowerUpTexture.loadFromFile(std::string(folderPath) + "\\powerup.png");
-	mPowerUpSprite.setTexture(mPowerUpTexture);
+	texture.loadFromFile(std::string(folderPath) + "\\powerup.png");
+	mTextures[pac::Textures::PowerUp] = texture;
+	mSprites[pac::Textures::PowerUp].setTexture(mTextures[pac::Textures::PowerUp]);
 }
 
-sf::Sprite pac::AssetManager::GetPacmanSprite() const
+sf::Sprite pac::AssetManager::GetSprite(pac::Textures texture) const
 {
-	return mPacmanSprite;
-}
-
-sf::Sprite pac::AssetManager::GetGhostSprite() const
-{
-	return mGhostSprite;
-}
-
-sf::Sprite pac::AssetManager::GetWallSprite() const
-{
-	return mWallSprite;
-}
-
-sf::Sprite pac::AssetManager::GetCoinSprite() const
-{
-	return mCoinSprite;
-}
-
-sf::Sprite pac::AssetManager::GetPowerUpSprite() const
-{
-	return mPowerUpSprite;
+	return mSprites.at(texture);
 }

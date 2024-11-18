@@ -2,8 +2,10 @@
 
 #include <vector>
 #include <string>
+#include <memory>
 #include "Position.h"
 #include "Dimensions.h"
+#include "IWindow.h"
 
 
 namespace pac
@@ -29,6 +31,7 @@ namespace pac
 		Position GetPacmanSpawnPosition() const;
 		Dimensions GetDimensions() const;
 		void ReadMazeFromFile(std::string_view filename);
+		void DrawMaze(std::shared_ptr<pac::IWindow> window) const;
 
 	private:
 		std::vector<std::vector<CellType>> mCells;

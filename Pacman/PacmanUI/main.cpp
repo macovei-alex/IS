@@ -20,7 +20,7 @@ int main() {
 
 	pac::AssetManager assetManager = pac::AssetManager("assets");
 
-    pac::SFMLWindow gameWindow(window, maze, assetManager);
+    std::shared_ptr<pac::IWindow> swindow = std::make_shared<pac::SFMLWindow>(window, assetManager);
 
     while (window.isOpen()) {
         sf::Event event;
@@ -30,10 +30,10 @@ int main() {
             }
         }
 
+        
+
         window.clear();
-		gameWindow.DrawTexture();
-        gameWindow.DrawLine();
-		gameWindow.DrawText(10);
+        maze.DrawMaze(swindow);
         window.display();
     }
 

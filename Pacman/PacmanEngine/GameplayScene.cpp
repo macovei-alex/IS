@@ -80,7 +80,7 @@ void pac::GameplayScene::Notify(std::shared_ptr<IEvent> event) const
 void pac::GameplayScene::Draw() const
 {
 	// TODO: finish this
-	mWindow->DrawTexture();
+	//mWindow->DrawTexture();
 }
 
 void pac::GameplayScene::NextTick()

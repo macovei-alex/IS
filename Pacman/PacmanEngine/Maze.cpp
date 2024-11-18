@@ -139,3 +139,27 @@ void pac::Maze::ReadMazeFromFile(std::string_view filename)
 		mCells.push_back(std::move(row));
 	}
 }
+
+void pac::Maze::DrawMaze(std::shared_ptr<pac::IWindow> window) const
+{
+	auto [height, width] = GetDimensions();
+
+	for (uint16_t i = 0; i < height; ++i) {
+		for (uint16_t j = 0; j < width; ++j) {
+			switch (GetCellType(Position(i, j)))
+			{
+			case CellType::Wall:
+				window->DrawTexture(Position(i, j), Textures::Wall);
+				break;
+			case CellType::Coin:
+				window->DrawTexture(Position(i, j), Textures::Coin);
+				break;
+			case CellType::PowerUp:
+				window->DrawTexture(Position(i, j), Textures::PowerUp);
+				break;
+			default:
+				break;
+			}
+		}
+	}
+}
