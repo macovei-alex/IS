@@ -3,6 +3,7 @@
 #include "Position.h"
 #include "KeyCode.h"
 #include "IListener.h"
+#include "Maze.h"
 
 namespace pac
 {
@@ -11,27 +12,23 @@ namespace pac
 		Up,
 		Down,
 		Left,
-		Right
+		Right,
+		Unknown
 	};
 
 	class Pacman : public IListener
 	{
 	public:
-		Pacman();
-		void MoveUp();
-		void MoveDown();
-		void MoveLeft();
-		void MoveRight();
-		uint64_t GetTicksSinceLastMove();
-		Position GetPosition();
-		Direction GetDirection();
+		Pacman(uint16_t ticksPerMove);
+		void TryMove(const Maze& maze);
+		Position GetCurrentPosition();
+		void OnEvent(std::shared_ptr<IEvent> event) override;
 
 	private:
-		Position currentPosition;
-		KeyCode currentDirection;
-		KeyCode nextDirection;
-		Position position;
-		Direction direction;
-		uint64_t ticksSinceLastMove;
+		Position mCurrentPosition;
+		Direction mCurrentDirection;
+		Direction mNextDirection;
+		uint16_t mTicksSinceLastMove;
+		uint16_t mTicksPerMove;
 	};
 }
