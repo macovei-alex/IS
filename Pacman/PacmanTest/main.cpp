@@ -1,19 +1,17 @@
 #include <iostream>
 #include <gtest/gtest.h>
+#include "PacmanEngine/Pacman.h"
+#include "PacmanEngine/Maze.h"
+#include "PacmanEngine/KeyPressedEvent.h"
+#include "PacmanEngine/GameplaySettings.h"
 
-
-TEST(SampleTest, Test1)
+TEST(PacmanTest, VerifyObjectInitialization)
 {
-	EXPECT_EQ(1 + 1, 2);
-	EXPECT_TRUE(true);
-	EXPECT_GT(5, 3);
-}
-
-TEST(SampleTest, Test2)
-{
-	EXPECT_EQ(1 + 1, 2);
-	EXPECT_TRUE(false);
-	EXPECT_GT(5, 3);
+	pac::GameplaySettings gps;
+	pac::Pacman pacman({ 10, 10 }, gps.mPacmanTicksPerMove);
+	EXPECT_EQ(pacman.GetCurrentPosition().row, 10);
+	EXPECT_EQ(pacman.GetCurrentPosition().col, 10);
+	EXPECT_EQ(pacman.GetTicksPerMove(), gps.mPacmanTicksPerMove);
 }
 
 int main(int argc, char* argv[])

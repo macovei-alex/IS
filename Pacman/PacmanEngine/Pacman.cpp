@@ -2,8 +2,8 @@
 #include "Logger/Logger.h"
 #include "KeyPressedEvent.h"
 
-pac::Pacman::Pacman(decltype(GameplaySettings::mPacmanTicksPerMove) ticksPerMove)
-	: mCurrentPosition()
+pac::Pacman::Pacman(Position initialPosition, decltype(GameplaySettings::mPacmanTicksPerMove) ticksPerMove)
+	: mCurrentPosition(initialPosition)
 	, mCurrentDirection()
 	, mNextDirection()
 	, mTicksSinceLastMove(0)
@@ -58,6 +58,11 @@ void pac::Pacman::TryMove(const Maze& maze)
 pac::Position pac::Pacman::GetCurrentPosition() const
 {
 	return mCurrentPosition;
+}
+
+decltype(pac::GameplaySettings::mPacmanTicksPerMove) pac::Pacman::GetTicksPerMove() const
+{
+	return mTicksPerMove;
 }
 
 void pac::Pacman::OnEvent(std::shared_ptr<IEvent> event)

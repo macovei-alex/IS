@@ -9,7 +9,7 @@ pac::GameplayScene::GameplayScene(std::shared_ptr<IWindow> window, Maze&& maze, 
 	: mWindow(window)
 	, mMaze(std::move(maze))
 	, mSettings(settings)
-	, mPacman(std::make_shared<Pacman>(settings.mPacmanTicksPerMove))
+	, mPacman(std::make_shared<Pacman>(mMaze.GetPacmanSpawnPosition(), settings.mPacmanTicksPerMove))
 {
 	AddListener(mPacman, EventType::KeyPressed);
 }

@@ -22,9 +22,10 @@ namespace pac
 	class Pacman : public IListener
 	{
 	public:
-		Pacman(decltype(GameplaySettings::mPacmanTicksPerMove) ticksPerMove);
+		Pacman(Position initialPosition, decltype(GameplaySettings::mPacmanTicksPerMove) ticksPerMove);
 		void TryMove(const Maze& maze);
 		Position GetCurrentPosition() const;
+		decltype(GameplaySettings::mPacmanTicksPerMove) GetTicksPerMove() const;
 		void OnEvent(std::shared_ptr<IEvent> event) override;
 
 	private:
