@@ -4,7 +4,9 @@
 #include "PacmanEngine/WindowCloseEvent.h"
 #include "Logger/Logger.h"
 
+#include <memory>
 #include <format>
+#include <unordered_map>
 
 
 pac::SFMLWindow::SFMLWindow(sf::RenderWindow& renderWindow, pac::AssetManager&& assetManager)
@@ -39,30 +41,6 @@ void pac::SFMLWindow::DrawTexture(pac::Position position, pac::Textures texture)
 
 	sf::Sprite sprite = mAssetManager.GetSprite(texture);
 	sprite.setPosition(position.col * a + 20.0f, position.row * a + 20.0f);
-	/*
-	Replace by scaleOnLoad in AssetManager
-
-	switch (texture)
-	{
-	case pac::Textures::Wall:
-		sprite.setScale(0.2f, 0.2f);
-		break;
-	case pac::Textures::Pacman:
-		sprite.setScale(0.03f, 0.03f);
-		break;
-	case pac::Textures::Ghost:
-		sprite.setScale(0.08f, 0.08f);
-		break;
-	case pac::Textures::Coin:
-		sprite.setScale(0.02f, 0.02f);
-		break;
-	case pac::Textures::PowerUp:
-		sprite.setScale(0.02f, 0.02f);
-		break;
-	default:
-		break;
-	}
-	*/
 	mRenderWindow.draw(sprite);
 }
 

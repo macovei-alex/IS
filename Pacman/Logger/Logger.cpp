@@ -2,7 +2,7 @@
 
 #include <format>
 #include <fstream>
-#include <unordered_map>
+#include <array>
 
 namespace chr = std::chrono;
 
@@ -12,14 +12,9 @@ pac::Logger pac::Logger::cout(std::cout);
 
 static std::string_view LogLevelToString(pac::Logger::Level level)
 {
-	static const std::unordered_map<pac::Logger::Level, std::string_view> levelStrings = {
-		{ pac::Logger::Level::Debug, "Debug" },
-		{ pac::Logger::Level::Info, "Info" },
-		{ pac::Logger::Level::Warning, "Warn" },
-		{ pac::Logger::Level::Error, "Error" }
-	};
+	static const std::array<std::string_view, 4> levelStrings = { "Debug", "Info", "Warn", "Error" };
 
-	return levelStrings.at(level);
+	return levelStrings.at((size_t)level);
 }
 
 

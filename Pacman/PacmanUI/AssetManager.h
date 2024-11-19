@@ -3,8 +3,8 @@
 #include "PacmanEngine/Textures.h"
 
 #include <SFML/Graphics.hpp>
-#include <unordered_map>
 #include <string_view>
+#include <vector>
 
 
 namespace pac
@@ -13,10 +13,10 @@ namespace pac
 	{
 	public:
 		AssetManager(std::string_view folderPath, bool scaleOnLoad = true);
-		sf::Sprite GetSprite(pac::Textures texture) const;
+		sf::Sprite& GetSprite(pac::Textures texture);
 
 	private:
-		std::unordered_map<pac::Textures, sf::Sprite> mSprites;
-		std::unordered_map<pac::Textures, sf::Texture> mTextures;
+		std::vector<sf::Sprite> mSprites;
+		std::vector<sf::Texture> mTextures;
 	};
 }
