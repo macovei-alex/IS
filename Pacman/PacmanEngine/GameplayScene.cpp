@@ -87,6 +87,22 @@ void pac::GameplayScene::Draw() const
 
 void pac::GameplayScene::NextTick()
 {
+	auto events = mWindow->GetEvents();
+	if (mWindow->ShouldClose())
+	{
+		return;
+	}
+	if (events.size() > 0)
+	{
+		Logger::cout.Debug("fgnrteyjg");
+	}
+	for (const auto& event : events)
+	{
+		Logger::cout.Debug(std::format("iujher9uh"));
+		Notify(event.get());
+	}
+
+	mPacman->TryMove(mMaze);
 	// TODO: finish this
 }
 

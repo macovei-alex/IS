@@ -24,7 +24,7 @@ void pac::Game::Run()
 
 	while (mWindow->IsOpen())
 	{
-		auto events = mWindow->GetEvents();
+		mScenes[mCurrentSceneIndex]->NextTick();
 
 		if (mWindow->ShouldClose())
 		{
@@ -32,11 +32,10 @@ void pac::Game::Run()
 			break;
 		}
 
-		mScenes[mCurrentSceneIndex]->NextTick();
-
 		mWindow->Clear();
 		mScenes[mCurrentSceneIndex]->Draw();
 		mWindow->Display();
+
 	}
 
 	Logger::cout.Debug("Game closed successfully");

@@ -14,12 +14,12 @@ pac::Pacman::Pacman(Position initialPosition, decltype(GameplaySettings::mPacman
 
 void pac::Pacman::TryMove(const Maze& maze)
 {
-	if (maze.GetCellType(mCurrentPosition) == CellType::Wall)
+	/*if (maze.GetCellType(mCurrentPosition) == CellType::Wall)
 	{
 		mCurrentDirection = mNextDirection;
 		mNextDirection = Direction::GetInvalid();
 		return;
-	}
+	}*/
 
 	if (mTicksSinceLastMove < mTicksPerMove)
 	{
@@ -40,8 +40,7 @@ void pac::Pacman::TryMove(const Maze& maze)
 			if (maze.GetCellType(newPosition) != CellType::Wall)
 			{
 				mCurrentPosition = newPosition;
-				mCurrentDirection = mNextDirection;
-				mNextDirection = Direction::GetInvalid();
+				
 			}
 			else
 			{
@@ -50,6 +49,8 @@ void pac::Pacman::TryMove(const Maze& maze)
 			}
 		}
 	}
+
+	mTicksPerMove++;
 }
 
 pac::Position pac::Pacman::GetCurrentPosition() const
@@ -73,19 +74,21 @@ void pac::Pacman::OnEvent(IEvent* event)
 	{
 		auto keyEvent = dynamic_cast<KeyPressedEvent*>(event);
 
+		auto& direction = mCurrentDirection.IsValid() ? mNextDirection : mCurrentDirection;
+
 		switch (keyEvent->GetKeyCode())
 		{
 		case KeyCode::Up:
-			mNextDirection = { -1, 0 };
+			direction = { -1, 0 };
 			break;
 		case KeyCode::Down:
-			mNextDirection = { 1, 0 };
+			direction = { 1, 0 };
 			break;
 		case KeyCode::Left:
-			mNextDirection = { 0, -1 };
+			direction = { 0, -1 };
 			break;
 		case KeyCode::Right:
-			mNextDirection = { 0, 1 };
+			direction = { 0, 1 };
 			break;
 		case KeyCode::Unknown:
 			Logger::cout.Warning("Unknown key pressed");

@@ -1,6 +1,9 @@
 #pragma once
 
 #include "ISubject.h"
+#include "IEvent.h"
+
+#include <vector>
 
 
 namespace pac
