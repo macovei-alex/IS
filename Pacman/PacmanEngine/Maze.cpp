@@ -82,7 +82,7 @@ pac::Position pac::Maze::GetGhostSpawnPosition() const
 {
 	if (mGhostSpawn.IsInvalid())
 	{
-		throw std::runtime_error("No ghost spawn found. You must call InitCells() before using the maze");
+		throw std::runtime_error("No ghost spawn found. You must call InitCells() or ReadFromFile() before using the maze");
 	}
 
 	return mGhostSpawn;
@@ -92,7 +92,7 @@ pac::Position pac::Maze::GetPacmanSpawnPosition() const
 {
 	if (mPacmanSpawn.IsInvalid())
 	{
-		throw std::runtime_error("No pacman spawn found. You must call InitCells() before using the maze");
+		throw std::runtime_error("No pacman spawn found. You must call InitCells() or ReadFromFile() before using the maze");
 	}
 
 	return mPacmanSpawn;
@@ -114,15 +114,20 @@ pac::Dimensions pac::Maze::GetDimensions() const
 void pac::Maze::ReadMazeFromFile(std::string_view filename)
 {
 	std::ifstream file(filename.data());
-	std::string line;
+	std::stringstream filetream;
+	filetream << file.rdbuf();
+	file.close();
 
-	while (std::getline(file, line))
+	std::string line;
+	std::vector<std::vector<CellType>> cells;
+
+	while (std::getline(filetream, line))
 	{
 		std::vector<pac::CellType> row;
-		std::istringstream stream(line);
+		std::istringstream lineStream(line);
 		int value;
 
-		while (stream >> value)
+		while (lineStream >> value)
 		{
 			switch (value)
 			{
@@ -136,8 +141,10 @@ void pac::Maze::ReadMazeFromFile(std::string_view filename)
 			}
 		}
 
-		mCells.push_back(std::move(row));
+		cells.push_back(std::move(row));
 	}
+
+	InitCells(std::move(cells));
 }
 
 void pac::Maze::DrawMaze(std::shared_ptr<pac::IWindow> window) const
