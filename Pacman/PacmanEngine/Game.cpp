@@ -2,6 +2,7 @@
 
 #include "GameplayScene.h"
 #include "Logger/Logger.h"
+#include "WindowCloseEvent.h"
 
 
 pac::Game::Game(std::shared_ptr<IWindow> window, Maze&& maze, const GameplaySettings& settings)
@@ -41,4 +42,13 @@ void pac::Game::Run()
 std::shared_ptr<pac::IScene> pac::Game::GetCurrentScene() const
 {
 	return mScenes[mCurrentSceneIndex];
+}
+
+void pac::Game::OnEvent(std::shared_ptr<IEvent> event)
+{
+	if (event->GetType() == EventType::WindowClosed)
+	{
+		auto keyEvent = std::static_pointer_cast<WindowCloseEvent>(event);
+		mWindow->Close();
+	}
 }

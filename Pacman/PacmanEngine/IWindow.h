@@ -24,6 +24,6 @@ namespace pac
 		virtual void Display() = 0;
 		virtual void Close() = 0;
 		virtual std::vector<std::shared_ptr<IEvent>> GetEvents() = 0;
-		~IWindow() = default;
+		virtual ~IWindow() = default;
 	};
 }

@@ -18,9 +18,8 @@ int main()
 		(renderWindow, pac::AssetManager("assets"));
 
 	pac::GameplaySettings settings;
-	std::shared_ptr<pac::IGame> game = std::make_shared<pac::Game>(iWindow, std::move(maze), settings);
-
-	game->Run();
+	pac::Game game(iWindow, std::move(maze), settings);
+	game.Run();
 
 	return 0;
 }

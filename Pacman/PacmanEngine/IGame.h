@@ -7,5 +7,6 @@ namespace pac
 	{
 	public:
 		virtual void Run() = 0;
+		virtual ~IGame() = default;
 	};
 }

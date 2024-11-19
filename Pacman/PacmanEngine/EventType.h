@@ -11,8 +11,7 @@ namespace pac
 		KeyPressed,
 		PowerUp,
 		SceneOver,
-		WindowClosed,
-		_Count
+		WindowClosed
 	};
 
 	std::string_view GetEventTypeName(EventType type);
