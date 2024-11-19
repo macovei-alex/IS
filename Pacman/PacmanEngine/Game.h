@@ -12,19 +12,17 @@
 
 namespace pac
 {
-	class Game : public IGame, public IListener
+	class Game : public IGame
 	{
 	public:
-		Game(std::shared_ptr<IWindow> window, Maze&& maze, const GameplaySettings& settings);
-		void AddScene(std::shared_ptr<IScene> scene);
+		Game(std::unique_ptr<IWindow> window, Maze&& maze, const GameplaySettings& settings);
+		void AddScene(std::unique_ptr<IScene> scene);
 		void Run() override;
-		std::shared_ptr<IScene> GetCurrentScene() const;
-
-		void OnEvent(std::shared_ptr<IEvent> event) override;
+		IScene* GetCurrentScene() const;
 
 	private:
-		std::shared_ptr<IWindow> mWindow;
-		std::vector<std::shared_ptr<IScene>> mScenes;
+		std::unique_ptr<IWindow> mWindow;
+		std::vector<std::unique_ptr<IScene>> mScenes;
 		size_t mCurrentSceneIndex = 0;
 	};
 }

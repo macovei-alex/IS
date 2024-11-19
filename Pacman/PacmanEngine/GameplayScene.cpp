@@ -5,7 +5,7 @@
 #include <format>
 
 
-pac::GameplayScene::GameplayScene(std::shared_ptr<IWindow> window, Maze&& maze, const GameplaySettings& settings)
+pac::GameplayScene::GameplayScene(IWindow* window, Maze&& maze, const GameplaySettings& settings)
 	: mWindow(window)
 	, mMaze(std::move(maze))
 	, mSettings(settings)
@@ -37,7 +37,7 @@ void pac::GameplayScene::RemoveListener(std::shared_ptr<IListener> listener, Eve
 	Logger::cout.Debug(std::format("An event listener for event type ( {} ) has successfuly been removed", GetEventTypeName(eventType)));
 }
 
-void pac::GameplayScene::Notify(std::shared_ptr<IEvent> event) const
+void pac::GameplayScene::Notify(IEvent* event) const
 {
 	auto foundIterator = mListeners.find(event->GetType());
 	if (foundIterator == mListeners.end())
@@ -85,7 +85,7 @@ void pac::GameplayScene::Draw() const
 
 void pac::GameplayScene::NextTick()
 {
-
+	// TODO: finish this
 }
 
 void pac::GameplayScene::RemoveExpiredListeners()

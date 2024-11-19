@@ -17,7 +17,7 @@ void pac::Pacman::TryMove(const Maze& maze)
 	if (maze.GetCellType(mCurrentPosition) == CellType::Wall)
 	{
 		mCurrentDirection = mNextDirection;
-		mNextDirection = Direction::Invalid();
+		mNextDirection = Direction::GetInvalid();
 		return;
 	}
 
@@ -26,30 +26,27 @@ void pac::Pacman::TryMove(const Maze& maze)
 		mTicksSinceLastMove++;
 		return;
 	}
-	
+
 	mTicksSinceLastMove = 0;
 
-	if (!mCurrentPosition.IsInvalid())
+	if (mCurrentPosition.IsValid() && mCurrentDirection.IsValid())
 	{
-		if (!mCurrentDirection.IsInvalid())
-		{
-			uint16_t newRow = mCurrentPosition.row + mCurrentDirection.row;
-			uint16_t newCol = mCurrentPosition.col + mCurrentDirection.col;
-			Position newPosition{ newRow, newCol };
+		uint16_t newRow = mCurrentPosition.row + mCurrentDirection.row;
+		uint16_t newCol = mCurrentPosition.col + mCurrentDirection.col;
+		Position newPosition = { newRow, newCol };
 
-			if (!newPosition.IsInvalid())
+		if (newPosition.IsValid())
+		{
+			if (maze.GetCellType(newPosition) != CellType::Wall)
 			{
-				if (maze.GetCellType(newPosition) != CellType::Wall)
-				{
-					mCurrentPosition = newPosition;
-					mCurrentDirection = mNextDirection;
-					mNextDirection = Direction::Invalid();
-				}
-				else
-				{
-					mCurrentDirection = mNextDirection;
-					mNextDirection = Direction::Invalid();
-				}
+				mCurrentPosition = newPosition;
+				mCurrentDirection = mNextDirection;
+				mNextDirection = Direction::GetInvalid();
+			}
+			else
+			{
+				mCurrentDirection = mNextDirection;
+				mNextDirection = Direction::GetInvalid();
 			}
 		}
 	}
@@ -65,11 +62,11 @@ decltype(pac::GameplaySettings::mPacmanTicksPerMove) pac::Pacman::GetTicksPerMov
 	return mTicksPerMove;
 }
 
-void pac::Pacman::OnEvent(std::shared_ptr<IEvent> event)
+void pac::Pacman::OnEvent(IEvent* event)
 {
 	if (event->GetType() == EventType::KeyPressed)
 	{
-		auto keyEvent = std::dynamic_pointer_cast<KeyPressedEvent>(event);
+		auto keyEvent = dynamic_cast<KeyPressedEvent*>(event);
 
 		switch (keyEvent->GetKeyCode())
 		{

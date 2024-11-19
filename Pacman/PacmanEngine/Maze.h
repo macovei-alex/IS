@@ -29,7 +29,7 @@ namespace pac
 		Position GetPacmanSpawnPosition() const;
 		Dimensions GetDimensions() const;
 		void ReadMazeFromFile(std::string_view filename);
-		void DrawMaze(std::shared_ptr<pac::IWindow> window) const;
+		void DrawMaze(IWindow* window) const;
 
 	private:
 		std::vector<std::vector<CellType>> mCells;

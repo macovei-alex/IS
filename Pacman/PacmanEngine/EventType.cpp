@@ -8,7 +8,7 @@
 
 std::string_view pac::GetEventTypeName(EventType type)
 {
-	static const std::unordered_map<EventType, std::string> names = {
+	static const std::unordered_map<EventType, std::string_view> names = {
 		{ EventType::KeyPressed, "KeyPressed" },
 		{ EventType::PowerUp, "PowerUp" },
 		{ EventType::SceneOver, "SceneOver" },

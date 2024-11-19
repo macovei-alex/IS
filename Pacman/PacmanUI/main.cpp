@@ -14,11 +14,11 @@ int main()
 	pac::Maze maze;
 	maze.ReadMazeFromFile("assets\\maze.txt");
 
-	std::shared_ptr<pac::IWindow> iWindow = std::make_shared<pac::SFMLWindow>
+	std::unique_ptr<pac::IWindow> iWindow = std::make_unique<pac::SFMLWindow>
 		(renderWindow, pac::AssetManager("assets"));
 
 	pac::GameplaySettings settings;
-	pac::Game game(iWindow, std::move(maze), settings);
+	pac::Game game(std::move(iWindow), std::move(maze), settings);
 	game.Run();
 
 	return 0;

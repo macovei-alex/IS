@@ -14,11 +14,11 @@ namespace pac
 	class GameplayScene : public IScene
 	{
 	public:
-		GameplayScene(std::shared_ptr<IWindow> window, Maze&& maze, const GameplaySettings& settings);
+		GameplayScene(IWindow* window, Maze&& maze, const GameplaySettings& settings);
 
 		void AddListener(std::shared_ptr<IListener> listener, EventType eventType) override;
 		void RemoveListener(std::shared_ptr<IListener> listener, EventType eventType) override;
-		void Notify(std::shared_ptr<IEvent> newEvent) const override;
+		void Notify(IEvent* newEvent) const override;
 
 		void Draw() const override;
 		void NextTick() override;
@@ -27,7 +27,7 @@ namespace pac
 		void RemoveExpiredListeners();
 
 	private:
-		std::shared_ptr<IWindow> mWindow;
+		IWindow* mWindow;
 		Maze mMaze;
 		std::shared_ptr<Pacman> mPacman;
 		GameplaySettings mSettings;

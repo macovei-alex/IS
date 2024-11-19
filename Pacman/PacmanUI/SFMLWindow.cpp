@@ -14,17 +14,17 @@ pac::SFMLWindow::SFMLWindow(sf::RenderWindow& renderWindow, pac::AssetManager&& 
 	// EMPTY
 }
 
-void pac::SFMLWindow::DrawScore(const std::string& score)
+void pac::SFMLWindow::DrawScore(int64_t score)
 {
 	sf::Font font;
 	if (!font.loadFromFile("C:/Windows/Fonts/arial.ttf"))
 	{
-		// error...
+		throw std::runtime_error("Could not load the font");
 	}
 
 	sf::Text text;
 	text.setFont(font);
-	text.setString(score);
+	text.setString(std::to_string(score));
 	text.setCharacterSize(20);
 	text.setFillColor(sf::Color::Blue);
 	text.setStyle(sf::Text::Bold);
@@ -37,8 +37,7 @@ void pac::SFMLWindow::DrawTexture(pac::Position position, pac::Textures texture)
 {
 	int a = 50;
 
-	sf::Sprite sprite;
-	sprite = mAssetManager.GetSprite(texture);
+	sf::Sprite sprite = mAssetManager.GetSprite(texture);
 	sprite.setPosition(position.col * a + 20.0f, position.row * a + 20.0f);
 	switch (texture)
 	{
@@ -88,9 +87,9 @@ void pac::SFMLWindow::Close()
 	mRenderWindow.close();
 }
 
-std::vector<std::shared_ptr<pac::IEvent>> pac::SFMLWindow::GetEvents()
+std::vector<std::unique_ptr<pac::IEvent>> pac::SFMLWindow::GetEvents()
 {
-	std::vector<std::shared_ptr<IEvent>> events;
+	std::vector<std::unique_ptr<IEvent>> events;
 	sf::Event event;
 	while (mRenderWindow.pollEvent(event))
 	{
@@ -106,13 +105,13 @@ std::vector<std::shared_ptr<pac::IEvent>> pac::SFMLWindow::GetEvents()
 			continue;
 		}
 
-		events.push_back(convertedEvent);
+		events.push_back(std::move(convertedEvent));
 	}
 
 	return events;
 }
 
-std::shared_ptr<pac::IEvent> pac::SFMLWindow::ConvertEvent(const sf::Event& event) const
+std::unique_ptr<pac::IEvent> pac::SFMLWindow::ConvertEvent(const sf::Event& event) const
 {
 	static const std::unordered_map<sf::Keyboard::Key, pac::KeyCode> keyMap = {
 		{sf::Keyboard::Up, pac::KeyCode::Up},
@@ -123,7 +122,7 @@ std::shared_ptr<pac::IEvent> pac::SFMLWindow::ConvertEvent(const sf::Event& even
 
 	if (event.type == sf::Event::KeyPressed)
 	{
-		return std::make_shared<KeyPressedEvent>(
+		return std::make_unique<KeyPressedEvent>(
 			keyMap.find(event.key.code) != keyMap.end()
 			? keyMap.at(event.key.code)
 			: pac::KeyCode::Unknown);
@@ -131,7 +130,7 @@ std::shared_ptr<pac::IEvent> pac::SFMLWindow::ConvertEvent(const sf::Event& even
 
 	if (event.type == sf::Event::Closed)
 	{
-		return std::make_shared<WindowCloseEvent>();
+		return std::make_unique<WindowCloseEvent>();
 	}
 
 	return nullptr;

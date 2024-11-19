@@ -9,8 +9,8 @@
 
 
 pac::Maze::Maze()
-	: mGhostSpawn(pac::Position::Invalid())
-	, mPacmanSpawn(pac::Position::Invalid())
+	: mGhostSpawn(pac::Position::GetInvalid())
+	, mPacmanSpawn(pac::Position::GetInvalid())
 {
 	// empty
 }
@@ -25,7 +25,7 @@ void pac::Maze::InitCells(std::vector<std::vector<pac::CellType>>&& cells)
 		{
 			if (mCells[row][col] == CellType::GhostSpawn)
 			{
-				if (!mGhostSpawn.IsInvalid())
+				if (mGhostSpawn.IsValid())
 				{
 					throw std::runtime_error(std::format(
 						"Multiple ghost spawns found: ( {}, {} ) and ( {}, {} )",
@@ -38,7 +38,7 @@ void pac::Maze::InitCells(std::vector<std::vector<pac::CellType>>&& cells)
 			}
 			else if (mCells[row][col] == CellType::PacmanSpawn)
 			{
-				if (!mPacmanSpawn.IsInvalid())
+				if (mPacmanSpawn.IsValid())
 				{
 					throw std::runtime_error(std::format(
 						"Multiple pacman spawns found: ( {}, {} ) and ( {}, {} )",
@@ -80,7 +80,7 @@ void pac::Maze::EatCell(Position pos)
 
 pac::Position pac::Maze::GetGhostSpawnPosition() const
 {
-	if (mGhostSpawn.IsInvalid())
+	if (!mGhostSpawn.IsValid())
 	{
 		throw std::runtime_error("No ghost spawn found. You must call InitCells() or ReadFromFile() before using the maze");
 	}
@@ -90,7 +90,7 @@ pac::Position pac::Maze::GetGhostSpawnPosition() const
 
 pac::Position pac::Maze::GetPacmanSpawnPosition() const
 {
-	if (mPacmanSpawn.IsInvalid())
+	if (!mPacmanSpawn.IsValid())
 	{
 		throw std::runtime_error("No pacman spawn found. You must call InitCells() or ReadFromFile() before using the maze");
 	}
@@ -147,22 +147,24 @@ void pac::Maze::ReadMazeFromFile(std::string_view filename)
 	InitCells(std::move(cells));
 }
 
-void pac::Maze::DrawMaze(std::shared_ptr<pac::IWindow> window) const
+void pac::Maze::DrawMaze(IWindow* window) const
 {
 	auto [height, width] = GetDimensions();
 
-	for (uint16_t i = 0; i < height; ++i) {
-		for (uint16_t j = 0; j < width; ++j) {
-			switch (GetCellType(Position(i, j)))
+	Position position;
+
+	for (; position.row < height; ++position.row) {
+		for (position.col = 0; position.col < width; ++position.col) {
+			switch (GetCellType(position))
 			{
 			case CellType::Wall:
-				window->DrawTexture(Position(i, j), Textures::Wall);
+				window->DrawTexture(position, Textures::Wall);
 				break;
 			case CellType::Coin:
-				window->DrawTexture(Position(i, j), Textures::Coin);
+				window->DrawTexture(position, Textures::Coin);
 				break;
 			case CellType::PowerUp:
-				window->DrawTexture(Position(i, j), Textures::PowerUp);
+				window->DrawTexture(position, Textures::PowerUp);
 				break;
 			default:
 				break;

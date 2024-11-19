@@ -5,20 +5,23 @@
 #include "WindowCloseEvent.h"
 
 
-pac::Game::Game(std::shared_ptr<IWindow> window, Maze&& maze, const GameplaySettings& settings)
-	: mWindow(window)
-	, mScenes({ std::make_shared<GameplayScene>(window, std::move(maze), settings) })
+pac::Game::Game(std::unique_ptr<IWindow> window, Maze&& maze, const GameplaySettings& settings)
+	: mWindow(std::move(window))
+	, mScenes()
 {
 	// empty
+	AddScene(std::make_unique<GameplayScene>(mWindow.get(), std::move(maze), settings));
 }
 
-void pac::Game::AddScene(std::shared_ptr<pac::IScene> scene)
+void pac::Game::AddScene(std::unique_ptr<pac::IScene> scene)
 {
-	mScenes.push_back(scene);
+	mScenes.push_back(std::move(scene));
 }
 
 void pac::Game::Run()
 {
+	Logger::cout.Info("Game running");
+
 	while (mWindow->IsOpen())
 	{
 		auto events = mWindow->GetEvents();
@@ -39,16 +42,7 @@ void pac::Game::Run()
 	Logger::cout.Debug("Game closed successfully");
 }
 
-std::shared_ptr<pac::IScene> pac::Game::GetCurrentScene() const
+pac::IScene* pac::Game::GetCurrentScene() const
 {
-	return mScenes[mCurrentSceneIndex];
-}
-
-void pac::Game::OnEvent(std::shared_ptr<IEvent> event)
-{
-	if (event->GetType() == EventType::WindowClosed)
-	{
-		auto keyEvent = std::static_pointer_cast<WindowCloseEvent>(event);
-		mWindow->Close();
-	}
+	return mScenes[mCurrentSceneIndex].get();
 }

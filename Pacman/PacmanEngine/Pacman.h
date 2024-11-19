@@ -14,9 +14,9 @@ namespace pac
 		int8_t row = 0;
 		int8_t col = 0;
 
-		inline static Direction Invalid() { return { 0, 0 }; }
+		static Direction GetInvalid() { return { 0, 0 }; }
 
-		inline bool IsInvalid() { return row == 0 && col == 0; }
+		inline bool IsValid() const { return row != 0 || col != 0; }
 	};
 
 	class Pacman : public IListener
@@ -26,7 +26,7 @@ namespace pac
 		void TryMove(const Maze& maze);
 		Position GetCurrentPosition() const;
 		decltype(GameplaySettings::mPacmanTicksPerMove) GetTicksPerMove() const;
-		void OnEvent(std::shared_ptr<IEvent> event) override;
+		void OnEvent(IEvent* event) override;
 
 	private:
 		Position mCurrentPosition;
