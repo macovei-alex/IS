@@ -2,6 +2,7 @@
 
 #include "Position.h"
 #include "Maze.h"
+#include "Pacman.h"
 
 namespace pac
 {
@@ -9,9 +10,7 @@ namespace pac
     {
     public:
         virtual ~IPathFinder() = default;
-
-        virtual void SetDestination(const Position& destination) = 0;
-        virtual Position NextMove(const Position& currentPosition, const Maze& maze) = 0;
-        virtual bool IsAtDestination(const Position& currentPosition) const = 0;
+		virtual Position NextMove(const Maze& maze, const Pacman& pacman) const = 0;
+   
     };
 }
