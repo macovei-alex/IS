@@ -16,7 +16,7 @@ namespace pac
 
 		inline static Direction Invalid() { return { 0, 0 }; }
 
-		inline bool IsInvalid(Direction d) { return d.row == 0 && d.col == 0; }
+		inline bool IsInvalid() { return row == 0 && col == 0; }
 	};
 
 	class Pacman : public IListener

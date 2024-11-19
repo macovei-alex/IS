@@ -21,15 +21,38 @@ void pac::Pacman::TryMove(const Maze& maze)
 		return;
 	}
 
-	if (mTicksSinceLastMove == mTicksPerMove)
+	if (mTicksSinceLastMove < mTicksPerMove)
 	{
 		mTicksSinceLastMove++;
 		return;
 	}
 	
-	mTicksSinceLastMove = 1;
+	mTicksSinceLastMove = 0;
 
-	// TODO: Implement the movement logic
+	if (!mCurrentPosition.IsInvalid())
+	{
+		if (!mCurrentDirection.IsInvalid())
+		{
+			uint16_t newRow = mCurrentPosition.row + mCurrentDirection.row;
+			uint16_t newCol = mCurrentPosition.col + mCurrentDirection.col;
+			Position newPosition{ newRow, newCol };
+
+			if (!newPosition.IsInvalid())
+			{
+				if (maze.GetCellType(newPosition) != CellType::Wall)
+				{
+					mCurrentPosition = newPosition;
+					mCurrentDirection = mNextDirection;
+					mNextDirection = Direction::Invalid();
+				}
+				else
+				{
+					mCurrentDirection = mNextDirection;
+					mNextDirection = Direction::Invalid();
+				}
+			}
+		}
+	}
 }
 
 pac::Position pac::Pacman::GetCurrentPosition() const
