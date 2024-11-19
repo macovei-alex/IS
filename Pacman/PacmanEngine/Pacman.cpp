@@ -2,6 +2,15 @@
 #include "Logger/Logger.h"
 #include "KeyPressedEvent.h"
 
+
+pac::Position pac::Add(Position pos, Direction dir)
+{
+	return {
+		static_cast<decltype(Position::row)>(pos.row + dir.row),
+		static_cast<decltype(Position::col)>(pos.col + dir.col)
+	};
+}
+
 pac::Pacman::Pacman(Position initialPosition, decltype(GameplaySettings::mPacmanTicksPerMove) ticksPerMove)
 	: mCurrentPosition(initialPosition)
 	, mCurrentDirection()
@@ -29,22 +38,33 @@ void pac::Pacman::TryMove(const Maze& maze)
 
 	mTicksSinceLastMove = 0;
 
-	if (mCurrentPosition.IsValid() && mCurrentDirection.IsValid())
+	if (!mCurrentPosition.IsValid())
 	{
-		uint16_t newRow = mCurrentPosition.row + mCurrentDirection.row;
-		uint16_t newCol = mCurrentPosition.col + mCurrentDirection.col;
-		Position newPosition = { newRow, newCol };
+		throw std::runtime_error(std::format("Pacman current position ( {}, {} ) is invalid", mCurrentPosition.row, mCurrentPosition.col));
+	}
 
+	if (mNextDirection.IsValid())
+	{
+		Position newPosition = Add(mCurrentPosition, mNextDirection);
+		if (newPosition.IsValid() && maze.GetCellType(newPosition) == CellType::Empty)
+		{
+			mCurrentDirection = mNextDirection;
+			mNextDirection = Direction::GetInvalid();
+		}
+	}
+
+	if (mCurrentDirection.IsValid())
+	{
+		Position newPosition = Add(mCurrentPosition, mCurrentDirection);
 		if (newPosition.IsValid())
 		{
-			if (maze.GetCellType(newPosition) != CellType::Wall)
+			if (maze.IsWalkable(newPosition))
 			{
 				mCurrentPosition = newPosition;
-				
 			}
 			else
 			{
-				mCurrentDirection = mNextDirection;
+				mCurrentDirection = Direction::GetInvalid();
 				mNextDirection = Direction::GetInvalid();
 			}
 		}
@@ -73,22 +93,21 @@ void pac::Pacman::OnEvent(IEvent* event)
 	if (event->GetType() == EventType::KeyPressed)
 	{
 		auto keyEvent = dynamic_cast<KeyPressedEvent*>(event);
-
-		auto& direction = mCurrentDirection.IsValid() ? mNextDirection : mCurrentDirection;
+		Direction& pos = mCurrentDirection.IsValid() ? mNextDirection : mCurrentDirection;
 
 		switch (keyEvent->GetKeyCode())
 		{
 		case KeyCode::Up:
-			direction = { -1, 0 };
+			pos = { -1, 0 };
 			break;
 		case KeyCode::Down:
-			direction = { 1, 0 };
+			pos = { 1, 0 };
 			break;
 		case KeyCode::Left:
-			direction = { 0, -1 };
+			pos = { 0, -1 };
 			break;
 		case KeyCode::Right:
-			direction = { 0, 1 };
+			pos = { 0, 1 };
 			break;
 		case KeyCode::Unknown:
 			Logger::cout.Warning("Unknown key pressed");

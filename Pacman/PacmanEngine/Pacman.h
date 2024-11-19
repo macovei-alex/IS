@@ -18,6 +18,8 @@ namespace pac
 		inline bool IsValid() const { return row != 0 || col != 0; }
 	};
 
+	Position Add(Position pos, Direction dir);
+
 	class Pacman : public IListener
 	{
 	public:

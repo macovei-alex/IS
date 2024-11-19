@@ -24,12 +24,13 @@ namespace pac
 		Maze();
 		void InitCells(std::vector<std::vector<CellType>>&& cells);
 		CellType GetCellType(Position pos) const;
+		bool IsWalkable(Position pos) const;
 		void EatCell(Position pos);
 		Position GetGhostSpawnPosition() const;
 		Position GetPacmanSpawnPosition() const;
 		Dimensions GetDimensions() const;
 		void ReadMazeFromFile(std::string_view filename);
-		void DrawMaze(IWindow* window) const;
+		void Draw(IWindow* window) const;
 
 	private:
 		std::vector<std::vector<CellType>> mCells;

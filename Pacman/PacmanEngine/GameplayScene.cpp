@@ -81,7 +81,7 @@ void pac::GameplayScene::Notify(IEvent* event) const
 void pac::GameplayScene::Draw() const
 {
 	// TODO: finish this
-	mMaze.DrawMaze(mWindow);
+	mMaze.Draw(mWindow);
 	mPacman->Draw(mWindow);
 }
 
@@ -92,13 +92,9 @@ void pac::GameplayScene::NextTick()
 	{
 		return;
 	}
-	if (events.size() > 0)
-	{
-		Logger::cout.Debug("fgnrteyjg");
-	}
+
 	for (const auto& event : events)
 	{
-		Logger::cout.Debug(std::format("iujher9uh"));
 		Notify(event.get());
 	}
 

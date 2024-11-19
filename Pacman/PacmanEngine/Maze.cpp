@@ -55,21 +55,16 @@ void pac::Maze::InitCells(std::vector<std::vector<pac::CellType>>&& cells)
 
 pac::CellType pac::Maze::GetCellType(Position pos) const
 {
-	if (pos.row >= mCells.size() || pos.col >= mCells[0].size())
-	{
-		throw std::runtime_error(std::format("Position ( {}, {} ) out of range", pos.row, pos.col));
-	}
-
 	return mCells[pos.row][pos.col];
+}
+
+bool pac::Maze::IsWalkable(Position pos) const
+{
+	return mCells[pos.row][pos.col] != CellType::Wall;
 }
 
 void pac::Maze::EatCell(Position pos)
 {
-	if (pos.row >= mCells.size() || pos.col >= mCells[0].size())
-	{
-		throw std::runtime_error(std::format("Position ( {}, {} ) out of range", pos.row, pos.col));
-	}
-
 	if (mCells[pos.row][pos.col] != CellType::Coin && mCells[pos.row][pos.col] != CellType::PowerUp)
 	{
 		throw std::runtime_error(std::format("Cell at ( {}, {} ) is not a coin or power-up", pos.row, pos.col));
@@ -102,7 +97,7 @@ pac::Dimensions pac::Maze::GetDimensions() const
 {
 	if (mCells.size() == 0)
 	{
-		return {};
+		return { 0, 0 };
 	}
 
 	return {
@@ -147,7 +142,7 @@ void pac::Maze::ReadMazeFromFile(std::string_view filename)
 	InitCells(std::move(cells));
 }
 
-void pac::Maze::DrawMaze(IWindow* window) const
+void pac::Maze::Draw(IWindow* window) const
 {
 	auto [height, width] = GetDimensions();
 

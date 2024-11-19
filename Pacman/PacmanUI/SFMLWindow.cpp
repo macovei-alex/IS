@@ -109,7 +109,6 @@ std::vector<std::unique_ptr<pac::IEvent>> pac::SFMLWindow::GetEvents()
 			continue;
 		}
 
-		Logger::cout.Debug(std::format("iujher9uh"));
 		events.push_back(std::move(convertedEvent));
 	}
 
