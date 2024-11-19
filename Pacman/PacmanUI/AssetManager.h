@@ -12,7 +12,7 @@ namespace pac
 	class AssetManager
 	{
 	public:
-		AssetManager(std::string_view folderPath);
+		AssetManager(std::string_view folderPath, bool scaleOnLoad = true);
 		sf::Sprite GetSprite(pac::Textures texture) const;
 
 	private:

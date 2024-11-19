@@ -3,7 +3,7 @@
 #include <string>
 
 
-pac::AssetManager::AssetManager(std::string_view folderPath)
+pac::AssetManager::AssetManager(std::string_view folderPath, bool scaleOnLoad)
 {
 	const std::string folderStr(folderPath);
 
@@ -21,6 +21,15 @@ pac::AssetManager::AssetManager(std::string_view folderPath)
 
 	mTextures[pac::Textures::PowerUp].loadFromFile(folderStr + "\\coin.png");
 	mSprites[pac::Textures::PowerUp].setTexture(mTextures[pac::Textures::PowerUp]);
+
+	if (scaleOnLoad)
+	{
+		mSprites[pac::Textures::Pacman].scale(0.03f, 0.03f);
+		mSprites[pac::Textures::Ghost].scale(0.08f, 0.08f);
+		mSprites[pac::Textures::Wall].scale(0.2f, 0.2f);
+		mSprites[pac::Textures::Coin].scale(0.02f, 0.02f);
+		mSprites[pac::Textures::PowerUp].scale(0.02f, 0.02f);
+	}
 }
 
 sf::Sprite pac::AssetManager::GetSprite(pac::Textures texture) const

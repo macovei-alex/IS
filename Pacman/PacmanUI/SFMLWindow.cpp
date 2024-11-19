@@ -39,6 +39,9 @@ void pac::SFMLWindow::DrawTexture(pac::Position position, pac::Textures texture)
 
 	sf::Sprite sprite = mAssetManager.GetSprite(texture);
 	sprite.setPosition(position.col * a + 20.0f, position.row * a + 20.0f);
+	/*
+	Replace by scaleOnLoad in AssetManager
+
 	switch (texture)
 	{
 	case pac::Textures::Wall:
@@ -59,6 +62,7 @@ void pac::SFMLWindow::DrawTexture(pac::Position position, pac::Textures texture)
 	default:
 		break;
 	}
+	*/
 	mRenderWindow.draw(sprite);
 }
 
