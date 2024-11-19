@@ -62,6 +62,11 @@ decltype(pac::GameplaySettings::mPacmanTicksPerMove) pac::Pacman::GetTicksPerMov
 	return mTicksPerMove;
 }
 
+void pac::Pacman::Draw(IWindow* window) const
+{
+	window->DrawTexture(mCurrentPosition, Textures::Pacman);
+}
+
 void pac::Pacman::OnEvent(IEvent* event)
 {
 	if (event->GetType() == EventType::KeyPressed)

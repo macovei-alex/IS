@@ -82,6 +82,7 @@ void pac::GameplayScene::Draw() const
 {
 	// TODO: finish this
 	mMaze.DrawMaze(mWindow);
+	mPacman->Draw(mWindow);
 }
 
 void pac::GameplayScene::NextTick()

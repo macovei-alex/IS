@@ -26,6 +26,7 @@ namespace pac
 		void TryMove(const Maze& maze);
 		Position GetCurrentPosition() const;
 		decltype(GameplaySettings::mPacmanTicksPerMove) GetTicksPerMove() const;
+		void Draw(IWindow* window) const;
 		void OnEvent(IEvent* event) override;
 
 	private:
