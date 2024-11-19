@@ -1,11 +1,19 @@
 #pragma once
 
 #include "IEvent.h"
-#include "KeyCode.h"
 
 
 namespace pac
 {
+	enum class KeyCode : uint8_t
+	{
+		Up,
+		Down,
+		Left,
+		Right,
+		Unknown
+	};
+
 	class KeyPressedEvent : public IEvent
 	{
 	public:

@@ -59,9 +59,6 @@
     <ClInclude Include="Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="KeyCode.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="IListener.h">
       <Filter>Header Files\Observer</Filter>
     </ClInclude>

@@ -155,7 +155,6 @@
     <ClInclude Include="IScene.h" />
     <ClInclude Include="ISubject.h" />
     <ClInclude Include="IWindow.h" />
-    <ClInclude Include="KeyCode.h" />
     <ClInclude Include="KeyPressedEvent.h" />
     <ClInclude Include="Pacman.h" />
     <ClInclude Include="Position.h" />
