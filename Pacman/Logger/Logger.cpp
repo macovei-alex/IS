@@ -2,6 +2,7 @@
 
 #include <format>
 #include <fstream>
+#include <unordered_map>
 
 namespace chr = std::chrono;
 
@@ -11,19 +12,14 @@ pac::Logger pac::Logger::cout(std::cout);
 
 static std::string_view LogLevelToString(pac::Logger::Level level)
 {
-	switch (level)
-	{
-	case pac::Logger::Level::Debug:
-		return "Debug";
-	case pac::Logger::Level::Info:
-		return "Info";
-	case pac::Logger::Level::Warning:
-		return "Warning";
-	case pac::Logger::Level::Error:
-		return "Error";
-	default:
-		return "";
-	}
+	static const std::unordered_map<pac::Logger::Level, std::string_view> levelStrings = {
+		{ pac::Logger::Level::Debug, "Debug" },
+		{ pac::Logger::Level::Info, "Info" },
+		{ pac::Logger::Level::Warning, "Warn" },
+		{ pac::Logger::Level::Error, "Error" }
+	};
+
+	return levelStrings.at(level);
 }
 
 
@@ -57,6 +53,6 @@ void pac::Logger::Log(std::string_view message, Level level)
 		return;
 	}
 
-	mOutStream << std::format("({}) [{}]: {}\n",
+	mOutStream << std::format("({}) [{}]:\t {}\n",
 		NowInSeconds(), LogLevelToString(level), message);
 }
