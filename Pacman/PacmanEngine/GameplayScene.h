@@ -16,8 +16,8 @@ namespace pac
 	public:
 		GameplayScene(IWindow* window, Maze&& maze, const GameplaySettings& settings);
 
-		void AddListener(std::shared_ptr<IListener> listener, EventType eventType) override;
-		void RemoveListener(std::shared_ptr<IListener> listener, EventType eventType) override;
+		void AddListener(std::weak_ptr<IListener> listener, EventType eventType) override;
+		void RemoveListener(std::weak_ptr<IListener> listener, EventType eventType) override;
 		void Notify(IEvent* newEvent) const override;
 
 		void Draw() const override;

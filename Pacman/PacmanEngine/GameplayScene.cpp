@@ -14,18 +14,19 @@ pac::GameplayScene::GameplayScene(IWindow* window, Maze&& maze, const GameplaySe
 	AddListener(mPacman, EventType::KeyPressed);
 }
 
-void pac::GameplayScene::AddListener(std::shared_ptr<IListener> listener, EventType eventType)
+void pac::GameplayScene::AddListener(std::weak_ptr<IListener> listener, EventType eventType)
 {
 	mListeners[eventType].push_back(listener);
 }
 
-void pac::GameplayScene::RemoveListener(std::shared_ptr<IListener> listener, EventType eventType)
+void pac::GameplayScene::RemoveListener(std::weak_ptr<IListener> listener, EventType eventType)
 {
+	auto listenerLocked = listener.lock();
 	auto& listeners = mListeners[eventType];
 	auto foundIterator = std::find_if(listeners.begin(), listeners.end(),
-		[&listener](const std::weak_ptr<IListener>& listenerElement)
+		[&listenerLocked](const std::weak_ptr<IListener>& listenerElement)
 		{
-			return listenerElement.lock().get() == listener.get();
+			return listenerElement.lock().get() == listenerLocked.get();
 		});
 
 	if (foundIterator == listeners.end())
