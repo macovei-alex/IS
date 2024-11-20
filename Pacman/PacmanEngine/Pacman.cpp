@@ -73,12 +73,6 @@ void pac::Pacman::TryMove(const Maze& maze)
 	mTicksPerMove++;
 }
 
-void pac::Pacman::SetCurrentPosition(uint8_t row, uint8_t col)
-{
-	mCurrentPosition.row = row;
-	mCurrentPosition.col = col;
-}
-
 pac::Position pac::Pacman::GetCurrentPosition() const
 {
 	return mCurrentPosition;

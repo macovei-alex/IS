@@ -25,7 +25,6 @@ namespace pac
 	public:
 		Pacman(Position initialPosition, decltype(GameplaySettings::mPacmanTicksPerMove) pacmanTicksPerMove);
 		void TryMove(const Maze& maze);
-		void SetCurrentPosition(uint8_t row, uint8_t col);
 		Position GetCurrentPosition() const;
 		decltype(GameplaySettings::mPacmanTicksPerMove) GetTicksPerMove() const;
 		void Draw(IWindow* window) const;
