@@ -30,7 +30,6 @@ namespace pac
 		decltype(GameplaySettings::mPacmanTicksPerMove) GetTicksPerMove() const;
 		void Draw(IWindow* window) const;
 		void OnEvent(IEvent* event) override;
-		bool IsTicksPerMoveValid() const;
 
 	private:
 		Position mCurrentPosition;

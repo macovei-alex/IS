@@ -28,20 +28,6 @@ TEST(PacmanTest, VerifyObjectInvalidPositionInit)
 	EXPECT_EQ(pacman.GetCurrentPosition().IsValid(), false);
 }
 
-TEST(PacmanTest, VerifyObjectValidTicksPerMoveInit)
-{
-	pac::GameplaySettings gps;
-	pac::Pacman pacman({ 10, 10 }, 2);
-	EXPECT_EQ(pacman.IsTicksPerMoveValid(), true);
-}
-
-TEST(PacmanTest, VerifyObjectInvalidTicksPerMoveInit)
-{
-	pac::GameplaySettings gps;
-	pac::Pacman pacman({ 10, 10 }, 0);
-	EXPECT_EQ(pacman.IsTicksPerMoveValid(), false);
-}
-
 int main(int argc, char* argv[])
 {
 	::testing::InitGoogleTest(&argc, argv);

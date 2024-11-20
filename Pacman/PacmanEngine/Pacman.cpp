@@ -124,9 +124,3 @@ void pac::Pacman::OnEvent(IEvent* event)
 		}
 	}
 }
-
-bool pac::Pacman::IsTicksPerMoveValid() const
-{
-	pac::GameplaySettings gps = pac::GameplaySettings();
-	return mTicksPerMove == gps.mPacmanTicksPerMove;
-}
