@@ -1,11 +1,11 @@
 #include "Maze.h"
 
-#include <stdexcept>
+#include "Logger/Logger.h"
+
 #include <format>
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include <filesystem>
 
 
 pac::Maze::Maze()
@@ -17,13 +17,20 @@ pac::Maze::Maze()
 
 void pac::Maze::InitCells(std::vector<std::vector<pac::CellType>>&& cells)
 {
-	mCells = std::move(cells);
-
-	for (size_t row = 0; row < mCells.size(); ++row)
+	if (cells.size() == 0)
 	{
-		for (size_t col = 0; col < mCells[row].size(); ++col)
+		throw std::runtime_error("Maze must have at least 1 row");
+	}
+	if (cells[0].size() == 0)
+	{
+		throw std::runtime_error("Maze must have at least 1 column");
+	}
+
+	for (size_t row = 0; row < cells.size(); ++row)
+	{
+		for (size_t col = 0; col < cells[row].size(); ++col)
 		{
-			if (mCells[row][col] == CellType::GhostSpawn)
+			if (cells[row][col] == CellType::GhostSpawn)
 			{
 				if (mGhostSpawn.IsValid())
 				{
@@ -36,7 +43,7 @@ void pac::Maze::InitCells(std::vector<std::vector<pac::CellType>>&& cells)
 					static_cast<decltype(Position::row)>(col)
 				};
 			}
-			else if (mCells[row][col] == CellType::PacmanSpawn)
+			else if (cells[row][col] == CellType::PacmanSpawn)
 			{
 				if (mPacmanSpawn.IsValid())
 				{
@@ -50,7 +57,18 @@ void pac::Maze::InitCells(std::vector<std::vector<pac::CellType>>&& cells)
 				};
 			}
 		}
+
+		if (cells[row].size() < cells[0].size())
+		{
+			Logger::cout.Warning(std::format(
+				"Row ( {} ) has ( {} ) cells instead of ( {} ). The empty cells will be filled with walls",
+				row, cells[row].size(), cells[0].size()));
+
+			cells[row].resize(cells[0].size(), CellType::Wall);
+		}
 	}
+
+	mCells = std::move(cells);
 }
 
 pac::CellType pac::Maze::GetCellType(Position pos) const
@@ -77,7 +95,7 @@ pac::Position pac::Maze::GetGhostSpawnPosition() const
 {
 	if (!mGhostSpawn.IsValid())
 	{
-		throw std::runtime_error("No ghost spawn found. You must call InitCells() or ReadFromFile() before using the maze");
+		throw std::runtime_error("Ghost spawn is invalid. You must call InitCells() or ReadFromFile() before using the maze");
 	}
 
 	return mGhostSpawn;
@@ -87,7 +105,7 @@ pac::Position pac::Maze::GetPacmanSpawnPosition() const
 {
 	if (!mPacmanSpawn.IsValid())
 	{
-		throw std::runtime_error("No pacman spawn found. You must call InitCells() or ReadFromFile() before using the maze");
+		throw std::runtime_error("Pacman spawn is invalid. You must call InitCells() or ReadFromFile() before using the maze");
 	}
 
 	return mPacmanSpawn;
@@ -161,7 +179,12 @@ void pac::Maze::Draw(IWindow* window) const
 			case CellType::PowerUp:
 				window->DrawTexture(position, Textures::PowerUp);
 				break;
+			case CellType::Empty:
+			case CellType::PacmanSpawn:
+			case CellType::GhostSpawn:
+				break;
 			default:
+				throw std::runtime_error(std::format("Invalid cell type ( {} )", (size_t)GetCellType(position)));
 				break;
 			}
 		}
