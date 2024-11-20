@@ -17,13 +17,26 @@ pac::Maze::Maze()
 
 void pac::Maze::InitCells(std::vector<std::vector<pac::CellType>>&& cells)
 {
+	const Dimensions dimensions = Dimensions::GetInvalid();
 	if (cells.size() == 0)
 	{
 		throw std::runtime_error("Maze must have at least 1 row");
 	}
+	if (cells.size() >= dimensions.rows)
+	{
+		throw std::runtime_error(std::format(
+			"Maze has too many rows ( {} ). The maximum number of rows is ( {} )", 
+			cells.size(), dimensions.rows - 1));
+	}
 	if (cells[0].size() == 0)
 	{
 		throw std::runtime_error("Maze must have at least 1 column");
+	}
+	if (cells[0].size() >= dimensions.cols)
+	{
+		throw std::runtime_error(std::format(
+			"Maze has too many columns ( {} ). The maximum number of columns is ( {} )",
+			cells[0].size(), dimensions.cols - 1));
 	}
 
 	for (size_t row = 0; row < cells.size(); ++row)
@@ -61,10 +74,16 @@ void pac::Maze::InitCells(std::vector<std::vector<pac::CellType>>&& cells)
 		if (cells[row].size() < cells[0].size())
 		{
 			Logger::cout.Warning(std::format(
-				"Row ( {} ) has ( {} ) cells instead of ( {} ). The empty cells will be filled with walls",
+				"Row with index ( {} ) has too few cells ( {} ). The expected number of columns is ( {} ). The row will be left padded with CellType::Wall cells.",
 				row, cells[row].size(), cells[0].size()));
 
 			cells[row].resize(cells[0].size(), CellType::Wall);
+		}
+		else if (cells[row].size() < cells[0].size())
+		{
+			throw std::runtime_error(std::format(
+				"Row with index ( {} ) has too many cells ( {} ). The expected number of columns is ( {} ).",
+				row, cells[row].size(), cells[0].size()));
 		}
 	}
 
@@ -115,7 +134,7 @@ pac::Dimensions pac::Maze::GetDimensions() const
 {
 	if (mCells.size() == 0)
 	{
-		return { 0, 0 };
+		return Dimensions::GetInvalid();
 	}
 
 	return {
