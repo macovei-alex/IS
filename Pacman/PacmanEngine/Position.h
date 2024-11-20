@@ -24,7 +24,7 @@ namespace pac
 		bool IsValid() const
 		{
 			return row != std::numeric_limits<decltype(row)>::max()
-				|| col != std::numeric_limits<decltype(col)>::max();
+				&& col != std::numeric_limits<decltype(col)>::max();
 		}
 	};
 }
