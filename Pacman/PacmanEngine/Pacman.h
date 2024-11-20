@@ -23,7 +23,7 @@ namespace pac
 	class Pacman : public IListener
 	{
 	public:
-		Pacman(Position initialPosition, decltype(GameplaySettings::mPacmanTicksPerMove) ticksPerMove);
+		Pacman(Position initialPosition, decltype(GameplaySettings::mPacmanTicksPerMove) pacmanTicksPerMove);
 		void TryMove(const Maze& maze);
 		void SetCurrentPosition(uint8_t row, uint8_t col);
 		Position GetCurrentPosition() const;

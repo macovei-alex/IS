@@ -11,12 +11,12 @@ pac::Position pac::Add(Position pos, Direction dir)
 	};
 }
 
-pac::Pacman::Pacman(Position initialPosition, decltype(GameplaySettings::mPacmanTicksPerMove) ticksPerMove)
+pac::Pacman::Pacman(Position initialPosition, decltype(GameplaySettings::mPacmanTicksPerMove) pacmanTicksPerMove)
 	: mCurrentPosition(initialPosition)
 	, mCurrentDirection()
 	, mNextDirection()
 	, mTicksSinceLastMove(0)
-	, mTicksPerMove(ticksPerMove)
+	, mTicksPerMove(pacmanTicksPerMove)
 {
 	// empty
 }
@@ -128,5 +128,5 @@ void pac::Pacman::OnEvent(IEvent* event)
 bool pac::Pacman::IsTicksPerMoveValid() const
 {
 	pac::GameplaySettings gps = pac::GameplaySettings();
-	return mTicksPerMove == gps.mTicksPerSecond;
+	return mTicksPerMove == gps.mPacmanTicksPerMove;
 }
