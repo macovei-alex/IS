@@ -73,6 +73,12 @@ void pac::Pacman::TryMove(const Maze& maze)
 	mTicksPerMove++;
 }
 
+void pac::Pacman::SetCurrentPosition(uint8_t row, uint8_t col)
+{
+	mCurrentPosition.row = row;
+	mCurrentPosition.col = col;
+}
+
 pac::Position pac::Pacman::GetCurrentPosition() const
 {
 	return mCurrentPosition;
@@ -117,4 +123,10 @@ void pac::Pacman::OnEvent(IEvent* event)
 			break;
 		}
 	}
+}
+
+bool pac::Pacman::IsTicksPerMoveValid() const
+{
+	pac::GameplaySettings gps = pac::GameplaySettings();
+	return mTicksPerMove == gps.mTicksPerSecond;
 }
