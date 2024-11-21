@@ -10,9 +10,13 @@ pac::GameplayScene::GameplayScene(IWindow* window, Maze&& maze, const GameplaySe
 	, mMaze(std::move(maze))
 	, mSettings(settings)
 	, mPacman(std::make_shared<Pacman>(mMaze.GetPacmanSpawnPosition(), settings.mPacmanTicksPerMove))
+	, mHuntPathFinder()
+	, mScaredPathFinder()
+	, mGhost(mMaze.GetGhostSpawnPosition(), mHuntPathFinder) 
 {
 	AddListener(mPacman, EventType::KeyPressed);
 }
+
 
 void pac::GameplayScene::AddListener(std::weak_ptr<IListener> listener, EventType eventType)
 {
@@ -80,10 +84,11 @@ void pac::GameplayScene::Notify(IEvent* event) const
 
 void pac::GameplayScene::Draw() const
 {
-	// TODO: finish this
 	mMaze.Draw(mWindow);
 	mPacman->Draw(mWindow);
+	mGhost.Draw(mWindow); 
 }
+
 
 void pac::GameplayScene::NextTick()
 {
@@ -98,9 +103,10 @@ void pac::GameplayScene::NextTick()
 		Notify(event.get());
 	}
 
-	mPacman->TryMove(mMaze);
-	// TODO: finish this
+	mPacman->TryMove(mMaze); 
+	mGhost.Update(mMaze, *mPacman); 
 }
+
 
 void pac::GameplayScene::RemoveExpiredListeners()
 {

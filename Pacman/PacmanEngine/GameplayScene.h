@@ -7,6 +7,9 @@
 #include "GameplaySettings.h"
 
 #include <unordered_map>
+#include "Ghost.h"
+#include "HuntPathFinder.h"
+#include "ScaredPathFinder.h"
 
 
 namespace pac
@@ -31,7 +34,9 @@ namespace pac
 		Maze mMaze;
 		std::shared_ptr<Pacman> mPacman;
 		GameplaySettings mSettings;
-		// TODO: Add ghosts
+		pac::Ghost mGhost; 
+		pac::HuntPathFinder mHuntPathFinder; 
+		pac::ScaredPathFinder mScaredPathFinder; 
 		std::unordered_map<EventType, std::vector<std::weak_ptr<IListener>>> mListeners;
 	};
 }

@@ -1,23 +1,25 @@
 #pragma once
 
-
+#include "Position.h"
+#include "IPathFinder.h"
 #include "Maze.h"
-#include <queue>
-#include <unordered_set>
+#include "Pacman.h"
+#include "Textures.h"
 
 namespace pac
 {
-    enum class GhostState : uint8_t
+    class Ghost
     {
-        Chase,     
-        Scatter,    
-        Frightened 
+    public:
+        Ghost(Position initialPosition, const IPathFinder& pathFinder);
+
+
+        void Update(const Maze& maze, const Pacman& pacman);
+        void Draw(IWindow* window) const;
+        Position GetCurrentPosition() const;
+
+    private:
+        Position mCurrentPosition;
+        const IPathFinder& mPathFinder;
     };
-
-
 }
-
-
-
-
-

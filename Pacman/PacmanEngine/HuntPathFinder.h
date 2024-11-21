@@ -7,7 +7,7 @@ namespace pac
     class HuntPathFinder : public IPathFinder
     {
     public:
-        Position NextMove(const Maze& maze, const Pacman& pacman) const override {};
+        Position NextMove(const Maze& maze, const Pacman& pacman) const override ;
        
     };
 }
