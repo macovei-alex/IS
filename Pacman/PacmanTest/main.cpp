@@ -5,7 +5,7 @@
 #include "PacmanEngine/KeyPressedEvent.h"
 #include "PacmanEngine/GameplaySettings.h"
 
-TEST(PacmanTest, VerifyObjectInit)
+TEST(PacmanTest, VerifyPacmanInitialization)
 {
 	pac::GameplaySettings gps;
 	pac::Pacman pacman({ 10, 10 }, gps.mPacmanTicksPerMove);
@@ -14,14 +14,14 @@ TEST(PacmanTest, VerifyObjectInit)
 	EXPECT_EQ(pacman.GetTicksPerMove(), gps.mPacmanTicksPerMove);
 }
 
-TEST(PacmanTest, VerifyObjectValidPositionInit)
+TEST(PacmanTest, VerifyObjectValidPosition)
 {
 	pac::GameplaySettings gps;
 	pac::Pacman pacman({ 10, 10 }, gps.mPacmanTicksPerMove);
 	EXPECT_EQ(pacman.GetCurrentPosition().IsValid(), true);
 }
 
-TEST(PacmanTest, VerifyObjectInvalidPositionInit)
+TEST(PacmanTest, VerifyObjectInvalidPosition)
 {
 	pac::GameplaySettings gps;
 	pac::Pacman pacman(pac::Position::GetInvalid(), gps.mPacmanTicksPerMove);
@@ -70,11 +70,11 @@ TEST(PacmanTest, VerifyMovementToWallCell)
 	pac::GameplaySettings gps;
 	pac::Pacman pacman({ 1, 1 }, gps.mPacmanTicksPerMove);
 
-	pac::KeyPressedEvent keyEvent(pac::KeyCode::Right);
+	pac::KeyPressedEvent keyEventRight(pac::KeyCode::Right);
 
 	pac::Position expectedPosition = pacman.GetCurrentPosition();
 
-	pacman.OnEvent(&keyEvent);
+	pacman.OnEvent(&keyEventRight);
 	for (int i = 0; i <= gps.mPacmanTicksPerMove; ++i)
 	{
 		pacman.TryMove(maze);
@@ -82,6 +82,70 @@ TEST(PacmanTest, VerifyMovementToWallCell)
 
 	EXPECT_EQ(pacman.GetCurrentPosition().row, expectedPosition.row);
 	EXPECT_EQ(pacman.GetCurrentPosition().col, expectedPosition.col);
+
+	pac::KeyPressedEvent keyEventLeft(pac::KeyCode::Left);
+
+	pacman.OnEvent(&keyEventLeft);
+	for (int i = 0; i <= gps.mPacmanTicksPerMove; ++i)
+	{
+		pacman.TryMove(maze);
+	}
+
+	EXPECT_EQ(pacman.GetCurrentPosition().row, expectedPosition.row);
+	EXPECT_EQ(pacman.GetCurrentPosition().col, expectedPosition.col);
+}
+
+TEST(MazeTest, VerifyMazeInitialization)
+{
+	std::vector<std::vector<pac::CellType>> cells = {
+		{pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall},
+		{pac::CellType::Wall, pac::CellType::Empty, pac::CellType::Coin, pac::CellType::PowerUp, pac::CellType::GhostSpawn, pac::CellType::PacmanSpawn, pac::CellType::Wall},
+		{pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall}
+	};
+
+	pac::Maze maze;
+	maze.InitCells(std::move(cells));
+
+	EXPECT_EQ(maze.GetDimensions().rows, 3);
+	EXPECT_EQ(maze.GetDimensions().cols, 7);
+}
+
+TEST(MazeTest, VerifyGetCellType)
+{
+	std::vector<std::vector<pac::CellType>> cells = {
+		{pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall},
+		{pac::CellType::Wall, pac::CellType::Empty, pac::CellType::Coin, pac::CellType::PowerUp, pac::CellType::GhostSpawn, pac::CellType::PacmanSpawn, pac::CellType::Wall},
+		{pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall}
+	};
+
+	pac::Maze maze;
+	maze.InitCells(std::move(cells));
+
+	EXPECT_EQ(maze.GetCellType({ 1, 0 }), pac::CellType::Wall);
+	EXPECT_EQ(maze.GetCellType({ 1, 1 }), pac::CellType::Empty);
+	EXPECT_EQ(maze.GetCellType({ 1, 2 }), pac::CellType::Coin);
+	EXPECT_EQ(maze.GetCellType({ 1, 3 }), pac::CellType::PowerUp);
+	EXPECT_EQ(maze.GetCellType({ 1, 4 }), pac::CellType::GhostSpawn);
+	EXPECT_EQ(maze.GetCellType({ 1, 5 }), pac::CellType::PacmanSpawn);
+}
+
+TEST(MazeTest, VerifyIsWalkable)
+{
+	std::vector<std::vector<pac::CellType>> cells = {
+		{pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall},
+		{pac::CellType::Wall, pac::CellType::Empty, pac::CellType::Coin, pac::CellType::PowerUp, pac::CellType::GhostSpawn, pac::CellType::PacmanSpawn, pac::CellType::Wall},
+		{pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall}
+	};
+
+	pac::Maze maze;
+	maze.InitCells(std::move(cells));
+
+	EXPECT_EQ(maze.IsWalkable({ 1, 0 }), false);
+	EXPECT_EQ(maze.IsWalkable({ 1, 1 }), true);
+	EXPECT_EQ(maze.IsWalkable({ 1, 2 }), true);
+	EXPECT_EQ(maze.IsWalkable({ 1, 3 }), true);
+	EXPECT_EQ(maze.IsWalkable({ 1, 4 }), true);
+	EXPECT_EQ(maze.IsWalkable({ 1, 5 }), true);
 }
 
 int main(int argc, char* argv[])
