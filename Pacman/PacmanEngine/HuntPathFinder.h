@@ -8,6 +8,5 @@ namespace pac
     {
     public:
         Position NextMove(const Maze& maze, const Pacman& pacman) const override ;
-       
     };
 }

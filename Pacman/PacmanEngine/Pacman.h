@@ -16,6 +16,11 @@ namespace pac
 		static Direction GetInvalid() { return { 0, 0 }; }
 
 		inline bool IsValid() const { return row != 0 || col != 0; }
+
+		static Direction Up() { return { -1, 0 }; }
+		static Direction Down() { return { 1, 0 }; }
+		static Direction Left() { return { 0, -1 }; }
+		static Direction Right() { return { 0, 1 }; }
 	};
 
 	Position Add(Position pos, Direction dir);

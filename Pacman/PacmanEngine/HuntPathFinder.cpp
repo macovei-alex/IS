@@ -12,7 +12,7 @@ namespace pac {
         Position pacmanPosition = pacman.GetCurrentPosition();
 
         std::vector<Direction> directions = {
-            {1, 0}, {-1, 0}, {0, 1}, {0, -1}
+            Direction::Down(), Direction::Up(), Direction::Right(), Direction::Left()
         };
 
 

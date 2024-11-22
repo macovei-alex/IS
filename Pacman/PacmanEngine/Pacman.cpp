@@ -98,16 +98,16 @@ void pac::Pacman::OnEvent(IEvent* event)
 		switch (keyEvent->GetKeyCode())
 		{
 		case KeyCode::Up:
-			pos = { -1, 0 };
+			pos = Direction::Up();
 			break;
 		case KeyCode::Down:
-			pos = { 1, 0 };
+			pos = Direction::Down();
 			break;
 		case KeyCode::Left:
-			pos = { 0, -1 };
+			pos = Direction::Left();
 			break;
 		case KeyCode::Right:
-			pos = { 0, 1 };
+			pos = Direction::Right();
 			break;
 		case KeyCode::Unknown:
 			Logger::cout.Warning("Unknown key pressed");
