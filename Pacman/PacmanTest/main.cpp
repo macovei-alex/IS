@@ -28,7 +28,7 @@ TEST(PacmanTest, VerifyObjectInvalidPosition)
 	EXPECT_EQ(pacman.GetCurrentPosition().IsValid(), false);
 }
 
-TEST(PacmanTest, VerifyMovementToValidAdjacentPosition)
+TEST(PacmanTest, VerifyMovementInMaze)
 {
 	std::vector<std::vector<pac::CellType>> cells = {
 			{pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall},
@@ -42,12 +42,47 @@ TEST(PacmanTest, VerifyMovementToValidAdjacentPosition)
 	pac::GameplaySettings gps;
 	pac::Pacman pacman({ 1, 1 }, gps.mPacmanTicksPerMove);
 
-	pac::KeyPressedEvent keyEvent(pac::KeyCode::Right);
+	pac::KeyPressedEvent keyEventRight(pac::KeyCode::Right);
+	pacman.OnEvent(&keyEventRight);
 
-	pac::Position expectedPosition = { 1, 2 };
+	pac::Position expectedPosition = { 1, 3 };
+	
+	while (pacman.GetCurrentPosition() != expectedPosition)
+	{
+		pacman.TryMove(maze);
+	}
 
-	pacman.OnEvent(&keyEvent);
-	for (int i = 0; i <= gps.mPacmanTicksPerMove; ++i)
+	EXPECT_EQ(pacman.GetCurrentPosition().row, expectedPosition.row);
+	EXPECT_EQ(pacman.GetCurrentPosition().col, expectedPosition.col);
+
+	pac::KeyPressedEvent keyEventUp(pac::KeyCode::Up);
+	pacman.OnEvent(&keyEventUp);
+
+	while (pacman.GetCurrentPosition() != expectedPosition)
+	{
+		pacman.TryMove(maze);
+	}
+
+	EXPECT_EQ(pacman.GetCurrentPosition().row, expectedPosition.row);
+	EXPECT_EQ(pacman.GetCurrentPosition().col, expectedPosition.col);
+
+	pac::KeyPressedEvent keyEventDown(pac::KeyCode::Down);
+	pacman.OnEvent(&keyEventDown);
+
+	while (pacman.GetCurrentPosition() != expectedPosition)
+	{
+		pacman.TryMove(maze);
+	}
+
+	EXPECT_EQ(pacman.GetCurrentPosition().row, expectedPosition.row);
+	EXPECT_EQ(pacman.GetCurrentPosition().col, expectedPosition.col);
+
+	pac::KeyPressedEvent keyEventLeft(pac::KeyCode::Left);
+	pacman.OnEvent(&keyEventLeft);
+
+	expectedPosition = { 1, 1 };
+
+	while (pacman.GetCurrentPosition() != expectedPosition)
 	{
 		pacman.TryMove(maze);
 	}
@@ -61,6 +96,7 @@ TEST(PacmanTest, VerifyMovementToWallCell)
 	std::vector<std::vector<pac::CellType>> cells = {
 		{pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall},
 		{pac::CellType::Wall, pac::CellType::Empty, pac::CellType::Wall, pac::CellType::Empty, pac::CellType::Wall},
+		{pac::CellType::Wall, pac::CellType::Empty, pac::CellType::Empty, pac::CellType::Empty, pac::CellType::Wall},
 		{pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall}
 	};
 
@@ -71,11 +107,11 @@ TEST(PacmanTest, VerifyMovementToWallCell)
 	pac::Pacman pacman({ 1, 1 }, gps.mPacmanTicksPerMove);
 
 	pac::KeyPressedEvent keyEventRight(pac::KeyCode::Right);
+	pacman.OnEvent(&keyEventRight);
 
 	pac::Position expectedPosition = pacman.GetCurrentPosition();
 
-	pacman.OnEvent(&keyEventRight);
-	for (int i = 0; i <= gps.mPacmanTicksPerMove; ++i)
+	while (pacman.GetCurrentPosition() != expectedPosition)
 	{
 		pacman.TryMove(maze);
 	}
@@ -84,9 +120,34 @@ TEST(PacmanTest, VerifyMovementToWallCell)
 	EXPECT_EQ(pacman.GetCurrentPosition().col, expectedPosition.col);
 
 	pac::KeyPressedEvent keyEventLeft(pac::KeyCode::Left);
-
 	pacman.OnEvent(&keyEventLeft);
-	for (int i = 0; i <= gps.mPacmanTicksPerMove; ++i)
+
+	while (pacman.GetCurrentPosition() != expectedPosition)
+	{
+		pacman.TryMove(maze);
+	}
+
+	EXPECT_EQ(pacman.GetCurrentPosition().row, expectedPosition.row);
+	EXPECT_EQ(pacman.GetCurrentPosition().col, expectedPosition.col);
+
+	pac::KeyPressedEvent keyEventDown(pac::KeyCode::Down);
+	pacman.OnEvent(&keyEventDown);
+
+	expectedPosition = { 2, 1 };
+
+	while (pacman.GetCurrentPosition() != expectedPosition)
+	{
+		pacman.TryMove(maze);
+	}
+
+	EXPECT_EQ(pacman.GetCurrentPosition().row, expectedPosition.row);
+	EXPECT_EQ(pacman.GetCurrentPosition().col, expectedPosition.col);
+
+	pacman.OnEvent(&keyEventRight);
+
+	expectedPosition = { 2, 3 };
+
+	while (pacman.GetCurrentPosition() != expectedPosition)
 	{
 		pacman.TryMove(maze);
 	}
