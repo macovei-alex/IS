@@ -98,15 +98,19 @@ void pac::Pacman::OnEvent(IEvent* event)
 		switch (keyEvent->GetKeyCode())
 		{
 		case KeyCode::Up:
+		case KeyCode::W:
 			pos = Direction::Up();
 			break;
 		case KeyCode::Down:
+		case KeyCode::S:
 			pos = Direction::Down();
 			break;
 		case KeyCode::Left:
+		case KeyCode::A:
 			pos = Direction::Left();
 			break;
 		case KeyCode::Right:
+		case KeyCode::D:
 			pos = Direction::Right();
 			break;
 		case KeyCode::Unknown:

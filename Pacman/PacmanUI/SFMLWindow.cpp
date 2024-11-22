@@ -99,7 +99,11 @@ std::unique_ptr<pac::IEvent> pac::SFMLWindow::ConvertEvent(const sf::Event& even
 		{sf::Keyboard::Up, pac::KeyCode::Up},
 		{sf::Keyboard::Down, pac::KeyCode::Down},
 		{sf::Keyboard::Left, pac::KeyCode::Left},
-		{sf::Keyboard::Right, pac::KeyCode::Right}
+		{sf::Keyboard::Right, pac::KeyCode::Right},
+		{sf::Keyboard::W, pac::KeyCode::W},
+		{sf::Keyboard::A, pac::KeyCode::A},
+		{sf::Keyboard::S, pac::KeyCode::S},
+		{sf::Keyboard::D, pac::KeyCode::D},
 	};
 
 	if (event.type == sf::Event::KeyPressed)

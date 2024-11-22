@@ -11,6 +11,10 @@ namespace pac
 		Down,
 		Left,
 		Right,
+		W,
+		A,
+		S,
+		D,
 		Unknown
 	};
 
