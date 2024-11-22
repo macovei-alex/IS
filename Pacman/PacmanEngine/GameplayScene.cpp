@@ -10,9 +10,7 @@ pac::GameplayScene::GameplayScene(IWindow* window, Maze&& maze, const GameplaySe
 	, mMaze(std::move(maze))
 	, mSettings(settings)
 	, mPacman(std::make_shared<Pacman>(mMaze.GetPacmanSpawnPosition(), settings.mPacmanTicksPerMove))
-	, mHuntPathFinder()
-	, mScaredPathFinder()
-	, mGhost(mMaze.GetGhostSpawnPosition(), mHuntPathFinder) 
+	, mGhost(mMaze.GetGhostSpawnPosition(), Ghost::State::Hunting) 
 {
 	AddListener(mPacman, EventType::KeyPressed);
 }

@@ -35,8 +35,6 @@ namespace pac
 		std::shared_ptr<Pacman> mPacman;
 		GameplaySettings mSettings;
 		pac::Ghost mGhost; 
-		pac::HuntPathFinder mHuntPathFinder; 
-		pac::ScaredPathFinder mScaredPathFinder; 
 		std::unordered_map<EventType, std::vector<std::weak_ptr<IListener>>> mListeners;
 	};
 }

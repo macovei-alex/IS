@@ -9,14 +9,20 @@ namespace pac
 		int8_t row = 0;
 		int8_t col = 0;
 
-		static Direction GetInvalid() { return { 0, 0 }; }
+		static constexpr Direction GetInvalid() { return { 0, 0 }; }
 
 		inline bool IsValid() const { return row != 0 || col != 0; }
 
-		static Direction Up() { return { -1, 0 }; }
-		static Direction Down() { return { 1, 0 }; }
-		static Direction Left() { return { 0, -1 }; }
-		static Direction Right() { return { 0, 1 }; }
+		static constexpr Direction Up() { return { -1, 0 }; }
+		static constexpr Direction Down() { return { 1, 0 }; }
+		static constexpr Direction Left() { return { 0, -1 }; }
+		static constexpr Direction Right() { return { 0, 1 }; }
+
+		bool operator==(const Direction& other) const
+		{
+			return row == other.row
+				&& col == other.col;
+		}
 	};
 
 	inline Position Add(Position pos, Direction dir)

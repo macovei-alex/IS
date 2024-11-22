@@ -1,44 +1,69 @@
 #include "HuntPathFinder.h"
+
 #include <queue>
 #include <vector>
-#include <map>
-#include <set>
+#include <array>
 
-namespace pac {
+
+#define POS(pos) (pos.row * colCount + pos.col)
+
+
+namespace pac
+{
+	HuntPathFinder::HuntPathFinder(Ghost* ghost)
+		: mGhost(ghost)
+	{
+		// empty
+	}
 
 	Position HuntPathFinder::NextMove(const Maze& maze, const Pacman& pacman) const
 	{
-		Position ghostPosition = maze.GetGhostSpawnPosition();
+		const Dimensions dim = maze.GetDimensions();
+
+		static std::vector<bool> visited(dim.rows * dim.cols, false);
+		static std::vector<Position> parent(dim.rows * dim.cols, Position::GetInvalid());
+
+		if (dim.rows * dim.cols > visited.size())
+		{
+			visited.resize(dim.rows * dim.cols);
+			parent.resize(dim.rows * dim.cols);
+		}
+
+		for (size_t i = 0; i < visited.size(); i++)
+		{
+			visited[i] = false;
+			parent[i] = Position::GetInvalid();
+		}
+
+		const auto colCount = maze.GetDimensions().cols;
+
+		Position ghostPosition = mGhost->GetCurrentPosition();
 		Position pacmanPosition = pacman.GetCurrentPosition();
 
-		std::vector<Direction> directions = {
+		static constexpr std::array<Direction, 4> directions = {
 			Direction::Down(), Direction::Up(), Direction::Right(), Direction::Left()
 		};
 
 
 		std::queue<Position> bfsQueue;
-		std::map<Position, Position> parent; 
-		std::set<Position> visited;
 
 		bfsQueue.push(ghostPosition);
-		visited.insert(ghostPosition);
+		visited[POS(ghostPosition)] = true;
 
 		while (!bfsQueue.empty())
 		{
 			Position current = bfsQueue.front();
 			bfsQueue.pop();
 
-
 			if (current == pacmanPosition)
 			{
-				Position nextMove = current;
-
-
-				while (parent[nextMove] != ghostPosition)
+				Position nextMove = parent[POS(current)];
+				while (nextMove != ghostPosition && nextMove.IsValid())
 				{
-					nextMove = parent[nextMove];
+					current = nextMove;
+					nextMove = parent[POS(nextMove)];
 				}
-				return nextMove; 
+				return current;
 			}
 
 
@@ -46,13 +71,12 @@ namespace pac {
 			{
 				Position neighbor = Add(current, direction);
 
-
-				if (visited.find(neighbor) == visited.end() &&
-					maze.GetCellType(neighbor) != CellType::Wall)
+				if (!visited[POS(neighbor)]
+					&& maze.GetCellType(neighbor) != CellType::Wall)
 				{
 					bfsQueue.push(neighbor);
-					visited.insert(neighbor);
-					parent[neighbor] = current;
+					visited[POS(neighbor)] = true;
+					parent[POS(neighbor)] = current;
 				}
 			}
 		}

@@ -169,6 +169,11 @@ pac::Dimensions pac::Maze::GetDimensions() const
 	};
 }
 
+bool pac::Maze::SeeEachOther(Position p1, Position p2) const
+{
+	return true;
+}
+
 void pac::Maze::ReadMazeFromFile(std::string_view filename)
 {
 	std::ifstream file(filename.data());

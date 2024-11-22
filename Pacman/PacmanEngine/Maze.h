@@ -30,6 +30,7 @@ namespace pac
 		Position GetGhostSpawnPosition() const;
 		Position GetPacmanSpawnPosition() const;
 		Dimensions GetDimensions() const;
+		bool SeeEachOther(Position p1, Position p2) const;
 		void ReadMazeFromFile(std::string_view filename);
 		void Draw(IWindow* window) const;
 
