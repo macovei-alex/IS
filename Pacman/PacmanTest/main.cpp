@@ -46,7 +46,7 @@ TEST(PacmanTest, VerifyMovementInMaze)
 	pacman.OnEvent(&keyEventRight);
 
 	pac::Position expectedPosition = { 1, 3 };
-	
+
 	while (pacman.GetCurrentPosition() != expectedPosition)
 	{
 		pacman.TryMove(maze);
@@ -290,13 +290,18 @@ TEST(MazeTest, VerifyMazeWithoutGhostCell)
 
 TEST(MazeTest, VerifyGetDimensions)
 {
-	std::vector<std::vector<pac::CellType>> cells = {
+	std::vector<std::vector<pac::CellType>> cells;
+
+	pac::Maze maze;
+
+	EXPECT_THROW(maze.InitCells(std::move(cells)), std::runtime_error);
+
+	cells = {
 		{pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall},
 		{pac::CellType::Wall, pac::CellType::Empty, pac::CellType::Wall},
 		{pac::CellType::Wall, pac::CellType::Wall, pac::CellType::Wall}
 	};
 
-	pac::Maze maze;
 	maze.InitCells(std::move(cells));
 
 	pac::Dimensions expectedDimension = maze.GetDimensions();
