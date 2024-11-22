@@ -4,9 +4,9 @@
 
 namespace pac
 {
-    class ScaredPathFinder : public IPathFinder
-    {
-    public:
-        Position NextMove(const Maze& maze, const Pacman& pacman) const override;
-    };
+	class ScaredPathFinder : public IPathFinder
+	{
+	public:
+		Position NextMove(const Maze& maze, const Pacman& pacman) const override;
+	};
 }

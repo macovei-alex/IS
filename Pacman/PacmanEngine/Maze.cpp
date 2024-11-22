@@ -1,6 +1,7 @@
 #include "Maze.h"
 
 #include "Logger/Logger.h"
+#include "Direction.h"
 
 #include <format>
 #include <iostream>
@@ -97,7 +98,31 @@ pac::CellType pac::Maze::GetCellType(Position pos) const
 
 bool pac::Maze::IsWalkable(Position pos) const
 {
-	return mCells[pos.row][pos.col] != CellType::Wall;
+	Dimensions dimensions = GetDimensions();
+	return pos.row < dimensions.rows
+		&& pos.col < dimensions.cols
+		&& mCells[pos.row][pos.col] != CellType::Wall;
+}
+
+bool pac::Maze::IsValid() const
+{
+	if (mCells.size() == 0)
+	{
+		return false;
+	}
+	if (!mGhostSpawn.IsValid() || !mPacmanSpawn.IsValid())
+	{
+		return false;
+	}
+	if (!IsWalkable(Add(mPacmanSpawn, Direction::Up()))
+		&& !IsWalkable(Add(mPacmanSpawn, Direction::Down()))
+		&& !IsWalkable(Add(mPacmanSpawn, Direction::Left()))
+		&& !IsWalkable(Add(mPacmanSpawn, Direction::Right())))
+	{
+		return false;
+	}
+
+	return true;
 }
 
 void pac::Maze::EatCell(Position pos)

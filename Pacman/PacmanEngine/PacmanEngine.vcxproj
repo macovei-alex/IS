@@ -143,6 +143,7 @@
     <ClCompile Include="ScaredPathFinder.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Direction.h" />
     <ClInclude Include="EventType.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameplaySettings.h" />

@@ -8,18 +8,18 @@
 
 namespace pac
 {
-    class Ghost
-    {
-    public:
-        Ghost(Position initialPosition, const IPathFinder& pathFinder);
+	class Ghost
+	{
+	public:
+		Ghost(Position initialPosition, const IPathFinder& pathFinder);
 
 
-        void Update(const Maze& maze, const Pacman& pacman);
-        void Draw(IWindow* window) const;
-        Position GetCurrentPosition() const;
+		void Update(const Maze& maze, const Pacman& pacman);
+		void Draw(IWindow* window) const;
+		Position GetCurrentPosition() const;
 
-    private:
-        Position mCurrentPosition;
-        const IPathFinder& mPathFinder;
-    };
+	private:
+		Position mCurrentPosition;
+		const IPathFinder& mPathFinder;
+	};
 }

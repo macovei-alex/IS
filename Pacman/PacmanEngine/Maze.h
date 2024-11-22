@@ -25,6 +25,7 @@ namespace pac
 		void InitCells(std::vector<std::vector<CellType>>&& cells);
 		CellType GetCellType(Position pos) const;
 		bool IsWalkable(Position pos) const;
+		bool IsValid() const;
 		void EatCell(Position pos);
 		Position GetGhostSpawnPosition() const;
 		Position GetPacmanSpawnPosition() const;

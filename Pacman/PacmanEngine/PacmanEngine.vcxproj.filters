@@ -110,6 +110,9 @@
     <ClInclude Include="ScaredPathFinder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Direction.h">
+      <Filter>Header Files\Structs</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Dimensions.h">

@@ -3,14 +3,6 @@
 #include "KeyPressedEvent.h"
 
 
-pac::Position pac::Add(Position pos, Direction dir)
-{
-	return {
-		static_cast<decltype(Position::row)>(pos.row + dir.row),
-		static_cast<decltype(Position::col)>(pos.col + dir.col)
-	};
-}
-
 pac::Pacman::Pacman(Position initialPosition, decltype(GameplaySettings::mPacmanTicksPerMove) pacmanTicksPerMove)
 	: mCurrentPosition(initialPosition)
 	, mCurrentDirection()

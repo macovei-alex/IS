@@ -1,2 +1,3 @@
 [*]  ; Add the file extensions you want to manage
 end_of_line = crlf
+indent_style = tabs
