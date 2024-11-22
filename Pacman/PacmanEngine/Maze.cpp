@@ -102,7 +102,8 @@ bool pac::Maze::IsWalkable(Position pos) const
 
 void pac::Maze::EatCell(Position pos)
 {
-	if (mCells[pos.row][pos.col] != CellType::Coin && mCells[pos.row][pos.col] != CellType::PowerUp)
+	if (mCells[pos.row][pos.col] != CellType::Coin
+		&& mCells[pos.row][pos.col] != CellType::PowerUp)
 	{
 		throw std::runtime_error(std::format("Cell at ( {}, {} ) is not a coin or power-up", pos.row, pos.col));
 	}
