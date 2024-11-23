@@ -21,7 +21,7 @@ pac::AssetManager::AssetManager(std::string_view folderPath, bool scaleOnLoad)
 	mTextures[(size_t)pac::Textures::Coin].loadFromFile(folderStr + "\\coin.png");
 	mSprites[(size_t)pac::Textures::Coin].setTexture(mTextures[(size_t)pac::Textures::Coin]);
 
-	mTextures[(size_t)pac::Textures::PowerUp].loadFromFile(folderStr + "\\coin.png");
+	mTextures[(size_t)pac::Textures::PowerUp].loadFromFile(folderStr + "\\powerup.png");
 	mSprites[(size_t)pac::Textures::PowerUp].setTexture(mTextures[(size_t)pac::Textures::PowerUp]);
 
 	if (scaleOnLoad)
