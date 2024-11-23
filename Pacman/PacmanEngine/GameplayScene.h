@@ -26,10 +26,6 @@ namespace pac
 		void Draw() const override;
 		void NextTick() override;
 
-		void GetCoin();
-		void GetPowerUp();
-		void EnterIntoGhost();
-
 	private:
 		void RemoveExpiredListeners();
 

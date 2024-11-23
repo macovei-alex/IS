@@ -27,6 +27,9 @@ namespace pac
 		bool IsWalkable(Position pos) const;
 		bool IsValid() const;
 		void EatCell(Position pos);
+		void GetCoin(Position pacmanCurrentPosition);
+		void GetPowerUp(Position pacmanCurrentPosition);
+		void EnterIntoGhost();
 		Position GetGhostSpawnPosition() const;
 		Position GetPacmanSpawnPosition() const;
 		Dimensions GetDimensions() const;

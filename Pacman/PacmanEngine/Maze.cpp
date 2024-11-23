@@ -2,6 +2,7 @@
 
 #include "Logger/Logger.h"
 #include "Direction.h"
+#include "Pacman.h"
 
 #include <format>
 #include <iostream>
@@ -133,7 +134,32 @@ void pac::Maze::EatCell(Position pos)
 		throw std::runtime_error(std::format("Cell at ( {}, {} ) is not a coin or power-up", pos.row, pos.col));
 	}
 
+	GetCoin(pos);
 	mCells[pos.row][pos.col] = CellType::Empty;
+}
+
+void pac::Maze::GetCoin(pac::Position pacmanCurrentPosition)
+{
+	pac::GameplaySettings gps;
+	pac::Pacman pacman = pac::Pacman(pacmanCurrentPosition, gps.mPacmanTicksPerMove);
+	pacman.IncreaseScoreCoinCell();
+	Logger::cout.Info("Coin collected. Score: " + std::to_string(pacman.GetScore()));
+}
+
+void pac::Maze::GetPowerUp(pac::Position pacmanCurrentPosition)
+{
+	pac::GameplaySettings gps;
+	pac::Pacman pacman = pac::Pacman(pacmanCurrentPosition, gps.mPacmanTicksPerMove);
+	pacman.IncreaseScorePowerUpCell();
+	
+	// TO DO
+
+	Logger::cout.Info("Power Up collected. Score: " + std::to_string(pacman.GetScore()));
+}
+
+void pac::Maze::EnterIntoGhost()
+{
+	// TO DO
 }
 
 pac::Position pac::Maze::GetGhostSpawnPosition() const
