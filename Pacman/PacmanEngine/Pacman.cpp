@@ -75,6 +75,31 @@ decltype(pac::GameplaySettings::mPacmanTicksPerMove) pac::Pacman::GetTicksPerMov
 	return mTicksPerMove;
 }
 
+void pac::Pacman::IncreaseScoreCoinCell()
+{
+	mScore += 10;
+}
+
+void pac::Pacman::IncreaseScorePowerUpCell()
+{
+	mScore += 50;
+}
+
+uint16_t pac::Pacman::GetScore() const
+{
+	return mScore;
+}
+
+void pac::Pacman::SetIsPowerUpActive(bool isPowerUpActive)
+{
+	mIsPowerUpActive = isPowerUpActive;
+}
+
+uint16_t pac::Pacman::GetPowerUpDuration() const
+{
+	return mPowerUpDuration;
+}
+
 void pac::Pacman::Draw(IWindow* window) const
 {
 	window->DrawTexture(mCurrentPosition, Textures::Pacman);

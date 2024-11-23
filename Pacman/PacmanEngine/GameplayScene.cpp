@@ -105,6 +105,23 @@ void pac::GameplayScene::NextTick()
 	mGhost.Update(mMaze, *mPacman); 
 }
 
+void pac::GameplayScene::GetCoin()
+{
+	mPacman->IncreaseScoreCoinCell();
+	mMaze.EatCell(mPacman->GetCurrentPosition());
+	Logger::cout.Info("Coin collected. Score: " + std::to_string(mPacman->GetScore()));
+}
+
+void pac::GameplayScene::GetPowerUp()
+{
+	mPacman->SetIsPowerUpActive(true);
+	mPacman->IncreaseScorePowerUpCell();
+	// TO DO
+}
+
+void pac::GameplayScene::EnterIntoGhost()
+{
+}
 
 void pac::GameplayScene::RemoveExpiredListeners()
 {

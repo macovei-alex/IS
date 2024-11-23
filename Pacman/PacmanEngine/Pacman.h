@@ -16,6 +16,11 @@ namespace pac
 		void TryMove(const Maze& maze);
 		Position GetCurrentPosition() const;
 		decltype(GameplaySettings::mPacmanTicksPerMove) GetTicksPerMove() const;
+		void IncreaseScoreCoinCell();
+		void IncreaseScorePowerUpCell();
+		uint16_t GetScore() const;
+		void SetIsPowerUpActive(bool isPowerUpActive);
+		uint16_t GetPowerUpDuration() const;
 		void Draw(IWindow* window) const;
 		void OnEvent(IEvent* event) override;
 
@@ -25,5 +30,8 @@ namespace pac
 		Direction mNextDirection;
 		decltype(GameplaySettings::mPacmanTicksPerMove) mTicksSinceLastMove;
 		decltype(GameplaySettings::mPacmanTicksPerMove) mTicksPerMove;
+		uint16_t mScore;
+		bool mIsPowerUpActive;
+		const uint16_t mPowerUpDuration = 100;
 	};
 }
