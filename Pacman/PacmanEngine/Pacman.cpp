@@ -9,11 +9,13 @@ pac::Pacman::Pacman(Position initialPosition, decltype(GameplaySettings::mPacman
 	, mNextDirection()
 	, mTicksSinceLastMove(0)
 	, mTicksPerMove(pacmanTicksPerMove)
+	, mScore(0)
+	, mIsPowerUpActive(false)
 {
 	// empty
 }
 
-void pac::Pacman::TryMove(const Maze& maze)
+void pac::Pacman::TryMove(Maze& maze)
 {
 	/*if (maze.GetCellType(mCurrentPosition) == CellType::Wall)
 	{
@@ -48,6 +50,10 @@ void pac::Pacman::TryMove(const Maze& maze)
 	if (mCurrentDirection.IsValid())
 	{
 		Position newPosition = Add(mCurrentPosition, mCurrentDirection);
+		if (maze.GetCellType(newPosition) == CellType::Coin || maze.GetCellType(newPosition) == CellType::PowerUp)
+		{
+			maze.EatCell(newPosition);
+		}
 		if (newPosition.IsValid())
 		{
 			if (maze.IsWalkable(newPosition))
@@ -77,12 +83,12 @@ decltype(pac::GameplaySettings::mPacmanTicksPerMove) pac::Pacman::GetTicksPerMov
 
 void pac::Pacman::IncreaseScoreCoinCell()
 {
-	mScore += 10;
+	mScore += 100;
 }
 
 void pac::Pacman::IncreaseScorePowerUpCell()
 {
-	mScore += 50;
+	mScore += 500;
 }
 
 uint16_t pac::Pacman::GetScore() const
@@ -103,6 +109,7 @@ uint16_t pac::Pacman::GetPowerUpDuration() const
 void pac::Pacman::Draw(IWindow* window) const
 {
 	window->DrawTexture(mCurrentPosition, Textures::Pacman);
+	window->DrawScore(mScore);
 }
 
 void pac::Pacman::OnEvent(IEvent* event)

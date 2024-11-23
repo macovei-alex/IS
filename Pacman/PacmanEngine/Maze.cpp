@@ -134,7 +134,11 @@ void pac::Maze::EatCell(Position pos)
 		throw std::runtime_error(std::format("Cell at ( {}, {} ) is not a coin or power-up", pos.row, pos.col));
 	}
 
-	GetCoin(pos);
+	if (mCells[pos.row][pos.col] == CellType::Coin)
+		GetCoin(pos);
+	else if (mCells[pos.row][pos.col] == CellType::PowerUp)
+		GetPowerUp(pos);
+
 	mCells[pos.row][pos.col] = CellType::Empty;
 }
 

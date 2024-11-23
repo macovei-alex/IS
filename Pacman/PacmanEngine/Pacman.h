@@ -13,7 +13,7 @@ namespace pac
 	{
 	public:
 		Pacman(Position initialPosition, decltype(GameplaySettings::mPacmanTicksPerMove) pacmanTicksPerMove);
-		void TryMove(const Maze& maze);
+		void TryMove(Maze& maze);
 		Position GetCurrentPosition() const;
 		decltype(GameplaySettings::mPacmanTicksPerMove) GetTicksPerMove() const;
 		void IncreaseScoreCoinCell();
