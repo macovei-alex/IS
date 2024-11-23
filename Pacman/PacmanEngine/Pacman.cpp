@@ -52,7 +52,7 @@ void pac::Pacman::TryMove(Maze& maze)
 		Position newPosition = Add(mCurrentPosition, mCurrentDirection);
 		if (maze.GetCellType(newPosition) == CellType::Coin || maze.GetCellType(newPosition) == CellType::PowerUp)
 		{
-			maze.EatCell(newPosition);
+			maze.EatCell(newPosition, mScore);
 		}
 		if (newPosition.IsValid())
 		{
@@ -91,7 +91,7 @@ void pac::Pacman::IncreaseScorePowerUpCell()
 	mScore += 500;
 }
 
-uint16_t pac::Pacman::GetScore() const
+uint64_t pac::Pacman::GetScore() const
 {
 	return mScore;
 }

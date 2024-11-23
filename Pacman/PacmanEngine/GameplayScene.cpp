@@ -87,7 +87,6 @@ void pac::GameplayScene::Draw() const
 	mGhost.Draw(mWindow); 
 }
 
-
 void pac::GameplayScene::NextTick()
 {
 	auto events = mWindow->GetEvents();

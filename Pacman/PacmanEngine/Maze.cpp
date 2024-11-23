@@ -126,7 +126,7 @@ bool pac::Maze::IsValid() const
 	return true;
 }
 
-void pac::Maze::EatCell(Position pos)
+void pac::Maze::EatCell(Position pos, uint64_t& score)
 {
 	if (mCells[pos.row][pos.col] != CellType::Coin
 		&& mCells[pos.row][pos.col] != CellType::PowerUp)
@@ -135,30 +135,24 @@ void pac::Maze::EatCell(Position pos)
 	}
 
 	if (mCells[pos.row][pos.col] == CellType::Coin)
-		GetCoin(pos);
+		GetCoin(pos, score);
 	else if (mCells[pos.row][pos.col] == CellType::PowerUp)
-		GetPowerUp(pos);
+		GetPowerUp(pos, score);
 
 	mCells[pos.row][pos.col] = CellType::Empty;
 }
 
-void pac::Maze::GetCoin(pac::Position pacmanCurrentPosition)
+void pac::Maze::GetCoin(pac::Position pacmanCurrentPosition, uint64_t& score)
 {
-	pac::GameplaySettings gps;
-	pac::Pacman pacman = pac::Pacman(pacmanCurrentPosition, gps.mPacmanTicksPerMove);
-	pacman.IncreaseScoreCoinCell();
-	Logger::cout.Info("Coin collected. Score: " + std::to_string(pacman.GetScore()));
+	score += 100;
 }
 
-void pac::Maze::GetPowerUp(pac::Position pacmanCurrentPosition)
+void pac::Maze::GetPowerUp(pac::Position pacmanCurrentPosition, uint64_t& score)
 {
-	pac::GameplaySettings gps;
-	pac::Pacman pacman = pac::Pacman(pacmanCurrentPosition, gps.mPacmanTicksPerMove);
-	pacman.IncreaseScorePowerUpCell();
+	score += 500;
 	
 	// TO DO
 
-	Logger::cout.Info("Power Up collected. Score: " + std::to_string(pacman.GetScore()));
 }
 
 void pac::Maze::EnterIntoGhost()

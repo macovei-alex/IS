@@ -26,9 +26,9 @@ namespace pac
 		CellType GetCellType(Position pos) const;
 		bool IsWalkable(Position pos) const;
 		bool IsValid() const;
-		void EatCell(Position pos);
-		void GetCoin(Position pacmanCurrentPosition);
-		void GetPowerUp(Position pacmanCurrentPosition);
+		void EatCell(Position pos, uint64_t& score);
+		void GetCoin(Position pacmanCurrentPosition, uint64_t& score);
+		void GetPowerUp(Position pacmanCurrentPosition, uint64_t& score);
 		void EnterIntoGhost();
 		Position GetGhostSpawnPosition() const;
 		Position GetPacmanSpawnPosition() const;
