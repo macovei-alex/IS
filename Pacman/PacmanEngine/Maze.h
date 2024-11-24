@@ -33,7 +33,7 @@ namespace pac
 		bool SeeEachOther(Position p1, Position p2) const;
 		void ReadMazeFromFile(std::string_view filename);
 		void Draw(IWindow* window) const;
-		void WinGame(IWindow* window);
+		bool HasWonGame();
 
 	private:
 		std::vector<std::vector<CellType>> mCells;

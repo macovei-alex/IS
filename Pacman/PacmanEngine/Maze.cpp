@@ -254,7 +254,7 @@ void pac::Maze::Draw(IWindow* window) const
 	}
 }
 
-void pac::Maze::WinGame(IWindow* window)
+bool pac::Maze::HasWonGame()
 {
 	for (int row = 0; row < GetDimensions().rows; ++row)
 	{
@@ -262,10 +262,10 @@ void pac::Maze::WinGame(IWindow* window)
 		{
 			if (mCells[row][col] == CellType::Coin || mCells[row][col] == CellType::PowerUp)
 			{
-				return;
+				return false;
 			}
 		}
 	}
 
-	window->Close();
+	return true;
 }
