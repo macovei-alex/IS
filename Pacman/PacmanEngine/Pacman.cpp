@@ -11,6 +11,7 @@ pac::Pacman::Pacman(Position initialPosition, decltype(GameplaySettings::mPacman
 	, mTicksPerMove(pacmanTicksPerMove)
 	, mScore(0)
 	, mIsPowerUpActive(false)
+	, mPacmanGhostCollisionType(CollisionType::WithoutPowerUp)
 {
 	// empty
 }

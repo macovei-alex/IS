@@ -8,6 +8,12 @@
 
 namespace pac
 {
+	enum class CollisionType : uint8_t
+	{
+		WithoutPowerUp,
+		WithPowerUp
+	};
+
 	class Pacman : public IListener
 	{
 	public:
@@ -32,6 +38,7 @@ namespace pac
 		decltype(GameplaySettings::mPacmanTicksPerMove) mTicksPerMove;
 		uint64_t mScore;
 		bool mIsPowerUpActive;
+		CollisionType mPacmanGhostCollisionType;
 
 	private:
 		static constexpr uint16_t mPowerUpDuration = 100;

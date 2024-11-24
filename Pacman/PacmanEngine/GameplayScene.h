@@ -26,6 +26,8 @@ namespace pac
 		void Draw() const override;
 		void NextTick() override;
 
+		CollisionType HandlePacmanGhostCollision();
+
 	private:
 		void RemoveExpiredListeners();
 

@@ -104,6 +104,23 @@ void pac::GameplayScene::NextTick()
 	mGhost.Update(mMaze, *mPacman); 
 }
 
+pac::CollisionType pac::GameplayScene::HandlePacmanGhostCollision()
+{
+	if (mPacman->GetCurrentPosition() == mGhost.GetCurrentPosition())
+	{
+		if (!mPacman->IsPowerUpActive())
+		{
+			Logger::cout.Info("Pacman collided with a ghost. Game Over!");
+			return CollisionType::WithoutPowerUp;
+		}
+		else
+		{
+			Logger::cout.Info("Pacman collided with a ghost. Ghost was eaten!");
+			return CollisionType::WithPowerUp;
+		}
+	}
+}
+
 void pac::GameplayScene::RemoveExpiredListeners()
 {
 	for (auto& [event, listeners] : mListeners)
