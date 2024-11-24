@@ -16,7 +16,8 @@ namespace pac
 		{
 			Hunting,
 			Scared,
-			Roaming
+			Roaming,
+			Eaten
 		};
 
 	public:
@@ -25,6 +26,9 @@ namespace pac
 		void Draw(IWindow* window) const;
 		Position GetCurrentPosition() const;
 		void SetState(State state);
+		State GetState() const;
+		
+
 
 	private:
 		Position mPosition;

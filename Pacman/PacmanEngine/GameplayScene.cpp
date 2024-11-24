@@ -1,4 +1,4 @@
-#include "GameplayScene.h"
+﻿#include "GameplayScene.h"
 
 #include "Logger/Logger.h"
 
@@ -92,11 +92,41 @@ void pac::GameplayScene::NextTick()
 	}
 
 	mPacman->TryMove(mMaze);
+
 	for (auto& ghost : mGhosts)
 	{
+		if (mMaze.SeeEachOther(ghost.GetCurrentPosition(), mPacman->GetCurrentPosition()))
+		{
+			if (mPacman->IsPoweredUp())
+			{
+				ghost.SetState(Ghost::State::Scared);
+			}
+			else
+			{
+				ghost.SetState(Ghost::State::Hunting);
+			}
+		}
+		else if (ghost.GetState() != Ghost::State::Scared)
+		{
+			ghost.SetState(Ghost::State::Roaming);
+		}
+		//daca se intalnesc pacman si ghost
+		if (PacmanCollidesWith(ghost) == CollisionType::NoPowerUp)
+		{
+			//Final
+		}
+		else if (PacmanCollidesWith(ghost) == CollisionType::PoweredUp)
+		{
+			ghost.SetState(Ghost::State::Eaten);
+		}
+
 		ghost.NextTick(mMaze, *mPacman);
+
 	}
 }
+
+
+
 
 pac::CollisionType pac::GameplayScene::PacmanCollidesWith(Ghost& ghost) const
 {

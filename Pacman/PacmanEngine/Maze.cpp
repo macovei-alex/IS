@@ -1,4 +1,4 @@
-#include "Maze.h"
+﻿#include "Maze.h"
 
 #include "Logger/Logger.h"
 #include "Direction.h"
@@ -188,8 +188,31 @@ pac::Dimensions pac::Maze::GetDimensions() const
 
 bool pac::Maze::SeeEachOther(Position p1, Position p2) const
 {
-	return true;
+	if (p1.row == p2.row)  // Pe aceeași linie
+	{
+		int startCol = std::min(p1.col, p2.col);
+		int endCol = std::max(p1.col, p2.col);
+		for (int col = startCol + 1; col < endCol; ++col)
+		{
+			if (mCells[p1.row][col] == CellType::Wall)
+				return false;
+		}
+		return true;
+	}
+	else if (p1.col == p2.col)  // Pe aceeași coloană
+	{
+		int startRow = std::min(p1.row, p2.row);
+		int endRow = std::max(p1.row, p2.row);
+		for (int row = startRow + 1; row < endRow; ++row)
+		{
+			if (mCells[row][p1.col] == CellType::Wall)
+				return false;
+		}
+		return true;
+	}
+	return false;  // Nu sunt pe aceeași linie sau coloană
 }
+
 
 void pac::Maze::ReadMazeFromFile(std::string_view filename)
 {
