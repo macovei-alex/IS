@@ -216,14 +216,15 @@ TEST(MazeTest, VerifyEatCell)
 	)";
 
 	pac::Maze maze = pac::test::ReadMazeFromStr(mazeStr);
+	uint64_t score = 0;
 
-	maze.EatCell({ 1, 2 });
+	maze.EatCell({ 1, 2 }, score);
 	EXPECT_EQ(maze.GetCellType({ 1, 2 }), pac::CellType::Empty);
-	maze.EatCell({ 1, 3 });
+	maze.EatCell({ 1, 3 }, score);
 	EXPECT_EQ(maze.GetCellType({ 1, 3 }), pac::CellType::Empty);
 
-	EXPECT_THROW(maze.EatCell({ 1, 4 }), std::runtime_error);
-	EXPECT_THROW(maze.EatCell({ 1, 5 }), std::runtime_error);
+	EXPECT_THROW(maze.EatCell({ 1, 4 }, score), std::runtime_error);
+	EXPECT_THROW(maze.EatCell({ 1, 5 }, score), std::runtime_error);
 }
 
 TEST(MazeTest, VerifyGetPacmanSpawnPosition)
