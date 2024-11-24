@@ -14,6 +14,13 @@
 
 namespace pac
 {
+	enum class CollisionType : uint8_t
+	{
+		NoCollision,
+		NoPowerUp,
+		PoweredUp
+	};
+
 	class GameplayScene : public IScene
 	{
 	public:
@@ -26,7 +33,7 @@ namespace pac
 		void Draw() const override;
 		void NextTick() override;
 
-		CollisionType HandlePacmanGhostCollision();
+		CollisionType PacmanCollidesWith(Ghost& ghost) const;
 
 	private:
 		void RemoveExpiredListeners();

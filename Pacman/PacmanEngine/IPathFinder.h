@@ -6,10 +6,10 @@
 
 namespace pac
 {
-    class IPathFinder
-    {
-    public:
-        virtual ~IPathFinder() = default;
+	class IPathFinder
+	{
+	public:
+		virtual ~IPathFinder() = default;
 		virtual Position NextMove(const Maze& maze, const Pacman& pacman) const = 0;
-    };
+	};
 }

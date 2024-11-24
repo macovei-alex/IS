@@ -9,8 +9,9 @@ pac::GameplayScene::GameplayScene(IWindow* window, Maze&& maze, const GameplaySe
 	: mWindow(window)
 	, mMaze(std::move(maze))
 	, mSettings(settings)
-	, mPacman(std::make_shared<Pacman>(mMaze.GetPacmanSpawnPosition(), settings.mPacmanTicksPerMove))
-	, mGhost(mMaze.GetGhostSpawnPosition(), Ghost::State::Hunting) 
+	, mPacman(std::make_shared<Pacman>(mMaze.GetPacmanSpawnPosition(),
+		settings.mPacmanTicksPerMove, settings.mPowerUpDuration))
+	, mGhost(mMaze.GetGhostSpawnPosition(), Ghost::State::Hunting)
 {
 	AddListener(mPacman, EventType::KeyPressed);
 }
@@ -48,24 +49,6 @@ void pac::GameplayScene::Notify(IEvent* event) const
 		return;
 	}
 
-	/*
-	std::vector<std::weak_ptr<IListener>>& listeners = foundIterator->second;
-	auto from = std::remove_if(listeners.begin(), listeners.end(),
-		[](const std::weak_ptr<IListener> listener) -> bool
-		{
-			return listener.expired();
-		});
-
-	if (from != listeners.end())
-	{
-		listeners.erase(from, listeners.end());
-
-		auto count = listeners.end() - from;
-		Logger::cout.Debug(std::format("( {} ) listeners were removed for events of type ( {} )",
-			count, GetEventTypeName(event->GetType())));
-	}
-	*/
-
 	const auto& listeners = foundIterator->second;
 	for (const auto& listener : listeners)
 	{
@@ -84,7 +67,7 @@ void pac::GameplayScene::Draw() const
 {
 	mMaze.Draw(mWindow);
 	mPacman->Draw(mWindow);
-	mGhost.Draw(mWindow); 
+	mGhost.Draw(mWindow);
 }
 
 void pac::GameplayScene::NextTick()
@@ -101,24 +84,26 @@ void pac::GameplayScene::NextTick()
 	}
 
 	mPacman->TryMove(mMaze);
-	mGhost.Update(mMaze, *mPacman); 
+	mGhost.Update(mMaze, *mPacman);
 }
 
-pac::CollisionType pac::GameplayScene::HandlePacmanGhostCollision()
+pac::CollisionType pac::GameplayScene::PacmanCollidesWith(Ghost& ghost) const
 {
-	if (mPacman->GetCurrentPosition() == mGhost.GetCurrentPosition())
+	if (mPacman->GetCurrentPosition() == ghost.GetCurrentPosition())
 	{
-		if (!mPacman->IsPowerUpActive())
+		if (!mPacman->IsPoweredUp())
 		{
 			Logger::cout.Info("Pacman collided with a ghost. Game Over!");
-			return CollisionType::WithoutPowerUp;
+			return CollisionType::NoPowerUp;
 		}
 		else
 		{
 			Logger::cout.Info("Pacman collided with a ghost. Ghost was eaten!");
-			return CollisionType::WithPowerUp;
+			return CollisionType::PoweredUp;
 		}
 	}
+
+	return CollisionType::NoCollision;
 }
 
 void pac::GameplayScene::RemoveExpiredListeners()

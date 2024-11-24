@@ -3,54 +3,45 @@
 #include "KeyPressedEvent.h"
 
 
-pac::Pacman::Pacman(Position initialPosition, decltype(GameplaySettings::mPacmanTicksPerMove) pacmanTicksPerMove)
-	: mCurrentPosition(initialPosition)
-	, mCurrentDirection()
+pac::Pacman::Pacman(Position initialPosition, TicksType ticksPerMove, TicksType powerUpDuration)
+	: mPosition(initialPosition)
+	, mDirection()
 	, mNextDirection()
-	, mTicksSinceLastMove(0)
-	, mTicksPerMove(pacmanTicksPerMove)
+	, mTick(static_cast<TicksType>(-1))
 	, mScore(0)
-	, mIsPowerUpActive(false)
-	, mPacmanGhostCollisionType(CollisionType::WithoutPowerUp)
+	, mTicksPerMove(ticksPerMove)
+	, mPowerUpDuration(powerUpDuration)
+	, mLastPowerUpStart(static_cast<TicksType>(-ticksPerMove))
 {
 	// empty
 }
 
 void pac::Pacman::TryMove(Maze& maze)
 {
-	/*if (maze.GetCellType(mCurrentPosition) == CellType::Wall)
+	++mTick;
+	if (mTick % mTicksPerMove == 0)
 	{
-		mCurrentDirection = mNextDirection;
-		mNextDirection = Direction::GetInvalid();
-		return;
-	}*/
-
-	if (mTicksSinceLastMove < mTicksPerMove)
-	{
-		mTicksSinceLastMove++;
 		return;
 	}
 
-	mTicksSinceLastMove = 0;
-
-	if (!mCurrentPosition.IsValid())
+	if (!mPosition.IsValid())
 	{
-		throw std::runtime_error(std::format("Pacman current position ( {}, {} ) is invalid", mCurrentPosition.row, mCurrentPosition.col));
+		throw std::runtime_error(std::format("Pacman current position ( {}, {} ) is invalid", mPosition.row, mPosition.col));
 	}
 
 	if (mNextDirection.IsValid())
 	{
-		Position newPosition = Add(mCurrentPosition, mNextDirection);
+		Position newPosition = Add(mPosition, mNextDirection);
 		if (newPosition.IsValid() && maze.GetCellType(newPosition) == CellType::Empty)
 		{
-			mCurrentDirection = mNextDirection;
+			mDirection = mNextDirection;
 			mNextDirection = Direction::GetInvalid();
 		}
 	}
 
-	if (mCurrentDirection.IsValid())
+	if (mDirection.IsValid())
 	{
-		Position newPosition = Add(mCurrentPosition, mCurrentDirection);
+		Position newPosition = Add(mPosition, mDirection);
 		if (maze.GetCellType(newPosition) == CellType::Coin
 			|| maze.GetCellType(newPosition) == CellType::PowerUp)
 		{
@@ -60,62 +51,45 @@ void pac::Pacman::TryMove(Maze& maze)
 		{
 			if (maze.IsWalkable(newPosition))
 			{
-				mCurrentPosition = newPosition;
+				mPosition = newPosition;
 			}
 			else
 			{
-				mCurrentDirection = Direction::GetInvalid();
+				mDirection = Direction::GetInvalid();
 				mNextDirection = Direction::GetInvalid();
 			}
 		}
 	}
-
-	mTicksPerMove++;
 }
 
 pac::Position pac::Pacman::GetCurrentPosition() const
 {
-	return mCurrentPosition;
+	return mPosition;
 }
 
-decltype(pac::GameplaySettings::mPacmanTicksPerMove) pac::Pacman::GetTicksPerMove() const
+void pac::Pacman::IncreaseScore(ScoreType value)
 {
-	return mTicksPerMove;
+	mScore += value;
 }
 
-void pac::Pacman::IncreaseScoreCoinCell()
-{
-	mScore += 100;
-}
-
-void pac::Pacman::IncreaseScorePowerUpCell()
-{
-	mScore += 500;
-}
-
-uint64_t pac::Pacman::GetScore() const
+pac::ScoreType pac::Pacman::GetScore() const
 {
 	return mScore;
 }
 
-void pac::Pacman::SetIsPowerUpActive(bool isPowerUpActive)
+void pac::Pacman::PowerUp()
 {
-	mIsPowerUpActive = isPowerUpActive;
+	mLastPowerUpStart = static_cast<TicksType>(mTick);
 }
 
-bool pac::Pacman::IsPowerUpActive() const
+bool pac::Pacman::IsPoweredUp() const
 {
-	return mIsPowerUpActive;
-}
-
-uint16_t pac::Pacman::GetPowerUpDuration() const
-{
-	return mPowerUpDuration;
+	return mTick - mLastPowerUpStart < mPowerUpDuration;
 }
 
 void pac::Pacman::Draw(IWindow* window) const
 {
-	window->DrawTexture(mCurrentPosition, Textures::Pacman);
+	window->DrawTexture(mPosition, Textures::Pacman);
 	window->DrawScore(mScore);
 }
 
@@ -124,7 +98,12 @@ void pac::Pacman::OnEvent(IEvent* event)
 	if (event->GetType() == EventType::KeyPressed)
 	{
 		auto keyEvent = dynamic_cast<KeyPressedEvent*>(event);
-		Direction& pos = mCurrentDirection.IsValid() ? mNextDirection : mCurrentDirection;
+		if (keyEvent == nullptr)
+		{
+			throw std::runtime_error("Failed to cast event to KeyPressedEvent");
+		}
+
+		Direction& pos = mDirection.IsValid() ? mNextDirection : mDirection;
 
 		switch (keyEvent->GetKeyCode())
 		{

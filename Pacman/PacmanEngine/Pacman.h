@@ -8,39 +8,29 @@
 
 namespace pac
 {
-	enum class CollisionType : uint8_t
-	{
-		WithoutPowerUp,
-		WithPowerUp
-	};
-
 	class Pacman : public IListener
 	{
 	public:
-		Pacman(Position initialPosition, decltype(GameplaySettings::mPacmanTicksPerMove) pacmanTicksPerMove);
+		Pacman(Position initialPosition, TicksType ticksPerMove, TicksType powerUpDuration);
 		void TryMove(Maze& maze);
 		Position GetCurrentPosition() const;
-		decltype(GameplaySettings::mPacmanTicksPerMove) GetTicksPerMove() const;
-		void IncreaseScoreCoinCell();
-		void IncreaseScorePowerUpCell();
-		uint64_t GetScore() const;
-		void SetIsPowerUpActive(bool isPowerUpActive);
-		bool IsPowerUpActive() const;
-		uint16_t GetPowerUpDuration() const;
+		void IncreaseScore(ScoreType value);
+		ScoreType GetScore() const;
+		void PowerUp();
+		bool IsPoweredUp() const;
 		void Draw(IWindow* window) const;
 		void OnEvent(IEvent* event) override;
 
 	private:
-		Position mCurrentPosition;
-		Direction mCurrentDirection;
+		Position mPosition;
+		Direction mDirection;
 		Direction mNextDirection;
-		decltype(GameplaySettings::mPacmanTicksPerMove) mTicksSinceLastMove;
-		decltype(GameplaySettings::mPacmanTicksPerMove) mTicksPerMove;
-		uint64_t mScore;
-		bool mIsPowerUpActive;
-		CollisionType mPacmanGhostCollisionType;
+		TicksType mTick;
+		TicksType mTicksPerMove;
+		ScoreType mScore;
+		TicksType mLastPowerUpStart;
 
 	private:
-		static constexpr uint16_t mPowerUpDuration = 100;
+		const TicksType mPowerUpDuration;
 	};
 }
