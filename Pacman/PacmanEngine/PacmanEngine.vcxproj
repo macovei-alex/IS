@@ -140,6 +140,7 @@
     <ClCompile Include="Maze.h" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Pacman.cpp" />
+    <ClCompile Include="RoamingPathFinder.cpp" />
     <ClCompile Include="ScaredPathFinder.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -159,6 +160,7 @@
     <ClInclude Include="KeyPressedEvent.h" />
     <ClInclude Include="Pacman.h" />
     <ClInclude Include="Position.h" />
+    <ClInclude Include="RoamingPathFinder.h" />
     <ClInclude Include="ScaredPathFinder.h" />
     <ClInclude Include="Textures.h" />
     <ClInclude Include="WindowCloseEvent.h" />

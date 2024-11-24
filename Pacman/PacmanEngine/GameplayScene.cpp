@@ -15,7 +15,7 @@ pac::GameplayScene::GameplayScene(IWindow* window, Maze&& maze, const GameplaySe
 	for (decltype(settings.ghostCount) i = 0; i < settings.ghostCount; ++i)
 	{
 		mGhosts.push_back(Ghost(mMaze.GetGhostSpawnPosition(), settings.mGhostFirstSpawnDelay * (i + 1)));
-		mGhosts.back().SetState(Ghost::State::Hunting);
+		mGhosts.back().SetState(Ghost::State::Roaming);
 	}
 
 	AddListener(mPacman, EventType::KeyPressed);

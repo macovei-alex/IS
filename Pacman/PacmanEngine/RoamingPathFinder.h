@@ -4,6 +4,7 @@
 #include "Ghost.h"
 
 
+
 namespace pac
 {
 	class RoamingPathFinder : public IPathFinder

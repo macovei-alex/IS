@@ -1,7 +1,8 @@
 #include "Ghost.h"
 
 #include "HuntPathFinder.h"
-
+#include "ScaredPathFinder.h"
+#include "RoamingPathFinder.h"
 
 namespace pac
 {
@@ -47,6 +48,14 @@ namespace pac
 		if (state == State::Hunting)
 		{
 			mPathFinder = std::make_unique<HuntPathFinder>(this);
+		}
+		else if (state == State::Scared)
+		{
+			 mPathFinder = std::make_unique<ScaredPathFinder>();
+		}
+		else if (state == State::Roaming)
+		{
+			mPathFinder = std::make_unique<RoamingPathFinder>(this);
 		}
 	}
 }
