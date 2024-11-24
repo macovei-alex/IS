@@ -4,6 +4,8 @@
 #include "Dimensions.h"
 
 #include <memory>
+#include "Pacman.h"
+#include <PacmanUI/SFMLWindow.h>
 
 
 namespace pac
@@ -29,7 +31,7 @@ namespace pac
 		void EatCell(Position pos, uint64_t& score);
 		void GetCoin(Position pacmanCurrentPosition, uint64_t& score);
 		void GetPowerUp(Position pacmanCurrentPosition, uint64_t& score);
-		void EnterIntoGhost();
+		void EnterIntoGhost(Position pos, Pacman pacman, SFMLWindow& window);
 		Position GetGhostSpawnPosition() const;
 		Position GetPacmanSpawnPosition() const;
 		Dimensions GetDimensions() const;

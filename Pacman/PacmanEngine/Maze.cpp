@@ -155,9 +155,21 @@ void pac::Maze::GetPowerUp(pac::Position pacmanCurrentPosition, uint64_t& score)
 
 }
 
-void pac::Maze::EnterIntoGhost()
+void pac::Maze::EnterIntoGhost(Position pos, Pacman pacman, SFMLWindow& window)
 {
-	// TO DO
+	if (mCells[pos.row][pos.col] != CellType::GhostSpawn)
+	{
+		throw std::runtime_error(std::format("Cell at ( {}, {} ) is not a ghost spawn", pos.row, pos.col));
+	}
+
+	if (!pacman.IsPowerUpActive())
+	{
+		window.Close();
+	}
+	else
+	{
+
+	}
 }
 
 pac::Position pac::Maze::GetGhostSpawnPosition() const

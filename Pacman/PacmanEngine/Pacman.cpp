@@ -101,6 +101,11 @@ void pac::Pacman::SetIsPowerUpActive(bool isPowerUpActive)
 	mIsPowerUpActive = isPowerUpActive;
 }
 
+bool pac::Pacman::IsPowerUpActive() const
+{
+	return mIsPowerUpActive;
+}
+
 uint16_t pac::Pacman::GetPowerUpDuration() const
 {
 	return mPowerUpDuration;

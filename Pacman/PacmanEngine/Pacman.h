@@ -20,6 +20,7 @@ namespace pac
 		void IncreaseScorePowerUpCell();
 		uint64_t GetScore() const;
 		void SetIsPowerUpActive(bool isPowerUpActive);
+		bool IsPowerUpActive() const;
 		uint16_t GetPowerUpDuration() const;
 		void Draw(IWindow* window) const;
 		void OnEvent(IEvent* event) override;
