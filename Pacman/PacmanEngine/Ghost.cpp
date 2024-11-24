@@ -5,38 +5,48 @@
 
 namespace pac
 {
-	Ghost::Ghost(Position initialPosition, State initialState)
-		: mCurrentPosition(initialPosition)
+	Ghost::Ghost(Position initialPosition, TicksType firstSpawnDelay)
+		: mPosition(initialPosition)
+		, mFirstSpawnDelay(firstSpawnDelay)
 	{
-		SetState(initialState);
+		SetState(State::Roaming);
 	}
 
-	void Ghost::Update(const Maze& maze, const Pacman& pacman)
+	void Ghost::NextTick(const Maze& maze, const Pacman& pacman)
 	{
 		static Position lastPacmanPosition = pacman.GetCurrentPosition();
+		static TicksType tick = 0;
+
+		++tick;
+		if (tick < mFirstSpawnDelay)
+		{
+			return;
+		}
 
 		// Wait for Pacman to move before updating
 		if (pacman.GetCurrentPosition() != lastPacmanPosition)
 		{
-			mCurrentPosition = mPathFinder->NextMove(maze, pacman);
+			mPosition = mPathFinder->NextMove(maze, pacman);
 			lastPacmanPosition = pacman.GetCurrentPosition();
 		}
 	}
- 
+
 	void Ghost::Draw(IWindow* window) const
 	{
-		window->DrawTexture(mCurrentPosition, Textures::Ghost);
+		window->DrawTexture(mPosition, Textures::Ghost);
 	}
 
 	Position Ghost::GetCurrentPosition() const
 	{
-		return mCurrentPosition;
+		return mPosition;
 	}
 
-	void Ghost::SetState(Ghost::State state)
+	void Ghost::SetState(State state)
 	{
-		mCurrentState = state;
-		mPathFinder = std::make_unique<HuntPathFinder>(this);
+		mState = state;
+		if (state == State::Hunting)
+		{
+			mPathFinder = std::make_unique<HuntPathFinder>(this);
+		}
 	}
 }
-

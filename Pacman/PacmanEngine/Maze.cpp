@@ -144,6 +144,10 @@ uint64_t pac::Maze::EatCell(Position pos)
 	{
 		scoreBonus = 500;
 	}
+	else
+	{
+		throw std::runtime_error("Invalid cell type");
+	}
 
 	mCells[pos.row][pos.col] = CellType::Empty;
 	return scoreBonus;

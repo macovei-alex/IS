@@ -24,5 +24,6 @@ namespace pac
 		std::unique_ptr<IWindow> mWindow;
 		std::vector<std::unique_ptr<IScene>> mScenes;
 		size_t mCurrentSceneIndex = 0;
+		const GameplaySettings& mSettings;
 	};
 }

@@ -43,7 +43,7 @@ namespace pac
 		Maze mMaze;
 		std::shared_ptr<Pacman> mPacman;
 		GameplaySettings mSettings;
-		pac::Ghost mGhost; 
+		std::vector<pac::Ghost> mGhosts; 
 		std::unordered_map<EventType, std::vector<std::weak_ptr<IListener>>> mListeners;
 	};
 }

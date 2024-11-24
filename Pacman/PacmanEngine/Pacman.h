@@ -16,7 +16,7 @@ namespace pac
 		Position GetCurrentPosition() const;
 		void IncreaseScore(ScoreType value);
 		ScoreType GetScore() const;
-		void PowerUp();
+		void SetPowerUp();
 		bool IsPoweredUp() const;
 		void Draw(IWindow* window) const;
 		void OnEvent(IEvent* event) override;

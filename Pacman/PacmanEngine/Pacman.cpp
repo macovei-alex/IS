@@ -11,7 +11,7 @@ pac::Pacman::Pacman(Position initialPosition, TicksType ticksPerMove, TicksType 
 	, mScore(0)
 	, mTicksPerMove(ticksPerMove)
 	, mPowerUpDuration(powerUpDuration)
-	, mLastPowerUpStart(static_cast<TicksType>(-ticksPerMove))
+	, mLastPowerUpStart(0)
 {
 	// empty
 }
@@ -77,14 +77,15 @@ pac::ScoreType pac::Pacman::GetScore() const
 	return mScore;
 }
 
-void pac::Pacman::PowerUp()
+void pac::Pacman::SetPowerUp()
 {
 	mLastPowerUpStart = static_cast<TicksType>(mTick);
 }
 
 bool pac::Pacman::IsPoweredUp() const
 {
-	return mTick - mLastPowerUpStart < mPowerUpDuration;
+	return mLastPowerUpStart > 0 
+		&& mTick - mLastPowerUpStart < mPowerUpDuration;
 }
 
 void pac::Pacman::Draw(IWindow* window) const

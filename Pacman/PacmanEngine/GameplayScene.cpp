@@ -9,10 +9,15 @@ pac::GameplayScene::GameplayScene(IWindow* window, Maze&& maze, const GameplaySe
 	: mWindow(window)
 	, mMaze(std::move(maze))
 	, mSettings(settings)
-	, mPacman(std::make_shared<Pacman>(mMaze.GetPacmanSpawnPosition(),
-		settings.mPacmanTicksPerMove, settings.mPowerUpDuration))
-	, mGhost(mMaze.GetGhostSpawnPosition(), Ghost::State::Hunting)
+	, mPacman(std::make_shared<Pacman>(mMaze.GetPacmanSpawnPosition(), settings.mPacmanTicksPerMove, settings.mPowerUpDuration))
+	, mGhosts()
 {
+	for (decltype(settings.ghostCount) i = 0; i < settings.ghostCount; ++i)
+	{
+		mGhosts.push_back(Ghost(mMaze.GetGhostSpawnPosition(), settings.mGhostFirstSpawnDelay * (i + 1)));
+		mGhosts.back().SetState(Ghost::State::Hunting);
+	}
+
 	AddListener(mPacman, EventType::KeyPressed);
 }
 
@@ -67,7 +72,10 @@ void pac::GameplayScene::Draw() const
 {
 	mMaze.Draw(mWindow);
 	mPacman->Draw(mWindow);
-	mGhost.Draw(mWindow);
+	for (const auto& ghost : mGhosts)
+	{
+		ghost.Draw(mWindow);
+	}
 }
 
 void pac::GameplayScene::NextTick()
@@ -84,7 +92,10 @@ void pac::GameplayScene::NextTick()
 	}
 
 	mPacman->TryMove(mMaze);
-	mGhost.Update(mMaze, *mPacman);
+	for (auto& ghost : mGhosts)
+	{
+		ghost.NextTick(mMaze, *mPacman);
+	}
 }
 
 pac::CollisionType pac::GameplayScene::PacmanCollidesWith(Ghost& ghost) const
