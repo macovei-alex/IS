@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
-#include "PacmanTests.cpp"
-#include "MazeTests.cpp"
+#include "PacmanTests.h"
+#include "MazeTests.h"
 
 int main(int argc, char* argv[])
 {
