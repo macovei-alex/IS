@@ -4,8 +4,6 @@
 #include "Dimensions.h"
 
 #include <memory>
-#include "Pacman.h"
-#include <PacmanUI/SFMLWindow.h>
 
 
 namespace pac
@@ -28,17 +26,14 @@ namespace pac
 		CellType GetCellType(Position pos) const;
 		bool IsWalkable(Position pos) const;
 		bool IsValid() const;
-		void EatCell(Position pos, uint64_t& score);
-		void GetCoin(Position pacmanCurrentPosition, uint64_t& score);
-		void GetPowerUp(Position pacmanCurrentPosition, uint64_t& score);
-		void EnterIntoGhost(Position pos, Pacman pacman, SFMLWindow& window);
+		uint64_t EatCell(Position pos);
 		Position GetGhostSpawnPosition() const;
 		Position GetPacmanSpawnPosition() const;
 		Dimensions GetDimensions() const;
 		bool SeeEachOther(Position p1, Position p2) const;
 		void ReadMazeFromFile(std::string_view filename);
 		void Draw(IWindow* window) const;
-		void WinGame(SFMLWindow& window);
+		void WinGame(IWindow* window);
 
 	private:
 		std::vector<std::vector<CellType>> mCells;

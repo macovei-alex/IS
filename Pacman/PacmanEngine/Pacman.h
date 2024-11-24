@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Position.h"
 #include "IListener.h"
 #include "Maze.h"
 #include "GameplaySettings.h"
@@ -33,6 +32,8 @@ namespace pac
 		decltype(GameplaySettings::mPacmanTicksPerMove) mTicksPerMove;
 		uint64_t mScore;
 		bool mIsPowerUpActive;
-		const uint16_t mPowerUpDuration = 100;
+
+	private:
+		static constexpr uint16_t mPowerUpDuration = 100;
 	};
 }

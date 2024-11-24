@@ -126,7 +126,7 @@ bool pac::Maze::IsValid() const
 	return true;
 }
 
-void pac::Maze::EatCell(Position pos, uint64_t& score)
+uint64_t pac::Maze::EatCell(Position pos)
 {
 	if (mCells[pos.row][pos.col] != CellType::Coin
 		&& mCells[pos.row][pos.col] != CellType::PowerUp)
@@ -134,42 +134,19 @@ void pac::Maze::EatCell(Position pos, uint64_t& score)
 		throw std::runtime_error(std::format("Cell at ( {}, {} ) is not a coin or power-up", pos.row, pos.col));
 	}
 
+	uint64_t scoreBonus = 0;
+
 	if (mCells[pos.row][pos.col] == CellType::Coin)
-		GetCoin(pos, score);
+	{
+		scoreBonus = 100;
+	}
 	else if (mCells[pos.row][pos.col] == CellType::PowerUp)
-		GetPowerUp(pos, score);
+	{
+		scoreBonus = 500;
+	}
 
 	mCells[pos.row][pos.col] = CellType::Empty;
-}
-
-void pac::Maze::GetCoin(pac::Position pacmanCurrentPosition, uint64_t& score)
-{
-	score += 100;
-}
-
-void pac::Maze::GetPowerUp(pac::Position pacmanCurrentPosition, uint64_t& score)
-{
-	score += 500;
-	
-	// TO DO
-
-}
-
-void pac::Maze::EnterIntoGhost(Position pos, Pacman pacman, SFMLWindow& window)
-{
-	if (mCells[pos.row][pos.col] != CellType::GhostSpawn)
-	{
-		throw std::runtime_error(std::format("Cell at ( {}, {} ) is not a ghost spawn", pos.row, pos.col));
-	}
-
-	if (!pacman.IsPowerUpActive())
-	{
-		window.Close();
-	}
-	else
-	{
-
-	}
+	return scoreBonus;
 }
 
 pac::Position pac::Maze::GetGhostSpawnPosition() const
@@ -277,7 +254,7 @@ void pac::Maze::Draw(IWindow* window) const
 	}
 }
 
-void pac::Maze::WinGame(SFMLWindow& window)
+void pac::Maze::WinGame(IWindow* window)
 {
 	for (int row = 0; row < GetDimensions().rows; ++row)
 	{
@@ -290,5 +267,5 @@ void pac::Maze::WinGame(SFMLWindow& window)
 		}
 	}
 
-	window.Close();
+	window->Close();
 }

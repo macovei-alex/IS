@@ -50,9 +50,10 @@ void pac::Pacman::TryMove(Maze& maze)
 	if (mCurrentDirection.IsValid())
 	{
 		Position newPosition = Add(mCurrentPosition, mCurrentDirection);
-		if (maze.GetCellType(newPosition) == CellType::Coin || maze.GetCellType(newPosition) == CellType::PowerUp)
+		if (maze.GetCellType(newPosition) == CellType::Coin
+			|| maze.GetCellType(newPosition) == CellType::PowerUp)
 		{
-			maze.EatCell(newPosition, mScore);
+			mScore += maze.EatCell(newPosition);
 		}
 		if (newPosition.IsValid())
 		{

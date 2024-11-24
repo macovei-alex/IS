@@ -100,7 +100,7 @@ void pac::GameplayScene::NextTick()
 		Notify(event.get());
 	}
 
-	mPacman->TryMove(mMaze); 
+	mPacman->TryMove(mMaze);
 	mGhost.Update(mMaze, *mPacman); 
 }
 
