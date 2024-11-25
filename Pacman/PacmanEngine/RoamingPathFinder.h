@@ -13,7 +13,7 @@ namespace pac
 		RoamingPathFinder(Ghost* ghost);
 		Position NextMove(const Maze& maze, const Pacman& pacman) override;
 
-	private:
+	protected:
 		Ghost* mGhost;
 	};
 }

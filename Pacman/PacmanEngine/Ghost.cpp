@@ -3,16 +3,21 @@
 #include "HuntPathFinder.h"
 #include "ScaredPathFinder.h"
 #include "RoamingPathFinder.h"
+#include "DelayedRoamingPathFinder.h"
+
+#include <format>
+
 
 namespace pac
 {
-	Ghost::Ghost(Position initialPosition, TickType firstSpawnDelay)
+	Ghost::Ghost(Position initialPosition, TickType firstSpawnDelay, TickType respawnDelay)
 		: mPosition(initialPosition)
-		, mFirstSpawnDelay(firstSpawnDelay)
 		, mInitialPosition(initialPosition)
 		, mTick(0)
+		, mFirstSpawnDelay(firstSpawnDelay)
+		, mRespawnDelay(respawnDelay)
 	{
-		SetState(State::Roaming);
+		SetState(State::Dead);
 	}
 
 	void Ghost::NextTick(const Maze& maze, const Pacman& pacman)
@@ -30,7 +35,7 @@ namespace pac
 	{
 		window->DrawTexture(mPosition, Textures::Ghost);
 		//daca ghost e in stare de eaten,fantoma dispare 3 secunde si reapare
-		if (mState == State::Eaten)
+		if (mState == State::Dead)
 		{
 			//window->DrawTexture(mPosition, Textures::Empty);
 		}
@@ -44,22 +49,23 @@ namespace pac
 	void Ghost::SetState(State state)
 	{
 		mState = state;
-		if (state == State::Hunting)
+		switch (mState)
 		{
+		case State::Hunting:
 			mPathFinder = std::make_unique<HuntPathFinder>(this);
-		}
-		else if (state == State::Scared)
-		{
+			break;
+		case State::Scared:
 			mPathFinder = std::make_unique<ScaredPathFinder>();
-		}
-		else if (state == State::Roaming)
-		{
+			break;
+		case State::Roaming:
 			mPathFinder = std::make_unique<RoamingPathFinder>(this);
-		}
-		else if (state == State::Eaten)
-		{
+			break;
+		case State::Dead:
+			mPathFinder = std::make_unique<DelayedRoamingPathFinder>(this, mRespawnDelay);
 			mPosition = mInitialPosition;
-			mPathFinder = std::make_unique<RoamingPathFinder>(this);
+			break;
+		default:
+			throw std::runtime_error(std::format("State ( {} ) does not exist", (int)state));
 		}
 	}
 
@@ -67,10 +73,4 @@ namespace pac
 	{
 		return mState;
 	}
-
-
-
-
-
-
 }

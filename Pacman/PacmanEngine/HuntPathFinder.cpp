@@ -22,8 +22,6 @@ namespace pac
 
 	Position HuntPathFinder::NextMove(const Maze& maze, const Pacman& pacman)
 	{
-		static int pathIndex = 0;
-
 		if (bool seeEachOther = maze.SeeEachOther(pacman.GetPosition(), mGhost->GetPosition()); 
 			seeEachOther || mPath.size() == 0)
 		{
@@ -32,15 +30,16 @@ namespace pac
 				Logger::cout.Debug("Pacman spotted. Recalculating path...");
 			}
 			UpdatePath(maze, pacman);
-			pathIndex = (int)mPath.size() - 1;
 		}
 
-		if (mPath.size() == 0 || pathIndex < 0)
+		if (mPath.size() == 0)
 		{
 			return mGhost->GetPosition();
 		}
 
-		return mPath[pathIndex--];
+		Position temp = mPath.top();
+		mPath.pop();
+		return temp;
 	}
 
 	void HuntPathFinder::UpdatePath(const Maze& maze, const Pacman& pacman)
@@ -61,7 +60,10 @@ namespace pac
 			parent.resize(size);
 		}
 
-		mPath.clear();
+		while (!mPath.empty())
+		{
+			mPath.pop();
+		}
 
 		for (size_t i = 0; i < visited.size(); i++)
 		{
@@ -87,11 +89,12 @@ namespace pac
 			if (current == pacmanPosition)
 			{
 				Position nextMove = parent[POS(current)];
+				mPath.push(current);
 				while (nextMove != ghostPosition && nextMove.IsValid())
 				{
 					current = nextMove;
 					nextMove = parent[POS(nextMove)];
-					mPath.push_back(current);
+					mPath.push(current);
 				}
 				break;
 			}

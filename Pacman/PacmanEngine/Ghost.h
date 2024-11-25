@@ -17,23 +17,26 @@ namespace pac
 			Hunting,
 			Scared,
 			Roaming,
-			Eaten
+			Dead
 		};
 
 	public:
-		Ghost(Position initialPosition, TickType firstSpawnDelay);
+		Ghost(Position initialPosition, TickType firstSpawnDelay, TickType respawnDelay);
 		void NextTick(const Maze& maze, const Pacman& pacman);
 		void Draw(IWindow* window) const;
 		Position GetPosition() const;
 		void SetState(State state);
 		State GetState() const;
-		
+
 	private:
 		Position mPosition;
-		TickType mFirstSpawnDelay;
 		TickType mTick;
+		TickType mFirstSpawnDelay;
+		TickType mRespawnDelay;
 		std::unique_ptr<IPathFinder> mPathFinder;
 		State mState;
+
+	private:
 		const Position mInitialPosition;
 	};
 }

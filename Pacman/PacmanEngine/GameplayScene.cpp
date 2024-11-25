@@ -17,7 +17,10 @@ pac::GameplayScene::GameplayScene(IWindow* window, Maze&& maze, const GameplaySe
 
 	for (decltype(settings.ghostCount) i = 0; i < settings.ghostCount; ++i)
 	{
-		mGhosts.push_back(Ghost(mMaze.GetGhostSpawnPosition(), settings.mGhostFirstSpawnDelay * (i + 1)));
+		mGhosts.push_back(Ghost(
+			mMaze.GetGhostSpawnPosition(),
+			settings.mGhostInitialSpawnDelay * (i + 1),
+			settings.mGhostRespawnDelay));
 		mGhosts.back().SetState(Ghost::State::Roaming);
 	}
 
@@ -151,7 +154,7 @@ void pac::GameplayScene::NextTick()
 		}
 		else if (PacmanCollidesWith(ghost) == CollisionType::PoweredUp)
 		{
-			ghost.SetState(Ghost::State::Eaten);
+			ghost.SetState(Ghost::State::Dead);
 		}
 
 		ghost.NextTick(mMaze, *mPacman);

@@ -22,6 +22,12 @@
     <Filter Include="Source Files\Observer">
       <UniqueIdentifier>{0327c696-5c4b-43d8-b162-1f6cd29576c4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\PathFinders">
+      <UniqueIdentifier>{ab45a1ed-f279-4ec2-986b-3c7ae5aef8b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\PathFinders">
+      <UniqueIdentifier>{cde394fe-523b-40e7-b53d-ffb2a65f620d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -48,17 +54,23 @@
     <ClCompile Include="Ghost.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="HuntPathFinder.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ScaredPathFinder.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RoamingPathFinder.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="typedefs.h">
       <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HuntPathFinder.cpp">
+      <Filter>Source Files\PathFinders</Filter>
+    </ClCompile>
+    <ClCompile Include="RoamingPathFinder.cpp">
+      <Filter>Source Files\PathFinders</Filter>
+    </ClCompile>
+    <ClCompile Include="ScaredPathFinder.cpp">
+      <Filter>Source Files\PathFinders</Filter>
+    </ClCompile>
+    <ClCompile Include="DelayedRoamingPathFinder.h">
+      <Filter>Header Files\PathFinders</Filter>
+    </ClCompile>
+    <ClCompile Include="DelayedRoamingPathFinder.cpp">
+      <Filter>Source Files\PathFinders</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -104,23 +116,23 @@
     <ClInclude Include="Ghost.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="IPathFinder.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="WindowCloseEvent.h">
       <Filter>Header Files\Observer</Filter>
-    </ClInclude>
-    <ClInclude Include="HuntPathFinder.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ScaredPathFinder.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Direction.h">
       <Filter>Header Files\Structs</Filter>
     </ClInclude>
+    <ClInclude Include="ScaredPathFinder.h">
+      <Filter>Header Files\PathFinders</Filter>
+    </ClInclude>
     <ClInclude Include="RoamingPathFinder.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\PathFinders</Filter>
+    </ClInclude>
+    <ClInclude Include="IPathFinder.h">
+      <Filter>Header Files\PathFinders</Filter>
+    </ClInclude>
+    <ClInclude Include="HuntPathFinder.h">
+      <Filter>Header Files\PathFinders</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

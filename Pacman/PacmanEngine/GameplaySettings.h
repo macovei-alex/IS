@@ -15,6 +15,7 @@ namespace pac
 		ScoreType mScorePerCoin = 100;
 		ScoreType mScorePerPowerUp = 500;
 		uint8_t ghostCount = 1;
-		TickType mGhostFirstSpawnDelay = 10;
+		TickType mGhostInitialSpawnDelay = 10;
+		TickType mGhostRespawnDelay = 10;
 	};
 }

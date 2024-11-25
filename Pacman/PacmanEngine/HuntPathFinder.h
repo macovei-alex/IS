@@ -3,6 +3,8 @@
 #include "IPathFinder.h"
 #include "Ghost.h"
 
+#include <stack>
+
 
 namespace pac
 {
@@ -18,6 +20,6 @@ namespace pac
 	private:
 		Ghost* mGhost;
 		Position mLastPacmanPosition;
-		std::vector<Position> mPath;
+		std::stack<Position> mPath;
 	};
 }

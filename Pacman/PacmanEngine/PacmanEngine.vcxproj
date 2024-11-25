@@ -131,6 +131,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DelayedRoamingPathFinder.cpp" />
+    <ClCompile Include="DelayedRoamingPathFinder.h" />
     <ClCompile Include="EventType.cpp" />
     <ClCompile Include="GameplayScene.cpp" />
     <ClCompile Include="GameplayScene.h" />
