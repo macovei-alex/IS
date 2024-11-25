@@ -34,6 +34,7 @@ namespace pac
 		void NextTick() override;
 
 		CollisionType PacmanCollidesWith(Ghost& ghost) const;
+		void GameOver();
 		void WinGame();
 
 	private:
