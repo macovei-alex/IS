@@ -1,5 +1,7 @@
 #include "HuntPathFinder.h"
 
+#include "Logger/Logger.h"
+
 #include <queue>
 #include <vector>
 #include <array>
@@ -12,22 +14,54 @@ namespace pac
 {
 	HuntPathFinder::HuntPathFinder(Ghost* ghost)
 		: mGhost(ghost)
+		, mLastPacmanPosition(Position::GetInvalid())
+		, mPath()
 	{
 		// empty
 	}
 
-	Position HuntPathFinder::NextMove(const Maze& maze, const Pacman& pacman) const
+	Position HuntPathFinder::NextMove(const Maze& maze, const Pacman& pacman)
 	{
-		const Dimensions dim = maze.GetDimensions();
+		static int pathIndex = 0;
 
-		static std::vector<bool> visited(dim.rows * dim.cols, false);
-		static std::vector<Position> parent(dim.rows * dim.cols, Position::GetInvalid());
-
-		if (dim.rows * dim.cols > visited.size())
+		if (bool seeEachOther = maze.SeeEachOther(pacman.GetPosition(), mGhost->GetPosition()); 
+			seeEachOther || mPath.size() == 0)
 		{
-			visited.resize(dim.rows * dim.cols);
-			parent.resize(dim.rows * dim.cols);
+			if (seeEachOther)
+			{
+				Logger::cout.Debug("Pacman spotted. Recalculating path...");
+			}
+			UpdatePath(maze, pacman);
+			pathIndex = (int)mPath.size() - 1;
 		}
+
+		if (mPath.size() == 0 || pathIndex < 0)
+		{
+			return mGhost->GetPosition();
+		}
+
+		return mPath[pathIndex--];
+	}
+
+	void HuntPathFinder::UpdatePath(const Maze& maze, const Pacman& pacman)
+	{
+		static constexpr std::array<Direction, 4> directions = {
+			Direction::Up(), Direction::Down(), Direction::Left(), Direction::Right()
+		};
+
+		const Dimensions dimensions = maze.GetDimensions();
+		const uint64_t size = (uint64_t)dimensions.rows * dimensions.cols;
+
+		static std::vector<bool> visited(size);
+		static std::vector<Position> parent(size);
+
+		if (size > visited.size())
+		{
+			visited.resize(size);
+			parent.resize(size);
+		}
+
+		mPath.clear();
 
 		for (size_t i = 0; i < visited.size(); i++)
 		{
@@ -35,15 +69,10 @@ namespace pac
 			parent[i] = Position::GetInvalid();
 		}
 
-		const auto colCount = maze.GetDimensions().cols;
+		const auto colCount = dimensions.cols;
 
-		Position ghostPosition = mGhost->GetCurrentPosition();
-		Position pacmanPosition = pacman.GetCurrentPosition();
-
-		static constexpr std::array<Direction, 4> directions = {
-			Direction::Down(), Direction::Up(), Direction::Right(), Direction::Left()
-		};
-
+		const Position ghostPosition = mGhost->GetPosition();
+		const Position pacmanPosition = pacman.GetPosition();
 
 		std::queue<Position> bfsQueue;
 
@@ -62,10 +91,10 @@ namespace pac
 				{
 					current = nextMove;
 					nextMove = parent[POS(nextMove)];
+					mPath.push_back(current);
 				}
-				return current;
+				break;
 			}
-
 
 			for (Direction direction : directions)
 			{
@@ -80,7 +109,5 @@ namespace pac
 				}
 			}
 		}
-
-		return ghostPosition; 
 	}
 }

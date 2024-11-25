@@ -8,13 +8,13 @@ pac::RoamingPathFinder::RoamingPathFinder(Ghost* ghost)
 	// empty
 }
 
-pac::Position pac::RoamingPathFinder::NextMove(const Maze& maze, const Pacman& pacman) const
+pac::Position pac::RoamingPathFinder::NextMove(const Maze& maze, const Pacman& pacman)
 {
 
     std::vector<Direction> directions = { Direction::Up(), Direction::Down(), Direction::Left(), Direction::Right() };
     int randomIndex = rand() % directions.size(); 
 
-    Position newPos = Add(mGhost->GetCurrentPosition(), directions[randomIndex]);
+    Position newPos = Add(mGhost->GetPosition(), directions[randomIndex]);
 
     if (maze.IsWalkable(newPos))
     {
@@ -23,11 +23,11 @@ pac::Position pac::RoamingPathFinder::NextMove(const Maze& maze, const Pacman& p
 
     for (const auto& dir : directions)
     {
-        Position fallbackPos = Add(mGhost->GetCurrentPosition(), dir);
+        Position fallbackPos = Add(mGhost->GetPosition(), dir);
         if (maze.IsWalkable(fallbackPos))
         {
             return fallbackPos;
         }
     }
-    return mGhost->GetCurrentPosition();
+    return mGhost->GetPosition();
 }

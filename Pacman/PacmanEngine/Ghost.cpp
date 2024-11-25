@@ -10,39 +10,33 @@ namespace pac
 		: mPosition(initialPosition)
 		, mFirstSpawnDelay(firstSpawnDelay)
 		, mInitialPosition(initialPosition)
+		, mTick(0)
 	{
 		SetState(State::Roaming);
 	}
 
 	void Ghost::NextTick(const Maze& maze, const Pacman& pacman)
 	{
-		static Position lastPacmanPosition = pacman.GetCurrentPosition();
-		static TickType tick = 0;
-
-		++tick;
-		if (tick < mFirstSpawnDelay)
+		++mTick;
+		if (mTick < mFirstSpawnDelay)
 		{
 			return;
 		}
 
-		if (pacman.GetCurrentPosition() != lastPacmanPosition)
-		{
-			mPosition = mPathFinder->NextMove(maze, pacman);
-			lastPacmanPosition = pacman.GetCurrentPosition();
-		}
+		mPosition = mPathFinder->NextMove(maze, pacman);
 	}
 
 	void Ghost::Draw(IWindow* window) const
 	{
 		window->DrawTexture(mPosition, Textures::Ghost);
-		//daca ghost e in stare de eaten,fantoma dispare 3 secunde si reapare'
+		//daca ghost e in stare de eaten,fantoma dispare 3 secunde si reapare
 		if (mState == State::Eaten)
 		{
 			//window->DrawTexture(mPosition, Textures::Empty);
 		}
 	}
 
-	Position Ghost::GetCurrentPosition() const
+	Position Ghost::GetPosition() const
 	{
 		return mPosition;
 	}
@@ -56,7 +50,7 @@ namespace pac
 		}
 		else if (state == State::Scared)
 		{
-			 mPathFinder = std::make_unique<ScaredPathFinder>();
+			mPathFinder = std::make_unique<ScaredPathFinder>();
 		}
 		else if (state == State::Roaming)
 		{
@@ -77,6 +71,6 @@ namespace pac
 
 
 
-	
+
 
 }

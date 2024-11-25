@@ -11,6 +11,8 @@ pac::GameplayScene::GameplayScene(IWindow* window, Maze&& maze, const GameplaySe
 	, mSettings(settings)
 	, mPacman(std::make_shared<Pacman>(mMaze.GetPacmanSpawnPosition(), settings.mPacmanTicksPerMove, settings.mPowerUpDuration))
 	, mGhosts()
+	, mScore(0)
+	, mMaximumScore(0)
 {
 
 	for (decltype(settings.ghostCount) i = 0; i < settings.ghostCount; ++i)
@@ -22,24 +24,24 @@ pac::GameplayScene::GameplayScene(IWindow* window, Maze&& maze, const GameplaySe
 	AddListener(mPacman, EventType::KeyPressed);
 
 	auto [height, width] = mMaze.GetDimensions();
-	Position position;
+	Position pos;
 
-	for (int row = 0; row < height; row++)
+	for (pos.row = 0; pos.row < height; ++pos.row)
 	{
-		for (int col = 0; col < width; col++)
+		for (pos.col = 0; pos.col < width; ++pos.col)
 		{
-			position.row = row;
-			position.col = col;
-			if (mMaze.GetCellType(position) == CellType::Coin)
+			if (mMaze.GetCellType(pos) == CellType::Coin)
 			{
 				mMaximumScore += settings.mScorePerCoin;
 			}
-			if (mMaze.GetCellType(position) == CellType::PowerUp)
+			else if (mMaze.GetCellType(pos) == CellType::PowerUp)
 			{
 				mMaximumScore += settings.mScorePerPowerUp;
 			}
 		}
 	}
+
+	Logger::cout.Debug(std::format("The maximum score for this maze is ( {} )", mMaximumScore));
 }
 
 void pac::GameplayScene::AddListener(std::weak_ptr<IListener> listener, EventType eventType)
@@ -127,7 +129,7 @@ void pac::GameplayScene::NextTick()
 
 	for (auto& ghost : mGhosts)
 	{
-		if (mMaze.SeeEachOther(ghost.GetCurrentPosition(), mPacman->GetCurrentPosition()))
+		if (mMaze.SeeEachOther(ghost.GetPosition(), mPacman->GetPosition()))
 		{
 			if (mPacman->IsPoweredUp())
 			{
@@ -159,7 +161,7 @@ void pac::GameplayScene::NextTick()
 
 pac::CollisionType pac::GameplayScene::PacmanCollidesWith(Ghost& ghost) const
 {
-	if (mPacman->GetCurrentPosition() == ghost.GetCurrentPosition())
+	if (mPacman->GetPosition() == ghost.GetPosition())
 	{
 		if (!mPacman->IsPoweredUp())
 		{

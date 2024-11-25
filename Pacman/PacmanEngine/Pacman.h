@@ -13,7 +13,7 @@ namespace pac
 	public:
 		Pacman(Position initialPosition, TickType ticksPerMove, TickType powerUpDuration);
 		CellType TryMove(Maze& maze);
-		Position GetCurrentPosition() const;
+		Position GetPosition() const;
 		void SetPowerUp();
 		bool IsPoweredUp() const;
 		void Draw(IWindow* window) const;

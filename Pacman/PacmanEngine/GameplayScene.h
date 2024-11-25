@@ -47,7 +47,7 @@ namespace pac
 		const GameplaySettings& mSettings;
 		std::vector<pac::Ghost> mGhosts; 
 		std::unordered_map<EventType, std::vector<std::weak_ptr<IListener>>> mListeners;
-		ScoreType mScore = 0;
-		ScoreType mMaximumScore = 0;
+		ScoreType mScore;
+		ScoreType mMaximumScore;
 	};
 }

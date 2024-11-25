@@ -6,18 +6,19 @@
 #include <map>
 #include <set>
 
-namespace pac {
-
-	Position ScaredPathFinder::NextMove(const Maze& maze, const Pacman& pacman) const
+namespace pac
+{
+	Position ScaredPathFinder::NextMove(const Maze& maze, const Pacman& pacman)
 	{
+		/*
 		Position ghostPosition = maze.GetGhostSpawnPosition();
-		Position pacmanPosition = pacman.GetCurrentPosition();
+		Position pacmanPosition = pacman.GetPosition();
 		std::vector<Direction> directions = {
 			Direction::Down(), Direction::Up(), Direction::Right(), Direction::Left()
 		};
 
 		std::queue<Position> bfsQueue;
-		std::map<Position, Position> parent; 
+		std::map<Position, Position> parent;
 		std::set<Position> visited;
 
 		bfsQueue.push(ghostPosition);
@@ -61,7 +62,8 @@ namespace pac {
 		{
 			nextMove = parent[nextMove];
 		}
+		*/
 
-		return nextMove;
+		return pacman.GetPosition();
 	}
 }

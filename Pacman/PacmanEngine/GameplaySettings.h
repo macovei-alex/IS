@@ -7,7 +7,7 @@ namespace pac
 {
 	struct GameplaySettings
 	{
-		TickType mTicksPerSecond = 6;
+		TickType mTicksPerSecond = 2;
 		TickType mPacmanTicksPerMove = 2;
 		TickType mGhostTicksPerMove = 2;
 		TickType mGhostFearedTicksPerMove = 3;

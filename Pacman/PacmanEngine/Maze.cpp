@@ -183,6 +183,7 @@ pac::Dimensions pac::Maze::GetDimensions() const
 
 bool pac::Maze::SeeEachOther(Position p1, Position p2) const
 {
+	/*
 	if (p1.row == p2.row)  // Pe aceeași linie
 	{
 		int startCol = std::min(p1.col, p2.col);
@@ -205,7 +206,9 @@ bool pac::Maze::SeeEachOther(Position p1, Position p2) const
 		}
 		return true;
 	}
-	return false;  // Nu sunt pe aceeași linie sau coloană
+	*/
+
+	return p1.NumberOfCellsTo(p2) < 4;
 }
 
 

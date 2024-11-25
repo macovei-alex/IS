@@ -64,7 +64,7 @@ pac::CellType pac::Pacman::TryMove(Maze& maze)
 	return CellType::Empty;
 }
 
-pac::Position pac::Pacman::GetCurrentPosition() const
+pac::Position pac::Pacman::GetPosition() const
 {
 	return mPosition;
 }

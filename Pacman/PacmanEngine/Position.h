@@ -1,7 +1,10 @@
 #pragma once
 
 #include "Dimensions.h"
-#include <limits> 
+
+#include <limits>
+#include <utility>
+
 
 namespace pac
 {
@@ -24,19 +27,27 @@ namespace pac
 				col != std::numeric_limits<decltype(col)>::max();
 		}
 
-		bool operator==(const Position& other) const {
+		bool operator==(const Position& other) const
+		{
 			return row == other.row && col == other.col;
 		}
 
-		bool operator!=(const Position& other) const {
-			return !(*this == other); 
+		bool operator!=(const Position& other) const
+		{
+			return !(*this == other);
 		}
 
-		// Less-than operator for use in sorted containers like std::map and std::set
-		bool operator<(const Position& other) const {
-			if (row < other.row) return true;
-			if (row > other.row) return false;
-			return col < other.col;
+		decltype(row) NumberOfCellsTo(Position other) const
+		{
+			Position max = {
+				std::max(row, other.row),
+				std::max(col, other.col)
+			};
+			Position min = {
+				std::min(row, other.row),
+				std::min(col, other.col)
+			};
+			return max.row - min.row + max.col - min.col;
 		}
 	};
 }

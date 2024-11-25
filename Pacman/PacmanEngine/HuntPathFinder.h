@@ -10,9 +10,14 @@ namespace pac
 	{
 	public:
 		HuntPathFinder(Ghost* ghost);
-		Position NextMove(const Maze& maze, const Pacman& pacman) const override;
+		Position NextMove(const Maze& maze, const Pacman& pacman) override;
+
+	private:
+		void UpdatePath(const Maze& maze, const Pacman& pacman);
 
 	private:
 		Ghost* mGhost;
+		Position mLastPacmanPosition;
+		std::vector<Position> mPath;
 	};
 }

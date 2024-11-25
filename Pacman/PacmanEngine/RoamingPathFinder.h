@@ -11,7 +11,7 @@ namespace pac
 	{
 	public:
 		RoamingPathFinder(Ghost* ghost);
-		Position NextMove(const Maze& maze, const Pacman& pacman) const override;
+		Position NextMove(const Maze& maze, const Pacman& pacman) override;
 
 	private:
 		Ghost* mGhost;
