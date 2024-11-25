@@ -20,8 +20,27 @@ pac::GameplayScene::GameplayScene(IWindow* window, Maze&& maze, const GameplaySe
 	}
 
 	AddListener(mPacman, EventType::KeyPressed);
-}
 
+	auto [height, width] = mMaze.GetDimensions();
+	Position position;
+
+	for (int row = 0; row < height; row++)
+	{
+		for (int col = 0; col < width; col++)
+		{
+			position.row = row;
+			position.col = col;
+			if (mMaze.GetCellType(position) == CellType::Coin)
+			{
+				mMaximumScore += settings.mScorePerCoin;
+			}
+			if (mMaze.GetCellType(position) == CellType::PowerUp)
+			{
+				mMaximumScore += settings.mScorePerPowerUp;
+			}
+		}
+	}
+}
 
 void pac::GameplayScene::AddListener(std::weak_ptr<IListener> listener, EventType eventType)
 {
@@ -155,6 +174,15 @@ pac::CollisionType pac::GameplayScene::PacmanCollidesWith(Ghost& ghost) const
 	}
 
 	return CollisionType::NoCollision;
+}
+
+void pac::GameplayScene::WinGame()
+{
+	if (mScore == mMaximumScore)
+	{
+		mWindow->Close();
+		Logger::cout.Info("Game won!");
+	}
 }
 
 void pac::GameplayScene::RemoveExpiredListeners()

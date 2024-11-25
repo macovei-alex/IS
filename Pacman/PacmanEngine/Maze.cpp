@@ -275,19 +275,3 @@ void pac::Maze::Draw(IWindow* window) const
 		}
 	}
 }
-
-bool pac::Maze::HasWonGame()
-{
-	for (int row = 0; row < GetDimensions().rows; ++row)
-	{
-		for (int col = 0; col < GetDimensions().cols; ++col)
-		{
-			if (mCells[row][col] == CellType::Coin || mCells[row][col] == CellType::PowerUp)
-			{
-				return false;
-			}
-		}
-	}
-
-	return true;
-}

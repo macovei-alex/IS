@@ -34,6 +34,7 @@ namespace pac
 		void NextTick() override;
 
 		CollisionType PacmanCollidesWith(Ghost& ghost) const;
+		void WinGame();
 
 	private:
 		void RemoveExpiredListeners();
@@ -45,6 +46,7 @@ namespace pac
 		const GameplaySettings& mSettings;
 		std::vector<pac::Ghost> mGhosts; 
 		std::unordered_map<EventType, std::vector<std::weak_ptr<IListener>>> mListeners;
-		uint64_t mScore = 0;
+		ScoreType mScore = 0;
+		ScoreType mMaximumScore = 0;
 	};
 }
