@@ -44,7 +44,7 @@ void pac::Pacman::TryMove(Maze& maze)
 		if (maze.GetCellType(newPosition) == CellType::Coin
 			|| maze.GetCellType(newPosition) == CellType::PowerUp)
 		{
-			mScore += maze.EatCell(newPosition);
+			//mScore += maze.EatCell(newPosition);
 		}
 		if (newPosition.IsValid())
 		{
@@ -80,7 +80,6 @@ bool pac::Pacman::IsPoweredUp() const
 void pac::Pacman::Draw(IWindow* window) const
 {
 	window->DrawTexture(mPosition, Textures::Pacman);
-	window->DrawScore(mScore);
 }
 
 void pac::Pacman::OnEvent(IEvent* event)
