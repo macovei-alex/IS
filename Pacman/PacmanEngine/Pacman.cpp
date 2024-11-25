@@ -3,11 +3,11 @@
 #include "KeyPressedEvent.h"
 
 
-pac::Pacman::Pacman(Position initialPosition, TicksType ticksPerMove, TicksType powerUpDuration)
+pac::Pacman::Pacman(Position initialPosition, TickType ticksPerMove, TickType powerUpDuration)
 	: mPosition(initialPosition)
 	, mDirection()
 	, mNextDirection()
-	, mTick(static_cast<TicksType>(-1))
+	, mTick(static_cast<TickType>(-1))
 	, mTicksPerMove(ticksPerMove)
 	, mPowerUpDuration(powerUpDuration)
 	, mLastPowerUpStart(0)
@@ -71,7 +71,7 @@ pac::Position pac::Pacman::GetCurrentPosition() const
 
 void pac::Pacman::SetPowerUp()
 {
-	mLastPowerUpStart = static_cast<TicksType>(mTick);
+	mLastPowerUpStart = mTick;
 }
 
 bool pac::Pacman::IsPoweredUp() const

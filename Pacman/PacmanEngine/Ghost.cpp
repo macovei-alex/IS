@@ -6,7 +6,7 @@
 
 namespace pac
 {
-	Ghost::Ghost(Position initialPosition, TicksType firstSpawnDelay)
+	Ghost::Ghost(Position initialPosition, TickType firstSpawnDelay)
 		: mPosition(initialPosition)
 		, mFirstSpawnDelay(firstSpawnDelay)
 	{
@@ -16,7 +16,7 @@ namespace pac
 	void Ghost::NextTick(const Maze& maze, const Pacman& pacman)
 	{
 		static Position lastPacmanPosition = pacman.GetCurrentPosition();
-		static TicksType tick = 0;
+		static TickType tick = 0;
 
 		++tick;
 		if (tick < mFirstSpawnDelay)

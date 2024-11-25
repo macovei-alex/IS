@@ -142,6 +142,7 @@
     <ClCompile Include="Pacman.cpp" />
     <ClCompile Include="RoamingPathFinder.cpp" />
     <ClCompile Include="ScaredPathFinder.cpp" />
+    <ClCompile Include="typedefs.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Direction.h" />

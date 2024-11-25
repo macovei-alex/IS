@@ -11,7 +11,7 @@ namespace pac
 	class Pacman : public IListener
 	{
 	public:
-		Pacman(Position initialPosition, TicksType ticksPerMove, TicksType powerUpDuration);
+		Pacman(Position initialPosition, TickType ticksPerMove, TickType powerUpDuration);
 		ScoreType TryMove(Maze& maze);
 		Position GetCurrentPosition() const;
 		void SetPowerUp();
@@ -23,11 +23,11 @@ namespace pac
 		Position mPosition;
 		Direction mDirection;
 		Direction mNextDirection;
-		TicksType mTick;
-		TicksType mTicksPerMove;
-		TicksType mLastPowerUpStart;
+		TickType mTick;
+		TickType mTicksPerMove;
+		TickType mLastPowerUpStart;
 
 	private:
-		const TicksType mPowerUpDuration;
+		const TickType mPowerUpDuration;
 	};
 }
