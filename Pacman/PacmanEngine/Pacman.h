@@ -14,8 +14,6 @@ namespace pac
 		Pacman(Position initialPosition, TicksType ticksPerMove, TicksType powerUpDuration);
 		void TryMove(Maze& maze);
 		Position GetCurrentPosition() const;
-		void IncreaseScore(ScoreType value);
-		ScoreType GetScore() const;
 		void SetPowerUp();
 		bool IsPoweredUp() const;
 		void Draw(IWindow* window) const;
@@ -27,7 +25,6 @@ namespace pac
 		Direction mNextDirection;
 		TicksType mTick;
 		TicksType mTicksPerMove;
-		ScoreType mScore;
 		TicksType mLastPowerUpStart;
 
 	private:

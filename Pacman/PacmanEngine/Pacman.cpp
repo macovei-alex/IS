@@ -8,7 +8,6 @@ pac::Pacman::Pacman(Position initialPosition, TicksType ticksPerMove, TicksType 
 	, mDirection()
 	, mNextDirection()
 	, mTick(static_cast<TicksType>(-1))
-	, mScore(0)
 	, mTicksPerMove(ticksPerMove)
 	, mPowerUpDuration(powerUpDuration)
 	, mLastPowerUpStart(0)
@@ -65,16 +64,6 @@ void pac::Pacman::TryMove(Maze& maze)
 pac::Position pac::Pacman::GetCurrentPosition() const
 {
 	return mPosition;
-}
-
-void pac::Pacman::IncreaseScore(ScoreType value)
-{
-	mScore += value;
-}
-
-pac::ScoreType pac::Pacman::GetScore() const
-{
-	return mScore;
 }
 
 void pac::Pacman::SetPowerUp()
