@@ -19,11 +19,11 @@ pac::Maze::Maze()
 	// empty
 }
 
-void pac::Maze::InitScores(ScoreType coinScore, ScoreType powerUpScore)
-{
-	mCoinScore = coinScore;
-	mPowerUpScore = powerUpScore;
-}
+//void pac::Maze::InitScores(ScoreType coinScore, ScoreType powerUpScore)
+//{
+//	mCoinScore = coinScore;
+//	mPowerUpScore = powerUpScore;
+//}
 
 void pac::Maze::InitCells(std::vector<std::vector<pac::CellType>>&& cells)
 {
@@ -134,7 +134,7 @@ bool pac::Maze::IsValid() const
 	return true;
 }
 
-pac::ScoreType pac::Maze::EatCell(Position pos)
+pac::CellType pac::Maze::EatCell(Position pos)
 {
 	if (mCells[pos.row][pos.col] != CellType::Coin
 		&& mCells[pos.row][pos.col] != CellType::PowerUp)
@@ -142,29 +142,10 @@ pac::ScoreType pac::Maze::EatCell(Position pos)
 		throw std::runtime_error(std::format("Cell at ( {}, {} ) is not a coin or power-up", pos.row, pos.col));
 	}
 
-	if (mCoinScore == static_cast<ScoreType>(-1)
-		|| mPowerUpScore == static_cast<ScoreType>(-1))
-	{
-		throw std::runtime_error("You must call InitScores() before eating cells");
-	}
-
-	uint64_t scoreBonus = 0;
-
-	if (mCells[pos.row][pos.col] == CellType::Coin)
-	{
-		scoreBonus = mCoinScore;
-	}
-	else if (mCells[pos.row][pos.col] == CellType::PowerUp)
-	{
-		scoreBonus = mPowerUpScore;
-	}
-	else
-	{
-		throw std::runtime_error("Invalid cell type");
-	}
-
+	CellType temp = mCells[pos.row][pos.col];
+	
 	mCells[pos.row][pos.col] = CellType::Empty;
-	return scoreBonus;
+	return temp;
 }
 
 pac::Position pac::Maze::GetGhostSpawnPosition() const

@@ -28,12 +28,11 @@ namespace pac
 		void SetState(State state);
 		State GetState() const;
 		
-
-
 	private:
 		Position mPosition;
 		TickType mFirstSpawnDelay;
 		std::unique_ptr<IPathFinder> mPathFinder;
 		State mState;
+		const Position mInitialPosition;
 	};
 }

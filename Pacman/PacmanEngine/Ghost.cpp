@@ -9,6 +9,7 @@ namespace pac
 	Ghost::Ghost(Position initialPosition, TickType firstSpawnDelay)
 		: mPosition(initialPosition)
 		, mFirstSpawnDelay(firstSpawnDelay)
+		, mInitialPosition(initialPosition)
 	{
 		SetState(State::Roaming);
 	}
@@ -39,7 +40,6 @@ namespace pac
 		{
 			//window->DrawTexture(mPosition, Textures::Empty);
 		}
-		
 	}
 
 	Position Ghost::GetCurrentPosition() const
@@ -60,6 +60,11 @@ namespace pac
 		}
 		else if (state == State::Roaming)
 		{
+			mPathFinder = std::make_unique<RoamingPathFinder>(this);
+		}
+		else if (state == State::Eaten)
+		{
+			mPosition = mInitialPosition;
 			mPathFinder = std::make_unique<RoamingPathFinder>(this);
 		}
 	}
