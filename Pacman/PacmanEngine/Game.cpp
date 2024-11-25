@@ -53,3 +53,14 @@ pac::IScene* pac::Game::GetCurrentScene() const
 {
 	return mScenes[mCurrentSceneIndex].get();
 }
+
+void pac::Game::LoseGame()
+{
+	GameplayScene* gameplayScene = dynamic_cast<GameplayScene*>(mScenes[mCurrentSceneIndex].get());
+
+	if (gameplayScene->IsGameOver())
+	{
+		Logger::cout.Info("Game Over!");
+		mWindow->Close();
+	}
+}

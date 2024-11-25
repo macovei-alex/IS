@@ -176,16 +176,17 @@ pac::CollisionType pac::GameplayScene::PacmanCollidesWith(Ghost& ghost) const
 	return CollisionType::NoCollision;
 }
 
-void pac::GameplayScene::GameOver()
+bool pac::GameplayScene::IsGameOver()
 {
-	if (PacmanCollidesWith(mGhosts[0]) == CollisionType::NoPowerUp ||
-		PacmanCollidesWith(mGhosts[1]) == CollisionType::NoPowerUp ||
-		PacmanCollidesWith(mGhosts[2]) == CollisionType::NoPowerUp ||
-		PacmanCollidesWith(mGhosts[3]) == CollisionType::NoPowerUp)
+	for (int i = 0; i < mGhosts.size(); i++)
 	{
-		mWindow->Close();
-		Logger::cout.Info("Game over!");
+		if (PacmanCollidesWith(mGhosts[i]) != CollisionType::NoPowerUp)
+		{
+			return false;
+		}
 	}
+
+	return true;
 }
 
 void pac::GameplayScene::WinGame()
