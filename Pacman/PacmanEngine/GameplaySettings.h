@@ -14,7 +14,7 @@ namespace pac
 		TicksType mPacmanTicksPerMove = 2;
 		TicksType mGhostTicksPerMove = 2;
 		TicksType mGhostFearedTicksPerMove = 3;
-		TicksType mPowerUpDuration = 30;
+		TicksType mPowerUpDuration = 300;
 		ScoreType mScorePerCoin = 100;
 		ScoreType mScorePerPowerUp = 500;
 		uint8_t ghostCount = 1;

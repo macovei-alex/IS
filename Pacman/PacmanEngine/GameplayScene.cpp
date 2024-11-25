@@ -12,7 +12,6 @@ pac::GameplayScene::GameplayScene(IWindow* window, Maze&& maze, const GameplaySe
 	, mPacman(std::make_shared<Pacman>(mMaze.GetPacmanSpawnPosition(), settings.mPacmanTicksPerMove, settings.mPowerUpDuration))
 	, mGhosts()
 {
-	mMaze.InitScores(settings.mScorePerCoin, settings.mScorePerPowerUp);
 
 	for (decltype(settings.ghostCount) i = 0; i < settings.ghostCount; ++i)
 	{
@@ -93,7 +92,19 @@ void pac::GameplayScene::NextTick()
 		Notify(event.get());
 	}
 
-	mPacman->TryMove(mMaze);
+	if (mPacman->TryMove(mMaze) == CellType::PowerUp)
+	{
+		for (auto& ghost : mGhosts)
+		{
+			ghost.SetState(Ghost::State::Scared);
+		}
+
+		mScore += mSettings.mScorePerPowerUp;
+	}
+	else if (mPacman->TryMove(mMaze) == CellType::Coin)
+	{
+		mScore += mSettings.mScorePerCoin;
+	}
 
 	for (auto& ghost : mGhosts)
 	{
@@ -126,9 +137,6 @@ void pac::GameplayScene::NextTick()
 
 	}
 }
-
-
-
 
 pac::CollisionType pac::GameplayScene::PacmanCollidesWith(Ghost& ghost) const
 {

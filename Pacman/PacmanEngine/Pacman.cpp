@@ -15,12 +15,12 @@ pac::Pacman::Pacman(Position initialPosition, TicksType ticksPerMove, TicksType 
 	// empty
 }
 
-pac::ScoreType pac::Pacman::TryMove(Maze& maze)
+pac::CellType pac::Pacman::TryMove(Maze& maze)
 {
 	++mTick;
 	if (mTick % mTicksPerMove == 0)
 	{
-		return 0;
+		return CellType::Empty;
 	}
 
 	if (!mPosition.IsValid())
@@ -45,7 +45,7 @@ pac::ScoreType pac::Pacman::TryMove(Maze& maze)
 			|| maze.GetCellType(newPosition) == CellType::PowerUp)
 		{
 			mPosition = newPosition;
-			return maze.EatCell(mPosition);
+			return maze.EatCell(newPosition);
 		}
 		if (newPosition.IsValid())
 		{
@@ -61,7 +61,7 @@ pac::ScoreType pac::Pacman::TryMove(Maze& maze)
 		}
 	}
 
-	return 0;
+	return CellType::Empty;
 }
 
 pac::Position pac::Pacman::GetCurrentPosition() const

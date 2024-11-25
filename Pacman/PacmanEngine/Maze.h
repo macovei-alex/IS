@@ -23,12 +23,11 @@ namespace pac
 	{
 	public:
 		Maze();
-		void InitScores(ScoreType coinScore, ScoreType powerUpScore);
 		void InitCells(std::vector<std::vector<CellType>>&& cells);
 		CellType GetCellType(Position pos) const;
 		bool IsWalkable(Position pos) const;
 		bool IsValid() const;
-		uint64_t EatCell(Position pos);
+		pac::CellType EatCell(Position pos);
 		Position GetGhostSpawnPosition() const;
 		Position GetPacmanSpawnPosition() const;
 		Dimensions GetDimensions() const;
