@@ -2,6 +2,7 @@
 
 #include "IWindow.h"
 #include "Dimensions.h"
+#include "GameplaySettings.h"
 
 #include <memory>
 
@@ -22,6 +23,7 @@ namespace pac
 	{
 	public:
 		Maze();
+		void InitScores(ScoreType coinScore, ScoreType powerUpScore);
 		void InitCells(std::vector<std::vector<CellType>>&& cells);
 		CellType GetCellType(Position pos) const;
 		bool IsWalkable(Position pos) const;
@@ -39,5 +41,7 @@ namespace pac
 		std::vector<std::vector<CellType>> mCells;
 		Position mGhostSpawn;
 		Position mPacmanSpawn;
+		ScoreType mCoinScore;
+		ScoreType mPowerUpScore;
 	};
 }

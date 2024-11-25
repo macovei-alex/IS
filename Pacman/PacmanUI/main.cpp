@@ -10,6 +10,7 @@
 int main()
 {
 	sf::RenderWindow renderWindow(sf::VideoMode(1500, 1000), "Pacman Game");
+	pac::GameplaySettings settings;
 
 	pac::Maze maze;
 	maze.ReadMazeFromFile("assets\\maze.txt");
@@ -17,7 +18,6 @@ int main()
 	std::unique_ptr<pac::IWindow> iWindow = std::make_unique<pac::SFMLWindow>
 		(renderWindow, pac::AssetManager("assets"));
 
-	pac::GameplaySettings settings;
 	pac::Game game(std::move(iWindow), std::move(maze), settings);
 	game.Run();
 

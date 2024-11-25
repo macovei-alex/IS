@@ -12,6 +12,8 @@ pac::GameplayScene::GameplayScene(IWindow* window, Maze&& maze, const GameplaySe
 	, mPacman(std::make_shared<Pacman>(mMaze.GetPacmanSpawnPosition(), settings.mPacmanTicksPerMove, settings.mPowerUpDuration))
 	, mGhosts()
 {
+	mMaze.InitScores(settings.mScorePerCoin, settings.mScorePerPowerUp);
+
 	for (decltype(settings.ghostCount) i = 0; i < settings.ghostCount; ++i)
 	{
 		mGhosts.push_back(Ghost(mMaze.GetGhostSpawnPosition(), settings.mGhostFirstSpawnDelay * (i + 1)));

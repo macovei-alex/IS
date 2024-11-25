@@ -13,23 +13,22 @@
 TEST(PacmanTest, VerifyPacmanInitialization)
 {
 	pac::GameplaySettings gps;
-	pac::Pacman pacman({ 10, 10 }, gps.mPacmanTicksPerMove);
+	pac::Pacman pacman({ 10, 10 }, gps.mPacmanTicksPerMove, gps.mPowerUpDuration);
 	EXPECT_EQ(pacman.GetCurrentPosition().row, 10);
 	EXPECT_EQ(pacman.GetCurrentPosition().col, 10);
-	EXPECT_EQ(pacman.GetTicksPerMove(), gps.mPacmanTicksPerMove);
 }
 
 TEST(PacmanTest, VerifyObjectValidPosition)
 {
 	pac::GameplaySettings gps;
-	pac::Pacman pacman({ 10, 10 }, gps.mPacmanTicksPerMove);
+	pac::Pacman pacman({ 10, 10 }, gps.mPacmanTicksPerMove, gps.mPowerUpDuration);
 	EXPECT_EQ(pacman.GetCurrentPosition().IsValid(), true);
 }
 
 TEST(PacmanTest, VerifyObjectInvalidPosition)
 {
 	pac::GameplaySettings gps;
-	pac::Pacman pacman(pac::Position::GetInvalid(), gps.mPacmanTicksPerMove);
+	pac::Pacman pacman(pac::Position::GetInvalid(), gps.mPacmanTicksPerMove, gps.mPowerUpDuration);
 	EXPECT_EQ(pacman.GetCurrentPosition().IsValid(), false);
 }
 
@@ -44,7 +43,7 @@ TEST(PacmanTest, VerifyMovementInMaze)
 	pac::Maze maze = pac::test::ReadMazeFromStr(mazeStr);
 
 	pac::GameplaySettings gps;
-	pac::Pacman pacman({ 1, 1 }, gps.mPacmanTicksPerMove);
+	pac::Pacman pacman({ 1, 1 }, gps.mPacmanTicksPerMove, gps.mPowerUpDuration);
 
 	pac::KeyPressedEvent keyEventRight(pac::KeyCode::Right);
 	pacman.OnEvent(&keyEventRight);
@@ -107,7 +106,7 @@ TEST(PacmanTest, VerifyMovementToWallCell)
 	pac::Maze maze = pac::test::ReadMazeFromStr(mazeStr);
 
 	pac::GameplaySettings gps;
-	pac::Pacman pacman({ 1, 1 }, gps.mPacmanTicksPerMove);
+	pac::Pacman pacman({ 1, 1 }, gps.mPacmanTicksPerMove, gps.mPowerUpDuration);
 
 	pac::KeyPressedEvent keyEventRight(pac::KeyCode::Right);
 	pacman.OnEvent(&keyEventRight);

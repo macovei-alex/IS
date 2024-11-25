@@ -42,7 +42,7 @@ namespace pac
 		IWindow* mWindow;
 		Maze mMaze;
 		std::shared_ptr<Pacman> mPacman;
-		GameplaySettings mSettings;
+		const GameplaySettings& mSettings;
 		std::vector<pac::Ghost> mGhosts; 
 		std::unordered_map<EventType, std::vector<std::weak_ptr<IListener>>> mListeners;
 	};
