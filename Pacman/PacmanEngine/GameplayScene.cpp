@@ -93,11 +93,7 @@ void pac::GameplayScene::NextTick()
 	{
 		if (mMaze.SeeEachOther(ghost.GetPosition(), mPacman->GetPosition()))
 		{
-			if (mPacman->IsPoweredUp())
-			{
-				ghost.SetState(Ghost::State::Scared);
-			}
-			else
+			if (!mPacman->IsPoweredUp())
 			{
 				ghost.SetState(Ghost::State::Hunting);
 			}
