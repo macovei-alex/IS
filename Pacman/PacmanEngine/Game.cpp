@@ -31,6 +31,8 @@ void pac::Game::Run()
 	while (mWindow->IsOpen())
 	{
 		mScenes[mCurrentSceneIndex]->NextTick();
+		LoseGame();
+		WinGame();
 
 		if (mWindow->ShouldClose())
 		{

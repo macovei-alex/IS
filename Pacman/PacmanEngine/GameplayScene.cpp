@@ -12,7 +12,7 @@ pac::GameplayScene::GameplayScene(IWindow* window, Maze&& maze, const GameplaySe
 	, mPacman(std::make_shared<Pacman>(mMaze.GetPacmanSpawnPosition(), settings.mPacmanTicksPerMove, settings.mPowerUpDuration))
 	, mGhosts()
 	, mScore(0)
-	, mMaximumScore(0)
+	, mCollecatbleEntities(0)
 {
 
 	for (decltype(settings.ghostCount) i = 0; i < settings.ghostCount; ++i)
@@ -35,16 +35,16 @@ pac::GameplayScene::GameplayScene(IWindow* window, Maze&& maze, const GameplaySe
 		{
 			if (mMaze.GetCellType(pos) == CellType::Coin)
 			{
-				mMaximumScore += settings.mScorePerCoin;
+				mCollecatbleEntities++;
 			}
 			else if (mMaze.GetCellType(pos) == CellType::PowerUp)
 			{
-				mMaximumScore += settings.mScorePerPowerUp;
+				mCollecatbleEntities++;
 			}
 		}
 	}
 
-	Logger::cout.Debug(std::format("The maximum score for this maze is ( {} )", mMaximumScore));
+	Logger::cout.Debug(std::format("The maximum collectable entities for this maze is ( {} )", mCollecatbleEntities));
 }
 
 void pac::GameplayScene::Draw() const
@@ -71,7 +71,9 @@ void pac::GameplayScene::NextTick()
 		Notify(event.get());
 	}
 
-	if (mPacman->TryMove(mMaze) == CellType::PowerUp)
+	auto temp = mPacman->TryMove(mMaze);
+
+	if (temp == CellType::PowerUp)
 	{
 		for (auto& ghost : mGhosts)
 		{
@@ -79,10 +81,12 @@ void pac::GameplayScene::NextTick()
 		}
 
 		mScore += mSettings.mScorePerPowerUp;
+		mCollecatbleEntities--;
 	}
-	else if (mPacman->TryMove(mMaze) == CellType::Coin)
+	else if (temp == CellType::Coin)
 	{
 		mScore += mSettings.mScorePerCoin;
+		mCollecatbleEntities--;
 	}
 
 	for (auto& ghost : mGhosts)
@@ -102,15 +106,18 @@ void pac::GameplayScene::NextTick()
 		{
 			ghost.SetState(Ghost::State::Roaming);
 		}
+
 		//daca se intalnesc pacman si ghost
 		CollisionType collision = PacmanCollidesWith(ghost);
-		if (collision == CollisionType::NoPowerUp)
+		//thsi should be called when we verify LoseGame
+		/*if (collision == CollisionType::NoPowerUp)
 		{
 			mWindow->Close();
-		}
-		else if (collision == CollisionType::PoweredUp)
+		}*/
+		if (collision == CollisionType::PoweredUp)
 		{
 			ghost.SetState(Ghost::State::Dead);
+			mScore += mSettings.mScorePerGhost;
 		}
 
 		ghost.NextTick(mMaze, *mPacman);
@@ -152,7 +159,7 @@ bool pac::GameplayScene::IsGameOver()
 
 bool pac::GameplayScene::IsWinGame()
 {
-	if (mScore != mMaximumScore)
+	if (mCollecatbleEntities != 0)
 	{
 		return false;
 	}

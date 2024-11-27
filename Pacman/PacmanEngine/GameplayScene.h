@@ -48,6 +48,6 @@ namespace pac
 		std::vector<Ghost> mGhosts;
 		std::unordered_map<EventType, std::vector<std::weak_ptr<IListener>>> mListeners;
 		ScoreType mScore;
-		ScoreType mMaximumScore;
+		uint16_t mCollecatbleEntities;
 	};
 }
