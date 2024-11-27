@@ -31,7 +31,7 @@ namespace pac
 
 		CollisionType PacmanCollidesWith(const Ghost& ghost) const;
 		bool IsGameOver();
-		void WinGame();
+		bool IsWinGame();
 
 		void AddListener(std::weak_ptr<IListener> listener, EventType eventType) override;
 		void RemoveListener(std::weak_ptr<IListener> listener, EventType eventType) override;

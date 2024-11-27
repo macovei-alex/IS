@@ -64,3 +64,14 @@ void pac::Game::LoseGame()
 		mWindow->Close();
 	}
 }
+
+void pac::Game::WinGame()
+{
+	GameplayScene* gameplayScene = dynamic_cast<GameplayScene*>(mScenes[mCurrentSceneIndex].get());
+
+	if (gameplayScene->IsWinGame())
+	{
+		Logger::cout.Info("You Win!");
+		mWindow->Close();
+	}
+}

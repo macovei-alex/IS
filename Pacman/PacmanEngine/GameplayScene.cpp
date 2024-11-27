@@ -148,13 +148,14 @@ bool pac::GameplayScene::IsGameOver()
 	return true;
 }
 
-void pac::GameplayScene::WinGame()
+bool pac::GameplayScene::IsWinGame()
 {
-	if (mScore == mMaximumScore)
+	if (mScore != mMaximumScore)
 	{
-		mWindow->Close();
-		Logger::cout.Info("Game won!");
+		return false;
 	}
+
+	return true;
 }
 
 void pac::GameplayScene::RemoveExpiredListeners()
