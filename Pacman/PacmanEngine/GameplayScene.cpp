@@ -102,11 +102,12 @@ void pac::GameplayScene::NextTick()
 			ghost.SetState(Ghost::State::Roaming);
 		}
 		//daca se intalnesc pacman si ghost
-		if (PacmanCollidesWith(ghost) == CollisionType::NoPowerUp)
+		CollisionType collision = PacmanCollidesWith(ghost);
+		if (collision == CollisionType::NoPowerUp)
 		{
-			//Final
+			mWindow->Close();
 		}
-		else if (PacmanCollidesWith(ghost) == CollisionType::PoweredUp)
+		else if (collision == CollisionType::PoweredUp)
 		{
 			ghost.SetState(Ghost::State::Dead);
 		}
