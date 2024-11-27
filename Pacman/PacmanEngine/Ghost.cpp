@@ -33,11 +33,19 @@ namespace pac
 
 	void Ghost::Draw(IWindow* window) const
 	{
-		window->DrawTexture(mPosition, Textures::Ghost);
 		//daca ghost e in stare de eaten,fantoma dispare 3 secunde si reapare
 		if (mState == State::Dead)
 		{
 			//window->DrawTexture(mPosition, Textures::Empty);
+			window->DrawTexture(mPosition, Textures::Ghost);
+		}
+		else if (mState == State::Scared)
+		{
+			window->DrawTexture(mPosition, Textures::ScaredGhost);
+		}
+		else
+		{
+			window->DrawTexture(mPosition, Textures::Ghost);
 		}
 	}
 
@@ -48,6 +56,11 @@ namespace pac
 
 	void Ghost::SetState(State state)
 	{
+		if (mState == state)
+		{
+			return;
+		}
+
 		mState = state;
 		switch (mState)
 		{

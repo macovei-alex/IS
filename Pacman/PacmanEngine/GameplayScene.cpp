@@ -26,12 +26,12 @@ pac::GameplayScene::GameplayScene(IWindow* window, Maze&& maze, const GameplaySe
 
 	AddListener(mPacman, EventType::KeyPressed);
 
-	auto [height, width] = mMaze.GetDimensions();
+	Dimensions dimensions = mMaze.GetDimensions();
 	Position pos;
 
-	for (pos.row = 0; pos.row < height; ++pos.row)
+	for (pos.row = 0; pos.row < dimensions.rows; ++pos.row)
 	{
-		for (pos.col = 0; pos.col < width; ++pos.col)
+		for (pos.col = 0; pos.col < dimensions.cols; ++pos.col)
 		{
 			if (mMaze.GetCellType(pos) == CellType::Coin)
 			{
@@ -45,52 +45,6 @@ pac::GameplayScene::GameplayScene(IWindow* window, Maze&& maze, const GameplaySe
 	}
 
 	Logger::cout.Debug(std::format("The maximum score for this maze is ( {} )", mMaximumScore));
-}
-
-void pac::GameplayScene::AddListener(std::weak_ptr<IListener> listener, EventType eventType)
-{
-	mListeners[eventType].push_back(listener);
-}
-
-void pac::GameplayScene::RemoveListener(std::weak_ptr<IListener> listener, EventType eventType)
-{
-	auto listenerLocked = listener.lock();
-	auto& listeners = mListeners[eventType];
-	auto foundIterator = std::find_if(listeners.begin(), listeners.end(),
-		[&listenerLocked](const std::weak_ptr<IListener>& listenerElement)
-		{
-			return listenerElement.lock().get() == listenerLocked.get();
-		});
-
-	if (foundIterator == listeners.end())
-	{
-		Logger::cout.Info(std::format("Listener for event type ( {} ) could not be found", GetEventTypeName(eventType)));
-	}
-
-	listeners.erase(foundIterator);
-	Logger::cout.Debug(std::format("An event listener for event type ( {} ) has successfuly been removed", GetEventTypeName(eventType)));
-}
-
-void pac::GameplayScene::Notify(IEvent* event) const
-{
-	auto foundIterator = mListeners.find(event->GetType());
-	if (foundIterator == mListeners.end())
-	{
-		return;
-	}
-
-	const auto& listeners = foundIterator->second;
-	for (const auto& listener : listeners)
-	{
-		auto locked = listener.lock();
-		if (!locked)
-		{
-			Logger::cout.Warning("Listener could not be locked for notification. Expired listeners are supposed to be removed before Notify() is called. Listener skipped, expecting removal before the next iteration");
-			continue;
-		}
-
-		locked->OnEvent(event);
-	}
 }
 
 void pac::GameplayScene::Draw() const
@@ -162,7 +116,7 @@ void pac::GameplayScene::NextTick()
 	}
 }
 
-pac::CollisionType pac::GameplayScene::PacmanCollidesWith(Ghost& ghost) const
+pac::CollisionType pac::GameplayScene::PacmanCollidesWith(const Ghost& ghost) const
 {
 	if (mPacman->GetPosition() == ghost.GetPosition())
 	{
@@ -183,7 +137,7 @@ pac::CollisionType pac::GameplayScene::PacmanCollidesWith(Ghost& ghost) const
 
 bool pac::GameplayScene::IsGameOver()
 {
-	for (int i = 0; i < mGhosts.size(); i++)
+	for (size_t i = 0; i < mGhosts.size(); i++)
 	{
 		if (PacmanCollidesWith(mGhosts[i]) != CollisionType::NoPowerUp)
 		{
@@ -221,5 +175,51 @@ void pac::GameplayScene::RemoveExpiredListeners()
 			Logger::cout.Debug(std::format("( {} ) listeners were removed for events of type ( {} )",
 				count, GetEventTypeName(event)));
 		}
+	}
+}
+
+void pac::GameplayScene::AddListener(std::weak_ptr<IListener> listener, EventType eventType)
+{
+	mListeners[eventType].push_back(listener);
+}
+
+void pac::GameplayScene::RemoveListener(std::weak_ptr<IListener> listener, EventType eventType)
+{
+	auto listenerLocked = listener.lock();
+	auto& listeners = mListeners[eventType];
+	auto foundIterator = std::find_if(listeners.begin(), listeners.end(),
+		[&listenerLocked](const std::weak_ptr<IListener>& listenerElement)
+		{
+			return listenerElement.lock().get() == listenerLocked.get();
+		});
+
+	if (foundIterator == listeners.end())
+	{
+		Logger::cout.Info(std::format("Listener for event type ( {} ) could not be found", GetEventTypeName(eventType)));
+	}
+
+	listeners.erase(foundIterator);
+	Logger::cout.Debug(std::format("An event listener for event type ( {} ) has successfuly been removed", GetEventTypeName(eventType)));
+}
+
+void pac::GameplayScene::Notify(IEvent* event) const
+{
+	auto foundIterator = mListeners.find(event->GetType());
+	if (foundIterator == mListeners.end())
+	{
+		return;
+	}
+
+	const auto& listeners = foundIterator->second;
+	for (const auto& listener : listeners)
+	{
+		auto locked = listener.lock();
+		if (!locked)
+		{
+			Logger::cout.Warning("Listener could not be locked for notification. Expired listeners are supposed to be removed before Notify() is called. Listener skipped, expecting removal before the next iteration");
+			continue;
+		}
+
+		locked->OnEvent(event);
 	}
 }

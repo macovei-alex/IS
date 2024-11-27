@@ -25,6 +25,7 @@ namespace pac
 		Maze();
 		void InitCells(std::vector<std::vector<CellType>>&& cells);
 		CellType GetCellType(Position pos) const;
+		bool IsEatable(Position pos) const;
 		bool IsWalkable(Position pos) const;
 		bool IsValid() const;
 		pac::CellType EatCell(Position pos);

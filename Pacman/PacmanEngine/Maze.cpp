@@ -105,6 +105,12 @@ pac::CellType pac::Maze::GetCellType(Position pos) const
 	return mCells[pos.row][pos.col];
 }
 
+bool pac::Maze::IsEatable(Position pos) const
+{
+	return mCells[pos.row][pos.col] == CellType::Coin
+		|| mCells[pos.row][pos.col] == CellType::PowerUp;
+}
+
 bool pac::Maze::IsWalkable(Position pos) const
 {
 	Dimensions dimensions = GetDimensions();

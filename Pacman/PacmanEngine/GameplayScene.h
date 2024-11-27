@@ -26,16 +26,16 @@ namespace pac
 	public:
 		GameplayScene(IWindow* window, Maze&& maze, const GameplaySettings& settings);
 
-		void AddListener(std::weak_ptr<IListener> listener, EventType eventType) override;
-		void RemoveListener(std::weak_ptr<IListener> listener, EventType eventType) override;
-		void Notify(IEvent* newEvent) const override;
-
 		void Draw() const override;
 		void NextTick() override;
 
-		CollisionType PacmanCollidesWith(Ghost& ghost) const;
+		CollisionType PacmanCollidesWith(const Ghost& ghost) const;
 		bool IsGameOver();
 		void WinGame();
+
+		void AddListener(std::weak_ptr<IListener> listener, EventType eventType) override;
+		void RemoveListener(std::weak_ptr<IListener> listener, EventType eventType) override;
+		void Notify(IEvent* event) const override;
 
 	private:
 		void RemoveExpiredListeners();

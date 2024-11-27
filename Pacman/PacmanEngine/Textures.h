@@ -10,6 +10,7 @@ namespace pac
 		Wall,
 		Pacman,
 		Ghost,
+		ScaredGhost,
 		Coin,
 		PowerUp,
 		_Count

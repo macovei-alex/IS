@@ -41,23 +41,30 @@ pac::CellType pac::Pacman::TryMove(Maze& maze)
 	if (mDirection.IsValid())
 	{
 		Position newPosition = Add(mPosition, mDirection);
-		if (maze.GetCellType(newPosition) == CellType::Coin
-			|| maze.GetCellType(newPosition) == CellType::PowerUp)
+		if (!newPosition.IsValid())
+		{
+			return CellType::Empty;
+		}
+
+		if (maze.IsEatable(newPosition))
 		{
 			mPosition = newPosition;
-			return maze.EatCell(newPosition);
+			CellType temp = maze.EatCell(newPosition);
+			if (temp == CellType::PowerUp)
+			{
+				SetPowerUp();
+			}
+			return temp;
 		}
-		if (newPosition.IsValid())
+
+		if (maze.IsWalkable(newPosition))
 		{
-			if (maze.IsWalkable(newPosition))
-			{
-				mPosition = newPosition;
-			}
-			else
-			{
-				mDirection = Direction::GetInvalid();
-				mNextDirection = Direction::GetInvalid();
-			}
+			mPosition = newPosition;
+		}
+		else
+		{
+			mDirection = Direction::GetInvalid();
+			mNextDirection = Direction::GetInvalid();
 		}
 	}
 
@@ -76,7 +83,7 @@ void pac::Pacman::SetPowerUp()
 
 bool pac::Pacman::IsPoweredUp() const
 {
-	return mLastPowerUpStart > 0 
+	return mLastPowerUpStart > 0
 		&& mTick - mLastPowerUpStart < mPowerUpDuration;
 }
 
