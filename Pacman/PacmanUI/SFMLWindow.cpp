@@ -40,7 +40,7 @@ void pac::SFMLWindow::DrawTexture(pac::Position position, pac::Textures texture)
 	int a = 50;
 
 	sf::Sprite sprite = mAssetManager.GetSprite(texture);
-	sprite.setPosition(position.col * a + 20.0f, position.row * a + 20.0f);
+	sprite.setPosition(position.col * a + 35.0f, position.row * a + 35.0f);
 	mRenderWindow.draw(sprite);
 }
 

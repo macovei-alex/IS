@@ -55,6 +55,7 @@ void pac::GameplayScene::Draw() const
 	{
 		ghost.Draw(mWindow);
 	}
+	mWindow->DrawScore(mScore);
 }
 
 void pac::GameplayScene::NextTick()

@@ -28,7 +28,6 @@ namespace pac
 		std::unique_ptr<pac::IEvent> ConvertEvent(const sf::Event& event) const;
 
 	private:
-		//TODO: Get pointer to IWindow that will give all the details about the position, ...
 		sf::RenderWindow& mRenderWindow;
 		pac::AssetManager mAssetManager;
 		bool mShouldClose = false;
