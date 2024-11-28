@@ -1,33 +1,50 @@
 ﻿#include "RoamingPathFinder.h"
 #include <cstdlib> // pentru rand()
-#include <ctime>   
+#include <ctime>
+#include <vector>
 
-pac::RoamingPathFinder::RoamingPathFinder(Ghost* ghost)
-	: mGhost(ghost)
+namespace pac
 {
-	// empty
-}
-
-pac::Position pac::RoamingPathFinder::NextMove(const Maze& maze, const Pacman& pacman)
-{
-
-    std::vector<Direction> directions = { Direction::Up(), Direction::Down(), Direction::Left(), Direction::Right() };
-    int randomIndex = rand() % directions.size(); 
-
-    Position newPos = Add(mGhost->GetPosition(), directions[randomIndex]);
-
-    if (maze.IsWalkable(newPos))
+    RoamingPathFinder::RoamingPathFinder(Ghost* ghost)
+        : mGhost(ghost)
     {
-        return newPos;  
+        std::srand(static_cast<unsigned>(std::time(nullptr))); 
+        mCurrentDirection = Direction::Up(); 
     }
 
-    for (const auto& dir : directions)
+    Position RoamingPathFinder::NextMove(const Maze& maze, const Pacman& pacman)
     {
-        Position fallbackPos = Add(mGhost->GetPosition(), dir);
-        if (maze.IsWalkable(fallbackPos))
+        Position currentPosition = mGhost->GetPosition();
+
+        std::vector<Direction> directions = { Direction::Up(), Direction::Down(), Direction::Left(), Direction::Right() };
+
+        directions.erase(std::remove(directions.begin(), directions.end(), OppositeDirection(mCurrentDirection)), directions.end());
+
+        std::vector<Direction> validDirections;
+        for (const auto& dir : directions)
         {
-            return fallbackPos;
+            Position newPos = Add(currentPosition, dir);
+            if (maze.IsWalkable(newPos))
+            {
+                validDirections.push_back(dir);
+            }
         }
+
+        if (!validDirections.empty())
+        {
+            mCurrentDirection = validDirections[std::rand() % validDirections.size()];
+            return Add(currentPosition, mCurrentDirection);
+        }
+
+        return currentPosition;
     }
-    return mGhost->GetPosition();
+
+    Direction RoamingPathFinder::OppositeDirection(const Direction& direction) const
+    {
+        if (direction == Direction::Up()) return Direction::Down();
+        if (direction == Direction::Down()) return Direction::Up();
+        if (direction == Direction::Left()) return Direction::Right();
+        if (direction == Direction::Right()) return Direction::Left();
+        return Direction::Up(); 
+    }
 }
