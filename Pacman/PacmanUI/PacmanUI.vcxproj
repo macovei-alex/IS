@@ -179,6 +179,9 @@
     <None Include="build-events\postbuild-debug.bat" />
     <None Include="build-events\postbuild-release.bat" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="assets\maze.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

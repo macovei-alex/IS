@@ -64,4 +64,9 @@
       <Filter>Resource Files\Build events</Filter>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="assets\maze.txt">
+      <Filter>Assets</Filter>
+    </Text>
+  </ItemGroup>
 </Project>

@@ -1,4 +1,4 @@
-#include "Ghost.h"
+﻿#include "Ghost.h"
 
 #include "HuntPathFinder.h"
 #include "ScaredPathFinder.h"
@@ -28,7 +28,21 @@ namespace pac
 			return;
 		}
 
-		mPosition = mPathFinder->NextMove(maze, pacman);
+		Position nextPosition = mPathFinder->NextMove(maze, pacman);
+		if (nextPosition == mPosition)
+		{
+			for (const auto& direction : { Direction::Up(), Direction::Down(), Direction::Left(), Direction::Right() })
+			{
+				Position alternative = Add(mPosition, direction);
+				if (maze.GetCellType(alternative) != CellType::Wall)
+				{
+					nextPosition = alternative;
+					break;
+				}
+			}
+		}
+
+		mPosition = nextPosition;
 	}
 
 	void Ghost::Draw(IWindow* window) const
@@ -37,7 +51,7 @@ namespace pac
 		if (mState == State::Dead)
 		{
 			//window->DrawTexture(mPosition, Textures::Empty);
-			window->DrawTexture(mPosition, Textures::Ghost);
+			return;
 		}
 		else if (mState == State::Scared)
 		{

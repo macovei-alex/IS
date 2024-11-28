@@ -36,6 +36,14 @@ namespace pac
 		{
 			return !(*this == other);
 		}
+		bool operator<(const Position& other) const
+		{
+			if (row != other.row)
+				return row < other.row;
+			return col < other.col;
+		}
+
+
 
 		decltype(row) NumberOfCellsTo(Position other) const
 		{

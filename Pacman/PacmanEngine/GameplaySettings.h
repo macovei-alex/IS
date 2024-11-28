@@ -7,7 +7,7 @@ namespace pac
 {
 	struct GameplaySettings
 	{
-		TickType mTicksPerSecond = 2;
+		TickType mTicksPerSecond = 3;
 		TickType mPacmanTicksPerMove = 2;
 		TickType mGhostTicksPerMove = 2;
 		TickType mGhostFearedTicksPerMove = 3;
@@ -16,7 +16,7 @@ namespace pac
 		ScoreType mScorePerPowerUp = 500;
 		ScoreType mScorePerGhost = 1000;
 		uint8_t ghostCount = 1;
-		TickType mGhostInitialSpawnDelay = 10;
-		TickType mGhostRespawnDelay = 10;
+		TickType mGhostInitialSpawnDelay = 15;
+		TickType mGhostRespawnDelay = 100;
 	};
 }
