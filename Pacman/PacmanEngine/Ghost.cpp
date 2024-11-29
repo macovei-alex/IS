@@ -57,7 +57,14 @@ namespace pac
 		auto nextPos = mPathFinder->NextMove(maze, pacman);
 		if (mState == State::Dead && nextPos == Position::GetInvalid())
 		{
-			SetState(State::Roaming);
+			if (pacman.IsPoweredUp())
+			{
+				SetState(State::Scared);
+			}
+			else
+			{
+				SetState(State::Roaming);
+			}
 			nextPos = mPathFinder->NextMove(maze, pacman);
 		}
 		mPosition = nextPos;
