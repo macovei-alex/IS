@@ -44,10 +44,6 @@ namespace pac
 
 	void HuntPathFinder::UpdatePath(const Maze& maze, const Pacman& pacman)
 	{
-		static constexpr std::array<Direction, 4> directions = {
-			Direction::Up(), Direction::Down(), Direction::Left(), Direction::Right()
-		};
-
 		const Dimensions dimensions = maze.GetDimensions();
 		const uint64_t size = (uint64_t)dimensions.rows * dimensions.cols;
 
@@ -99,7 +95,7 @@ namespace pac
 				break;
 			}
 
-			for (Direction direction : directions)
+			for (Direction direction : Direction::AllDirections())
 			{
 				Position neighbor = Add(current, direction);
 

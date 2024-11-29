@@ -7,14 +7,21 @@
 #include <thread>
 
 
-pac::Game::Game(std::unique_ptr<IWindow> window, Maze&& maze, const GameplaySettings& settings)
+pac::Game::Game(std::unique_ptr<IWindow> window, Maze&& maze, const GameplaySettings& settings, uint32_t randomSeed)
 	: mWindow(std::move(window))
 	, mScenes()
 	, mCurrentSceneIndex(0)
 	, mSettings(settings)
 {
-	// empty
 	AddScene(std::make_unique<GameplayScene>(mWindow.get(), std::move(maze), settings));
+
+	if (randomSeed == 0)
+	{
+		randomSeed = static_cast<uint32_t>(std::time(nullptr));
+	}
+
+	std::srand(randomSeed);
+	Logger::cout.Info(std::format("Game with seed ( {} ) started", randomSeed));
 }
 
 void pac::Game::AddScene(std::unique_ptr<pac::IScene> scene)

@@ -2,6 +2,9 @@
 
 #include "Position.h"
 
+#include <vector>
+
+
 namespace pac
 {
 	struct Direction
@@ -18,10 +21,29 @@ namespace pac
 		static constexpr Direction Left() { return { 0, -1 }; }
 		static constexpr Direction Right() { return { 0, 1 }; }
 
-		bool operator==(const Direction& other) const
+		static const std::vector<Direction>& AllDirections()
+		{
+			static const std::vector<Direction> directions = {
+				Direction::Up(), Direction::Down(), Direction::Left(), Direction::Right()
+			};
+			return directions;
+		}
+
+		bool operator==(Direction other) const
 		{
 			return row == other.row
 				&& col == other.col;
+		}
+
+		Direction Opposite() const
+		{
+			/*if (*this == Direction::Up()) return Direction::Down();
+			if (*this == Direction::Down()) return Direction::Up();
+			if (*this == Direction::Left()) return Direction::Right();
+			if (*this == Direction::Right()) return Direction::Left();
+			return Direction::Up();*/
+
+			return { static_cast<decltype(row)>(-row), static_cast<decltype(col)>(-col) };
 		}
 	};
 

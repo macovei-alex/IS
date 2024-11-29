@@ -4,8 +4,8 @@
 
 
 pac::AssetManager::AssetManager(std::string_view folderPath, bool scaleOnLoad)
-	: mTextures(static_cast<size_t>(pac::Textures::_Count))
-	, mSprites(static_cast<size_t>(pac::Textures::_Count))
+	: mTextures(static_cast<size_t>(Textures::_Count))
+	, mSprites(static_cast<size_t>(Textures::_Count))
 {
 	const std::string folderStr(folderPath);
 
@@ -39,7 +39,7 @@ pac::AssetManager::AssetManager(std::string_view folderPath, bool scaleOnLoad)
 	}
 }
 
-sf::Sprite& pac::AssetManager::GetSprite(pac::Textures texture)
+sf::Sprite& pac::AssetManager::GetSprite(Textures texture)
 {
 	return mSprites.at((size_t)texture);
 }

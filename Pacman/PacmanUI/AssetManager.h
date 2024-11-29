@@ -13,7 +13,7 @@ namespace pac
 	{
 	public:
 		AssetManager(std::string_view folderPath, bool scaleOnLoad = true);
-		sf::Sprite& GetSprite(pac::Textures texture);
+		sf::Sprite& GetSprite(Textures texture);
 
 	private:
 		std::vector<sf::Sprite> mSprites;
