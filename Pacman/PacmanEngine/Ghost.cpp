@@ -10,12 +10,14 @@
 
 namespace pac
 {
-	Ghost::Ghost(Position initialPosition, TickType firstSpawnDelay, TickType respawnDelay)
-		: mPosition(initialPosition)
-		, mInitialPosition(initialPosition)
+	Ghost::Ghost(Position spawnPos, TickType firstSpawnDelay, const GameplaySettings& settings)
+		: mPosition(spawnPos)
+		, mSpawnPosition(spawnPos)
 		, mTick(0)
+		, mTicksPerMove(settings.mGhostTicksPerMove)
+		, mTicksPerMoveScared(settings.mGhostScaredTicksPerMove)
 		, mFirstSpawnDelay(firstSpawnDelay)
-		, mRespawnDelay(respawnDelay)
+		, mRespawnDelay(settings.mGhostRespawnDelay)
 	{
 		SetState(State::Dead);
 	}
@@ -28,10 +30,16 @@ namespace pac
 			return;
 		}
 
+		if (!((mState != State::Scared && mTick % mTicksPerMove == 0
+			|| mState == State::Scared && mTick % mTicksPerMoveScared == 0)))
+		{
+			return;
+		}
+
 		Position nextPosition = mPathFinder->NextMove(maze, pacman);
 		if (nextPosition == mPosition)
 		{
-			for (const auto& direction : { Direction::Up(), Direction::Down(), Direction::Left(), Direction::Right() })
+			for (Direction direction : Direction::AllDirections())
 			{
 				Position alternative = Add(mPosition, direction);
 				if (maze.GetCellType(alternative) != CellType::Wall)
@@ -82,14 +90,14 @@ namespace pac
 			mPathFinder = std::make_unique<HuntPathFinder>(this);
 			break;
 		case State::Scared:
-			mPathFinder = std::make_unique<ScaredPathFinder>();
+			mPathFinder = std::make_unique<ScaredPathFinder>(this);
 			break;
 		case State::Roaming:
 			mPathFinder = std::make_unique<RoamingPathFinder>(this);
 			break;
 		case State::Dead:
 			mPathFinder = std::make_unique<DelayedRoamingPathFinder>(this, mRespawnDelay);
-			mPosition = mInitialPosition;
+			mPosition = mSpawnPosition;
 			break;
 		default:
 			throw std::runtime_error(std::format("State ( {} ) does not exist", (int)state));

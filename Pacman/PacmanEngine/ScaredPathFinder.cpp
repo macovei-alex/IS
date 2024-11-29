@@ -7,9 +7,15 @@
 
 namespace pac
 {
+	ScaredPathFinder::ScaredPathFinder(Ghost* ghost)
+		: mGhost(ghost)
+	{
+		// empty
+	}
+
 	Position ScaredPathFinder::NextMove(const Maze& maze, const Pacman& pacman)
 	{
-		Position ghostPosition = maze.GetGhostSpawnPosition();
+		Position ghostPosition = mGhost->GetPosition();
 		Position pacmanPosition = pacman.GetPosition();
 
 		std::queue<Position> bfsQueue;

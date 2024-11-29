@@ -10,7 +10,7 @@ namespace pac
 		TickType mTicksPerSecond = 3;
 		TickType mPacmanTicksPerMove = 2;
 		TickType mGhostTicksPerMove = 2;
-		TickType mGhostFearedTicksPerMove = 3;
+		TickType mGhostScaredTicksPerMove = 3;
 		TickType mPowerUpDuration = 100;
 		ScoreType mScorePerCoin = 100;
 		ScoreType mScorePerPowerUp = 500;

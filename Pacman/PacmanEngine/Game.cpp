@@ -7,7 +7,7 @@
 #include <thread>
 
 
-pac::Game::Game(std::unique_ptr<IWindow> window, Maze&& maze, const GameplaySettings& settings, uint32_t randomSeed)
+pac::Game::Game(std::unique_ptr<IWindow> window, Maze&& maze, GameplaySettings settings, uint32_t randomSeed)
 	: mWindow(std::move(window))
 	, mScenes()
 	, mCurrentSceneIndex(0)

@@ -21,7 +21,7 @@ namespace pac
 		};
 
 	public:
-		Ghost(Position initialPosition, TickType firstSpawnDelay, TickType respawnDelay);
+		Ghost(Position spawnPos, TickType firstSpawnDelay, const GameplaySettings& settings);
 		void NextTick(const Maze& maze, const Pacman& pacman);
 		void Draw(IWindow* window) const;
 		Position GetPosition() const;
@@ -31,12 +31,14 @@ namespace pac
 	private:
 		Position mPosition;
 		TickType mTick;
+		TickType mTicksPerMove;
+		TickType mTicksPerMoveScared;
 		TickType mFirstSpawnDelay;
 		TickType mRespawnDelay;
 		std::unique_ptr<IPathFinder> mPathFinder;
 		State mState;
 
 	private:
-		const Position mInitialPosition;
+		const Position mSpawnPosition;
 	};
 }

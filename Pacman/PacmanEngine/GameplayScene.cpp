@@ -12,7 +12,7 @@ pac::GameplayScene::GameplayScene(IWindow* window, Maze&& maze, const GameplaySe
 	, mPacman(std::make_shared<Pacman>(mMaze.GetPacmanSpawnPosition(), settings.mPacmanTicksPerMove, settings.mPowerUpDuration))
 	, mGhosts()
 	, mScore(0)
-	, mCollecatbleEntities(0)
+	, mCollectibleEntities(0)
 {
 
 	for (decltype(settings.ghostCount) i = 0; i < settings.ghostCount; ++i)
@@ -20,7 +20,7 @@ pac::GameplayScene::GameplayScene(IWindow* window, Maze&& maze, const GameplaySe
 		mGhosts.push_back(Ghost(
 			mMaze.GetGhostSpawnPosition(),
 			settings.mGhostInitialSpawnDelay * (i + 1),
-			settings.mGhostRespawnDelay));
+			settings));
 		mGhosts.back().SetState(Ghost::State::Roaming);
 	}
 
@@ -35,16 +35,16 @@ pac::GameplayScene::GameplayScene(IWindow* window, Maze&& maze, const GameplaySe
 		{
 			if (mMaze.GetCellType(pos) == CellType::Coin)
 			{
-				mCollecatbleEntities++;
+				mCollectibleEntities++;
 			}
 			else if (mMaze.GetCellType(pos) == CellType::PowerUp)
 			{
-				mCollecatbleEntities++;
+				mCollectibleEntities++;
 			}
 		}
 	}
 
-	Logger::cout.Debug(std::format("The maximum collectable entities for this maze is ( {} )", mCollecatbleEntities));
+	Logger::cout.Debug(std::format("The maximum collectable entities for this maze is ( {} )", mCollectibleEntities));
 }
 
 void pac::GameplayScene::Draw() const
@@ -81,12 +81,12 @@ void pac::GameplayScene::NextTick()
 		}
 
 		mScore += mSettings.mScorePerPowerUp;
-		mCollecatbleEntities--;
+		mCollectibleEntities--;
 	}
 	else if (temp == CellType::Coin)
 	{
 		mScore += mSettings.mScorePerCoin;
-		mCollecatbleEntities--;
+		mCollectibleEntities--;
 	}
 
 	for (auto& ghost : mGhosts)
@@ -155,7 +155,7 @@ bool pac::GameplayScene::IsGameOver()
 
 bool pac::GameplayScene::IsWinGame()
 {
-	if (mCollecatbleEntities != 0)
+	if (mCollectibleEntities != 0)
 	{
 		return false;
 	}
