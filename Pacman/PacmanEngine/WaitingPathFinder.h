@@ -4,18 +4,18 @@
 #include "Ghost.h"
 
 
-
 namespace pac
 {
-	class RoamingPathFinder : public IPathFinder
+	class WaitingPathFinder : public IPathFinder
 	{
 	public:
-		RoamingPathFinder(const Ghost* ghost);
+		WaitingPathFinder(const Ghost* ghost, TickType delay);
 		Position NextMove(const Maze& maze, const Pacman& pacman) override;
 		void Attach(Ghost* ghost) override;
 
-	protected:
+	private:
 		const Ghost* mGhost;
-		Direction mCurrentDirection;
+		TickType mTick;
+		TickType mDelay;
 	};
 }

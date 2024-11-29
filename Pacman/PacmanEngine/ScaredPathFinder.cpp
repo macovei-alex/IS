@@ -7,7 +7,7 @@
 
 namespace pac
 {
-	ScaredPathFinder::ScaredPathFinder(Ghost* ghost)
+	ScaredPathFinder::ScaredPathFinder(const Ghost* ghost)
 		: mGhost(ghost)
 	{
 		// empty
@@ -70,5 +70,10 @@ namespace pac
 		}
 
 		return nextMove;
+	}
+
+	void ScaredPathFinder::Attach(Ghost* ghost)
+	{
+		mGhost = ghost;
 	}
 }

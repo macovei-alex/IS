@@ -3,7 +3,7 @@
 #include "HuntPathFinder.h"
 #include "ScaredPathFinder.h"
 #include "RoamingPathFinder.h"
-#include "DelayedRoamingPathFinder.h"
+#include "WaitingPathFinder.h"
 
 #include <format>
 
@@ -19,7 +19,21 @@ namespace pac
 		, mFirstSpawnDelay(firstSpawnDelay)
 		, mRespawnDelay(settings.mGhostRespawnDelay)
 	{
-		SetState(State::Dead);
+		SetState(State::Roaming);
+	}
+
+	Ghost::Ghost(Ghost&& other)
+		: mPosition(other.mPosition)
+		, mSpawnPosition(other.mSpawnPosition)
+		, mTick(other.mTick)
+		, mTicksPerMove(other.mTicksPerMove)
+		, mTicksPerMoveScared(other.mTicksPerMoveScared)
+		, mFirstSpawnDelay(other.mFirstSpawnDelay)
+		, mRespawnDelay(other.mRespawnDelay)
+		, mPathFinder(std::move(other.mPathFinder))
+	{
+		// VERY IMPORTANT for moving the ghost into the ghosts vector without breaking the link
+		mPathFinder->Attach(this);
 	}
 
 	void Ghost::NextTick(const Maze& maze, const Pacman& pacman)
@@ -36,21 +50,12 @@ namespace pac
 			return;
 		}
 
-		Position nextPosition = mPathFinder->NextMove(maze, pacman);
-		if (nextPosition == mPosition)
+		auto nextPos = mPathFinder->NextMove(maze, pacman);
+		if (mState == State::Dead && nextPos != Position::GetInvalid())
 		{
-			for (Direction direction : Direction::AllDirections())
-			{
-				Position alternative = Add(mPosition, direction);
-				if (maze.GetCellType(alternative) != CellType::Wall)
-				{
-					nextPosition = alternative;
-					break;
-				}
-			}
+			SetState(State::Roaming);
 		}
-
-		mPosition = nextPosition;
+		mPosition = nextPos;
 	}
 
 	void Ghost::Draw(IWindow* window) const
@@ -96,7 +101,7 @@ namespace pac
 			mPathFinder = std::make_unique<RoamingPathFinder>(this);
 			break;
 		case State::Dead:
-			mPathFinder = std::make_unique<DelayedRoamingPathFinder>(this, mRespawnDelay);
+			mPathFinder = std::make_unique<WaitingPathFinder>(this, mRespawnDelay);
 			mPosition = mSpawnPosition;
 			break;
 		default:

@@ -66,10 +66,10 @@
     <ClCompile Include="ScaredPathFinder.cpp">
       <Filter>Source Files\PathFinders</Filter>
     </ClCompile>
-    <ClCompile Include="DelayedRoamingPathFinder.h">
+    <ClCompile Include="WaitingPathFinder.h">
       <Filter>Header Files\PathFinders</Filter>
     </ClCompile>
-    <ClCompile Include="DelayedRoamingPathFinder.cpp">
+    <ClCompile Include="WaitingPathFinder.cpp">
       <Filter>Source Files\PathFinders</Filter>
     </ClCompile>
   </ItemGroup>

@@ -13,13 +13,12 @@ pac::GameplayScene::GameplayScene(IWindow* window, Maze&& maze, const GameplaySe
 	, mScore(0)
 	, mCollectibleEntities(0)
 {
-	for (decltype(settings.ghostCount) i = 0; i < settings.ghostCount; ++i)
+	for (decltype(settings.mGhostCount) i = 0; i < settings.mGhostCount; ++i)
 	{
 		mGhosts.push_back(Ghost(
 			mMaze.GetGhostSpawnPosition(),
 			settings.mGhostInitialSpawnDelay * (i + 1),
 			settings));
-		mGhosts.back().SetState(Ghost::State::Roaming);
 	}
 
 	AddListener(mPacman, EventType::KeyPressed);
@@ -89,6 +88,12 @@ pac::SceneState pac::GameplayScene::NextTick()
 
 	for (auto& ghost : mGhosts)
 	{
+		if (ghost.GetState() == Ghost::State::Dead)
+		{
+			ghost.NextTick(mMaze, *mPacman);
+			continue;
+		}
+
 		if (mMaze.SeeEachOther(ghost.GetPosition(), mPacman->GetPosition()))
 		{
 			if (!mPacman->IsPoweredUp())

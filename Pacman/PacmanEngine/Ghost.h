@@ -22,6 +22,11 @@ namespace pac
 
 	public:
 		Ghost(Position spawnPos, TickType firstSpawnDelay, const GameplaySettings& settings);
+		Ghost(const Ghost& other) = delete;
+		void operator=(const Ghost& other) = delete;
+		Ghost(Ghost&& other);
+		void operator=(Ghost&& other) = delete;
+
 		void NextTick(const Maze& maze, const Pacman& pacman);
 		void Draw(IWindow* window) const;
 		Position GetPosition() const;

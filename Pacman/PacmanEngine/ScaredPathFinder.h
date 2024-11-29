@@ -8,10 +8,11 @@ namespace pac
 	class ScaredPathFinder : public IPathFinder
 	{
 	public:
-		ScaredPathFinder(Ghost* ghost);
+		ScaredPathFinder(const Ghost* ghost);
 		Position NextMove(const Maze& maze, const Pacman& pacman) override;
+		void Attach(Ghost* ghost) override;
 
 	private:
-		Ghost* mGhost;
+		const Ghost* mGhost;
 	};
 }
