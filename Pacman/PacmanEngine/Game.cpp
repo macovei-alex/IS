@@ -33,16 +33,27 @@ void pac::Game::Run()
 {
 	static const std::chrono::milliseconds sleepDuration(1000 / mSettings.mTicksPerSecond);
 
-	Logger::cout.Info("Game running");
+	Logger::cout.Info("Game started");
 
-	while (mWindow->IsOpen())
+	while (true)
 	{
-		mScenes[mCurrentSceneIndex]->NextTick();
-		LoseGame();
-		WinGame();
+		SceneState sceneState = mScenes[mCurrentSceneIndex]->NextTick();
 
-		if (mWindow->ShouldClose())
+		if (sceneState == SceneState::Won)
 		{
+			Logger::cout.Info("--------  GAME WON  --------");
+			mWindow->Close();
+			break;
+		}
+		else if (sceneState == SceneState::Lost)
+		{
+			Logger::cout.Info("--------  GAME LOST  --------");
+			mWindow->Close();
+			break;
+		}
+		else if (sceneState == SceneState::WindowClosed)
+		{
+			Logger::cout.Info("Window closed");
 			mWindow->Close();
 			break;
 		}
@@ -52,35 +63,10 @@ void pac::Game::Run()
 		mWindow->Display();
 
 		std::this_thread::sleep_for(sleepDuration);
-
 	}
-
-	Logger::cout.Debug("Game closed successfully");
 }
 
 pac::IScene* pac::Game::GetCurrentScene() const
 {
 	return mScenes[mCurrentSceneIndex].get();
-}
-
-void pac::Game::LoseGame()
-{
-	GameplayScene* gameplayScene = dynamic_cast<GameplayScene*>(mScenes[mCurrentSceneIndex].get());
-
-	if (gameplayScene->IsGameOver())
-	{
-		Logger::cout.Info("Game Over!");
-		mWindow->Close();
-	}
-}
-
-void pac::Game::WinGame()
-{
-	GameplayScene* gameplayScene = dynamic_cast<GameplayScene*>(mScenes[mCurrentSceneIndex].get());
-
-	if (gameplayScene->IsWinGame())
-	{
-		Logger::cout.Info("You Win!");
-		mWindow->Close();
-	}
 }

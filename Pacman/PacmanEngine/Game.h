@@ -19,8 +19,6 @@ namespace pac
 		void AddScene(std::unique_ptr<IScene> scene);
 		void Run() override;
 		IScene* GetCurrentScene() const;
-		void LoseGame();
-		void WinGame();
 
 	private:
 		std::unique_ptr<IWindow> mWindow;

@@ -10,11 +10,9 @@ pac::GameplayScene::GameplayScene(IWindow* window, Maze&& maze, const GameplaySe
 	, mMaze(std::move(maze))
 	, mSettings(settings)
 	, mPacman(std::make_shared<Pacman>(mMaze.GetPacmanSpawnPosition(), settings.mPacmanTicksPerMove, settings.mPowerUpDuration))
-	, mGhosts()
 	, mScore(0)
 	, mCollectibleEntities(0)
 {
-
 	for (decltype(settings.ghostCount) i = 0; i < settings.ghostCount; ++i)
 	{
 		mGhosts.push_back(Ghost(
@@ -58,12 +56,12 @@ void pac::GameplayScene::Draw() const
 	mWindow->DrawScore(mScore);
 }
 
-void pac::GameplayScene::NextTick()
+pac::SceneState pac::GameplayScene::NextTick()
 {
 	auto events = mWindow->GetEvents();
 	if (mWindow->ShouldClose())
 	{
-		return;
+		return SceneState::WindowClosed;
 	}
 
 	for (const auto& event : events)
@@ -103,13 +101,14 @@ void pac::GameplayScene::NextTick()
 			ghost.SetState(Ghost::State::Roaming);
 		}
 
-		//daca se intalnesc pacman si ghost
-		CollisionType collision = PacmanCollidesWith(ghost);
-		//thsi should be called when we verify LoseGame
-		/*if (collision == CollisionType::NoPowerUp)
+		// daca se intalnesc pacman si ghost
+		CollisionType collision = PacmanCollisionWith(ghost);
+
+		// this should be called when we verify LoseGame
+		if (collision == CollisionType::NoPowerUp)
 		{
-			mWindow->Close();
-		}*/
+			return SceneState::Lost;
+		}
 		if (collision == CollisionType::PoweredUp)
 		{
 			ghost.SetState(Ghost::State::Dead);
@@ -117,11 +116,12 @@ void pac::GameplayScene::NextTick()
 		}
 
 		ghost.NextTick(mMaze, *mPacman);
-
 	}
+
+	return IsGameWon() ? SceneState::Won : SceneState::Playing;
 }
 
-pac::CollisionType pac::GameplayScene::PacmanCollidesWith(const Ghost& ghost) const
+pac::CollisionType pac::GameplayScene::PacmanCollisionWith(const Ghost& ghost) const
 {
 	if (mPacman->GetPosition() == ghost.GetPosition())
 	{
@@ -140,20 +140,7 @@ pac::CollisionType pac::GameplayScene::PacmanCollidesWith(const Ghost& ghost) co
 	return CollisionType::NoCollision;
 }
 
-bool pac::GameplayScene::IsGameOver()
-{
-	for (size_t i = 0; i < mGhosts.size(); i++)
-	{
-		if (PacmanCollidesWith(mGhosts[i]) != CollisionType::NoPowerUp)
-		{
-			return false;
-		}
-	}
-
-	return true;
-}
-
-bool pac::GameplayScene::IsWinGame()
+bool pac::GameplayScene::IsGameWon() const
 {
 	if (mCollectibleEntities != 0)
 	{
