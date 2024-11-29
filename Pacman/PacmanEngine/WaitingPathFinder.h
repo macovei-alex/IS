@@ -11,11 +11,10 @@ namespace pac
 	public:
 		WaitingPathFinder(const Ghost* ghost, TickType delay);
 		Position NextMove(const Maze& maze, const Pacman& pacman) override;
-		void Attach(Ghost* ghost) override;
+		void AttachTo(const Ghost* ghost) override;
 
 	private:
 		const Ghost* mGhost;
-		TickType mTick;
-		TickType mDelay;
+		TickType mTargetTick;
 	};
 }

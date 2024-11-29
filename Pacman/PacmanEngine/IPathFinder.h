@@ -13,6 +13,6 @@ namespace pac
 	public:
 		virtual ~IPathFinder() = default;
 		virtual Position NextMove(const Maze& maze, const Pacman& pacman) = 0;
-		virtual void Attach(Ghost* ghost) = 0;
+		virtual void AttachTo(const Ghost* ghost) = 0;
 	};
 }

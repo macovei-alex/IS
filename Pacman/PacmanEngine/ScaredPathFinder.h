@@ -10,7 +10,7 @@ namespace pac
 	public:
 		ScaredPathFinder(const Ghost* ghost);
 		Position NextMove(const Maze& maze, const Pacman& pacman) override;
-		void Attach(Ghost* ghost) override;
+		void AttachTo(const Ghost* ghost) override;
 
 	private:
 		const Ghost* mGhost;

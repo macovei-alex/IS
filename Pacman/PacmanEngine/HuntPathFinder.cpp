@@ -13,11 +13,10 @@
 namespace pac
 {
 	HuntPathFinder::HuntPathFinder(const Ghost* ghost)
-		: mGhost(ghost)
-		, mLastPacmanPosition(Position::GetInvalid())
+		: mLastPacmanPosition(Position::GetInvalid())
 		, mPath()
 	{
-		// empty
+		AttachTo(ghost);
 	}
 
 	Position HuntPathFinder::NextMove(const Maze& maze, const Pacman& pacman)
@@ -110,7 +109,7 @@ namespace pac
 		}
 	}
 
-	void HuntPathFinder::Attach(Ghost* ghost)
+	void HuntPathFinder::AttachTo(const Ghost* ghost)
 	{
 		mGhost = ghost;
 	}

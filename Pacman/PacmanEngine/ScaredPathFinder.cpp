@@ -8,9 +8,8 @@
 namespace pac
 {
 	ScaredPathFinder::ScaredPathFinder(const Ghost* ghost)
-		: mGhost(ghost)
 	{
-		// empty
+		AttachTo(ghost);
 	}
 
 	Position ScaredPathFinder::NextMove(const Maze& maze, const Pacman& pacman)
@@ -72,7 +71,7 @@ namespace pac
 		return nextMove;
 	}
 
-	void ScaredPathFinder::Attach(Ghost* ghost)
+	void ScaredPathFinder::AttachTo(const Ghost* ghost)
 	{
 		mGhost = ghost;
 	}

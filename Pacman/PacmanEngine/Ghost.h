@@ -24,7 +24,7 @@ namespace pac
 		Ghost(Position spawnPos, TickType firstSpawnDelay, const GameplaySettings& settings);
 		Ghost(const Ghost& other) = delete;
 		void operator=(const Ghost& other) = delete;
-		Ghost(Ghost&& other);
+		Ghost(Ghost&& other) noexcept;
 		void operator=(Ghost&& other) = delete;
 
 		void NextTick(const Maze& maze, const Pacman& pacman);
@@ -32,6 +32,7 @@ namespace pac
 		Position GetPosition() const;
 		void SetState(State state);
 		State GetState() const;
+		TickType GetTick() const;
 
 	private:
 		Position mPosition;

@@ -13,7 +13,7 @@ namespace pac
 	public:
 		HuntPathFinder(const Ghost* ghost);
 		Position NextMove(const Maze& maze, const Pacman& pacman) override;
-		void Attach(Ghost* ghost) override;
+		void AttachTo(const Ghost* ghost) override;
 
 	private:
 		void UpdatePath(const Maze& maze, const Pacman& pacman);

@@ -20,9 +20,12 @@ namespace pac
 		, mRespawnDelay(settings.mGhostRespawnDelay)
 	{
 		SetState(State::Roaming);
+
+		// not necessary
+		mPathFinder->AttachTo(this);
 	}
 
-	Ghost::Ghost(Ghost&& other)
+	Ghost::Ghost(Ghost&& other) noexcept
 		: mPosition(other.mPosition)
 		, mSpawnPosition(other.mSpawnPosition)
 		, mTick(other.mTick)
@@ -31,9 +34,10 @@ namespace pac
 		, mFirstSpawnDelay(other.mFirstSpawnDelay)
 		, mRespawnDelay(other.mRespawnDelay)
 		, mPathFinder(std::move(other.mPathFinder))
+		, mState(other.mState)
 	{
 		// VERY IMPORTANT for moving the ghost into the ghosts vector without breaking the link
-		mPathFinder->Attach(this);
+		mPathFinder->AttachTo(this);
 	}
 
 	void Ghost::NextTick(const Maze& maze, const Pacman& pacman)
@@ -51,19 +55,20 @@ namespace pac
 		}
 
 		auto nextPos = mPathFinder->NextMove(maze, pacman);
-		if (mState == State::Dead && nextPos != Position::GetInvalid())
+		if (mState == State::Dead && nextPos == Position::GetInvalid())
 		{
 			SetState(State::Roaming);
+			nextPos = mPathFinder->NextMove(maze, pacman);
 		}
 		mPosition = nextPos;
 	}
 
 	void Ghost::Draw(IWindow* window) const
 	{
-		//daca ghost e in stare de eaten,fantoma dispare 3 secunde si reapare
 		if (mState == State::Dead)
 		{
-			//window->DrawTexture(mPosition, Textures::Empty);
+			// TODO: fix this after testing
+			window->DrawTexture(mPosition, Textures::Pacman);
 			return;
 		}
 		else if (mState == State::Scared)
@@ -109,8 +114,13 @@ namespace pac
 		}
 	}
 
-	pac::Ghost::State pac::Ghost::GetState() const
+	Ghost::State Ghost::GetState() const
 	{
 		return mState;
+	}
+
+	TickType Ghost::GetTick() const
+	{
+		return mTick;
 	}
 }

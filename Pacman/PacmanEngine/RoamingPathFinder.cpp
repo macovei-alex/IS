@@ -6,9 +6,9 @@
 namespace pac
 {
 	RoamingPathFinder::RoamingPathFinder(const Ghost* ghost)
-		: mGhost(ghost)
+		: mCurrentDirection(Direction::Up())
 	{
-		mCurrentDirection = Direction::Up();
+		AttachTo(ghost);
 	}
 
 	Position RoamingPathFinder::NextMove(const Maze& maze, const Pacman& pacman)
@@ -38,7 +38,7 @@ namespace pac
 		return currentPosition;
 	}
 
-	void RoamingPathFinder::Attach(Ghost* ghost)
+	void RoamingPathFinder::AttachTo(const Ghost* ghost)
 	{
 		mGhost = ghost;
 	}

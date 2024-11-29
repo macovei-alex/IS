@@ -4,25 +4,22 @@
 namespace pac
 {
 	WaitingPathFinder::WaitingPathFinder(const Ghost* ghost, TickType delay)
-		: mGhost(ghost)
-		, mTick(0)
-		, mDelay(delay)
+		: mTargetTick(ghost->GetTick() + delay)
 	{
-		// empty
+		AttachTo(ghost);
 	}
 
 	Position WaitingPathFinder::NextMove(const Maze& maze, const Pacman& pacman)
 	{
-		if (mTick < mDelay)
+		if (mGhost->GetTick() < mTargetTick)
 		{
-			++mTick;
 			return mGhost->GetPosition();
 		}
 
 		return Position::GetInvalid();
 	}
 
-	void WaitingPathFinder::Attach(Ghost* ghost)
+	void WaitingPathFinder::AttachTo(const Ghost* ghost)
 	{
 		mGhost = ghost;
 	}
