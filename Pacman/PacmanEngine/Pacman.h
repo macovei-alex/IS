@@ -17,7 +17,7 @@ namespace pac
 		void SetPowerUp();
 		bool IsPoweredUp() const;
 		void Draw(IWindow* window) const;
-		void OnEvent(IEvent* event) override;
+		void OnEvent(const IEvent* event) override;
 
 	private:
 		Position mPosition;

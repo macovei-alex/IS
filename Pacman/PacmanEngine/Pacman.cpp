@@ -31,7 +31,7 @@ pac::CellType pac::Pacman::TryMove(Maze& maze)
 	if (mNextDirection.IsValid())
 	{
 		Position newPosition = Add(mPosition, mNextDirection);
-		if (newPosition.IsValid() && maze.GetCellType(newPosition) == CellType::Empty)
+		if (newPosition.IsValid() && maze.IsWalkable(newPosition))
 		{
 			mDirection = mNextDirection;
 			mNextDirection = Direction::GetInvalid();
@@ -56,8 +56,7 @@ pac::CellType pac::Pacman::TryMove(Maze& maze)
 			}
 			return temp;
 		}
-
-		if (maze.IsWalkable(newPosition))
+		else if (maze.IsWalkable(newPosition))
 		{
 			mPosition = newPosition;
 		}
@@ -92,11 +91,11 @@ void pac::Pacman::Draw(IWindow* window) const
 	window->DrawTexture(mPosition, Textures::Pacman);
 }
 
-void pac::Pacman::OnEvent(IEvent* event)
+void pac::Pacman::OnEvent(const IEvent* event)
 {
 	if (event->GetType() == EventType::KeyPressed)
 	{
-		auto keyEvent = dynamic_cast<KeyPressedEvent*>(event);
+		auto keyEvent = dynamic_cast<const KeyPressedEvent*>(event);
 		if (keyEvent == nullptr)
 		{
 			throw std::runtime_error("Failed to cast event to KeyPressedEvent");

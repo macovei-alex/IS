@@ -36,7 +36,9 @@ namespace pac
 		, mPathFinder(std::move(other.mPathFinder))
 		, mState(other.mState)
 	{
-		// VERY IMPORTANT for moving the ghost into the ghosts vector without breaking the link
+		// !!! VERY IMPORTANT !!!
+		// for moving the ghost into the ghosts vector without breaking
+		// the pathFinder's pointer to the ghost
 		mPathFinder->AttachTo(this);
 	}
 
