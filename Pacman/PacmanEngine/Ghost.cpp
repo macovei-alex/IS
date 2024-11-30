@@ -77,7 +77,7 @@ namespace pac
 		if (mState == State::Dead)
 		{
 			// TODO: fix this after testing
-			window->DrawTexture(mPosition, Textures::Pacman);
+			window->DrawTexture(mPosition, Textures::DeadGhost);
 			return;
 		}
 		else if (mState == State::Scared)

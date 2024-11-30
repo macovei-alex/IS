@@ -11,6 +11,7 @@ namespace pac
 		Pacman,
 		Ghost,
 		ScaredGhost,
+		DeadGhost,
 		Coin,
 		PowerUp,
 		_Count
