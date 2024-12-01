@@ -1,78 +1,71 @@
 ﻿#include "ScaredPathFinder.h"
 #include <cmath>
 #include <queue>
-#include <map>
 #include <set>
+#include <map>
 #include <limits>
 
 namespace pac
 {
-	ScaredPathFinder::ScaredPathFinder(const Ghost* ghost)
-	{
-		AttachTo(ghost);
-	}
+    ScaredPathFinder::ScaredPathFinder(const Ghost* ghost)
+    {
+        AttachTo(ghost);
+    }
 
-	Position ScaredPathFinder::NextMove(const Maze& maze, const Pacman& pacman)
-	{
-		Position ghostPosition = mGhost->GetPosition();
-		Position pacmanPosition = pacman.GetPosition();
+    Position ScaredPathFinder::NextMove(const Maze& maze, const Pacman& pacman)
+    {
+        Position ghostPosition = mGhost->GetPosition();
+        Position pacmanPosition = pacman.GetPosition();
 
-		std::queue<Position> bfsQueue;
-		std::map<Position, Position> parent;
-		std::set<Position> visited;
+        std::map<Position, int> distances; 
+        std::queue<Position> bfsQueue;
+        std::set<Position> visited;
 
-		bfsQueue.push(ghostPosition);
-		visited.insert(ghostPosition);
 
-		Position farthestPosition = ghostPosition;
-		decltype(Position::row) maxDistance = 0;
+        bfsQueue.push(pacmanPosition);
+        distances[pacmanPosition] = 0;
+        visited.insert(pacmanPosition);
 
-		// Folosim BFS pentru a explora harta si a gasi cel mai îndepărtat punct față de Pacman
-		while (!bfsQueue.empty())
-		{
-			Position current = bfsQueue.front();
-			bfsQueue.pop();
+        while (!bfsQueue.empty())
+        {
+            Position current = bfsQueue.front();
+            bfsQueue.pop();
 
-			auto distance = current.NumberOfCellsTo(pacmanPosition);
+            for (const auto& direction : Direction::AllDirections())
+            {
+                Position neighbor = Add(current, direction);
+                if (visited.find(neighbor) == visited.end() && maze.GetCellType(neighbor) != CellType::Wall)
+                {
+                    visited.insert(neighbor);
+                    distances[neighbor] = distances[current] + 1;
+                    bfsQueue.push(neighbor);
+                }
+            }
+        }
 
-			// Dacă distanța față de Pacman este mai mare decât cea mai mare distanță găsită până acum
-			if (distance > maxDistance)
-			{
-				maxDistance = distance;
-				farthestPosition = current;
-			}
+        Position bestMove = ghostPosition;
+        int maxDistance = -1;
 
-			// Explorează vecinii
-			for (Direction direction : Direction::AllDirections())
-			{
-				Position neighbor = Add(current, direction);
+        for (const auto& direction : Direction::AllDirections())
+        {
+            Position neighbor = Add(ghostPosition, direction);
 
-				// Verificăm dacă nu este un zid și dacă nu am vizitat deja această poziție
-				if (visited.find(neighbor) == visited.end() && maze.GetCellType(neighbor) != CellType::Wall)
-				{
-					// Verificăm dacă poziția vecină nu este Pacman
-					if (neighbor != pacmanPosition)
-					{
-						bfsQueue.push(neighbor);
-						visited.insert(neighbor);
-						parent[neighbor] = current;
-					}
-				}
-			}
-		}
+            if (maze.GetCellType(neighbor) != CellType::Wall && distances.find(neighbor) != distances.end())
+            {
+                int distance = distances[neighbor];
+                if (distance > maxDistance)
+                {
+                    maxDistance = distance;
+                    bestMove = neighbor;
+                }
+            }
+        }
 
-		// Alege calea care maximizează distanța față de Pacman
-		Position nextMove = farthestPosition;
-		while (parent.find(nextMove) != parent.end() && parent[nextMove] != ghostPosition)
-		{
-			nextMove = parent[nextMove];
-		}
+        return bestMove;
+    }
 
-		return nextMove;
-	}
-
-	void ScaredPathFinder::AttachTo(const Ghost* ghost)
-	{
-		mGhost = ghost;
-	}
+    void ScaredPathFinder::AttachTo(const Ghost* ghost)
+    {
+        mGhost = ghost;
+    }
 }

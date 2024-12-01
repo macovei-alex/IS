@@ -2,6 +2,7 @@
 
 #include "PacmanTests.h"
 #include "MazeTests.h"
+#include "PathFinderTests.h"
 
 int main(int argc, char* argv[])
 {
