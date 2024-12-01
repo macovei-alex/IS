@@ -39,7 +39,6 @@ namespace pac
 		TickType mTick;
 		TickType mTicksPerMove;
 		TickType mTicksPerMoveScared;
-		TickType mFirstSpawnDelay;
 		TickType mRespawnDelay;
 		std::unique_ptr<IPathFinder> mPathFinder;
 		State mState;

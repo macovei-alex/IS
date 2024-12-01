@@ -14,6 +14,7 @@ namespace pac
 	class IWindow
 	{
 	public:
+		virtual ~IWindow() = default;
 		virtual void DrawScore(int64_t score) = 0;
 		virtual void DrawTexture(Position position, pac::Textures texture) = 0;
 		virtual bool IsOpen() const = 0;
@@ -22,6 +23,5 @@ namespace pac
 		virtual void Display() = 0;
 		virtual void Close() = 0;
 		virtual std::vector<std::unique_ptr<IEvent>> GetEvents() = 0;
-		virtual ~IWindow() = default;
 	};
 }

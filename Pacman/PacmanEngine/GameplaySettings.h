@@ -7,13 +7,13 @@ namespace pac
 {
 	struct GameplaySettings
 	{
-		TickType mTicksPerSecond = 3;
+		TickType mTicksPerSecond = 5;
 
 		ScoreType mScorePerCoin = 100;
 		ScoreType mScorePerPowerUp = 500;
 		ScoreType mScorePerGhost = 1000;
 
-		TickType mPowerUpDuration = 100;
+		TickType mPowerUpDuration = 10;
 
 		TickType mPacmanTicksPerMove = 2;
 

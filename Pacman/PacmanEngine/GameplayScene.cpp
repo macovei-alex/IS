@@ -57,15 +57,10 @@ void pac::GameplayScene::Draw() const
 
 pac::SceneState pac::GameplayScene::NextTick()
 {
-	auto events = mWindow->GetEvents();
-	if (mWindow->ShouldClose())
+	SceneState eventsResult = HandleEvents();
+	if (eventsResult != SceneState::Playing)
 	{
-		return SceneState::WindowClosed;
-	}
-
-	for (const auto& event : events)
-	{
-		Notify(event.get());
+		return eventsResult;
 	}
 
 	auto temp = mPacman->TryMove(mMaze);
@@ -88,42 +83,99 @@ pac::SceneState pac::GameplayScene::NextTick()
 
 	for (auto& ghost : mGhosts)
 	{
-		if (ghost.GetState() == Ghost::State::Dead)
+		SceneState collisionResult = HandleCollision(ghost);
+		if (collisionResult != SceneState::Playing)
 		{
-			ghost.NextTick(mMaze, *mPacman);
-			continue;
+			return collisionResult;
 		}
 
-		if (mMaze.SeeEachOther(ghost.GetPosition(), mPacman->GetPosition()))
-		{
-			if (!mPacman->IsPoweredUp())
-			{
-				ghost.SetState(Ghost::State::Hunting);
-			}
-		}
-		else if (ghost.GetState() != Ghost::State::Scared)
-		{
-			ghost.SetState(Ghost::State::Roaming);
-		}
-
-		// daca se intalnesc pacman si ghost
-		CollisionType collision = PacmanCollisionWith(ghost);
-
-		// this should be called when we verify LoseGame
-		if (collision == CollisionType::NoPowerUp)
-		{
-			return SceneState::Lost;
-		}
-		if (collision == CollisionType::PoweredUp)
-		{
-			ghost.SetState(Ghost::State::Dead);
-			mScore += mSettings.mScorePerGhost;
-		}
+		HandleStateTransition(ghost);
 
 		ghost.NextTick(mMaze, *mPacman);
 	}
 
 	return IsGameWon() ? SceneState::Won : SceneState::Playing;
+}
+
+pac::SceneState pac::GameplayScene::HandleEvents()
+{
+	auto events = mWindow->GetEvents();
+	if (mWindow->ShouldClose())
+	{
+		return SceneState::WindowClosed;
+	}
+
+	for (const auto& event : events)
+	{
+		Notify(event.get());
+	}
+	return SceneState::Playing;
+}
+
+pac::SceneState pac::GameplayScene::HandleCollision(Ghost& ghost)
+{
+	// daca se intalnesc pacman si ghost
+	CollisionType collision = PacmanCollisionWith(ghost);
+
+	// this should be called when we verify LoseGame
+	if (collision == CollisionType::NoPowerUp)
+	{
+		return SceneState::Lost;
+	}
+	if (collision == CollisionType::PoweredUp)
+	{
+		ghost.SetState(Ghost::State::Dead);
+		mScore += mSettings.mScorePerGhost;
+	}
+
+	return SceneState::Playing;
+}
+
+void pac::GameplayScene::HandleStateTransition(Ghost& ghost)
+{
+	Ghost::State state = ghost.GetState();
+	if (state == Ghost::State::Dead)
+	{
+		return;
+	}
+
+	if (state == Ghost::State::Roaming)
+	{
+		if (mPacman->IsPoweredUp())
+		{
+			ghost.SetState(Ghost::State::Scared);
+		}
+		else if (SeesPacman(ghost))
+		{
+			ghost.SetState(Ghost::State::Hunting);
+		}
+	}
+	else if (state == Ghost::State::Hunting)
+	{
+		if (mPacman->IsPoweredUp())
+		{
+			ghost.SetState(Ghost::State::Scared);
+		}
+		else if (!SeesPacman(ghost))
+		{
+			ghost.SetState(Ghost::State::Roaming);
+		}
+	}
+	else if (state == Ghost::State::Scared)
+	{
+		if (mPacman->IsPoweredUp())
+		{
+			return;
+		}
+		else if (SeesPacman(ghost))
+		{
+			ghost.SetState(Ghost::State::Hunting);
+		}
+		else
+		{
+			ghost.SetState(Ghost::State::Roaming);
+		}
+	}
 }
 
 pac::CollisionType pac::GameplayScene::PacmanCollisionWith(const Ghost& ghost) const
@@ -143,6 +195,11 @@ pac::CollisionType pac::GameplayScene::PacmanCollisionWith(const Ghost& ghost) c
 	}
 
 	return CollisionType::NoCollision;
+}
+
+bool pac::GameplayScene::SeesPacman(Ghost& ghost) const
+{
+	return mMaze.SeeEachOther(mPacman->GetPosition(), ghost.GetPosition());
 }
 
 bool pac::GameplayScene::IsGameWon() const

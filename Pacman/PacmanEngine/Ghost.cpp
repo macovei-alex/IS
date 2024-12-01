@@ -8,128 +8,121 @@
 #include <format>
 
 
-namespace pac
+pac::Ghost::Ghost(Position spawnPos, TickType firstSpawnDelay, const GameplaySettings& settings)
+	: mPosition(spawnPos)
+	, mSpawnPosition(spawnPos)
+	, mTick(0)
+	, mTicksPerMove(settings.mGhostTicksPerMove)
+	, mTicksPerMoveScared(settings.mGhostScaredTicksPerMove)
+	, mRespawnDelay(settings.mGhostRespawnDelay)
 {
-	Ghost::Ghost(Position spawnPos, TickType firstSpawnDelay, const GameplaySettings& settings)
-		: mPosition(spawnPos)
-		, mSpawnPosition(spawnPos)
-		, mTick(0)
-		, mTicksPerMove(settings.mGhostTicksPerMove)
-		, mTicksPerMoveScared(settings.mGhostScaredTicksPerMove)
-		, mFirstSpawnDelay(firstSpawnDelay)
-		, mRespawnDelay(settings.mGhostRespawnDelay)
-	{
-		SetState(State::Roaming);
+	// not using SetState() bc the death delay is different for the first spawn
+	mState = State::Dead;
+	mPathFinder = std::make_unique<WaitingPathFinder>(this, firstSpawnDelay);
+	
+	// not necessary
+	mPathFinder->AttachTo(this);
+}
 
-		// not necessary
-		mPathFinder->AttachTo(this);
+pac::Ghost::Ghost(Ghost&& other) noexcept
+	: mPosition(other.mPosition)
+	, mSpawnPosition(other.mSpawnPosition)
+	, mTick(other.mTick)
+	, mTicksPerMove(other.mTicksPerMove)
+	, mTicksPerMoveScared(other.mTicksPerMoveScared)
+	, mRespawnDelay(other.mRespawnDelay)
+	, mPathFinder(std::move(other.mPathFinder))
+	, mState(other.mState)
+{
+	// !!! VERY IMPORTANT !!!
+	// for moving the ghost into the ghosts vector without breaking
+	// the pathFinder's pointer to the ghost
+	mPathFinder->AttachTo(this);
+}
+
+void pac::Ghost::NextTick(const Maze& maze, const Pacman& pacman)
+{
+	++mTick;
+
+	if (!((mState != State::Scared && mTick % mTicksPerMove == 0
+		|| mState == State::Scared && mTick % mTicksPerMoveScared == 0)))
+	{
+		return;
 	}
 
-	Ghost::Ghost(Ghost&& other) noexcept
-		: mPosition(other.mPosition)
-		, mSpawnPosition(other.mSpawnPosition)
-		, mTick(other.mTick)
-		, mTicksPerMove(other.mTicksPerMove)
-		, mTicksPerMoveScared(other.mTicksPerMoveScared)
-		, mFirstSpawnDelay(other.mFirstSpawnDelay)
-		, mRespawnDelay(other.mRespawnDelay)
-		, mPathFinder(std::move(other.mPathFinder))
-		, mState(other.mState)
+	auto nextPos = mPathFinder->NextMove(maze, pacman);
+	if (mState == State::Dead && nextPos == Position::GetInvalid())
 	{
-		// !!! VERY IMPORTANT !!!
-		// for moving the ghost into the ghosts vector without breaking
-		// the pathFinder's pointer to the ghost
-		mPathFinder->AttachTo(this);
-	}
-
-	void Ghost::NextTick(const Maze& maze, const Pacman& pacman)
-	{
-		++mTick;
-		if (mTick < mFirstSpawnDelay)
+		if (pacman.IsPoweredUp())
 		{
-			return;
-		}
-
-		if (!((mState != State::Scared && mTick % mTicksPerMove == 0
-			|| mState == State::Scared && mTick % mTicksPerMoveScared == 0)))
-		{
-			return;
-		}
-
-		auto nextPos = mPathFinder->NextMove(maze, pacman);
-		if (mState == State::Dead && nextPos == Position::GetInvalid())
-		{
-			if (pacman.IsPoweredUp())
-			{
-				SetState(State::Scared);
-			}
-			else
-			{
-				SetState(State::Roaming);
-			}
-			nextPos = mPathFinder->NextMove(maze, pacman);
-		}
-		mPosition = nextPos;
-	}
-
-	void Ghost::Draw(IWindow* window) const
-	{
-		if (mState == State::Dead)
-		{
-			// TODO: fix this after testing
-			window->DrawTexture(mPosition, Textures::DeadGhost);
-			return;
-		}
-		else if (mState == State::Scared)
-		{
-			window->DrawTexture(mPosition, Textures::ScaredGhost);
+			SetState(State::Scared);
 		}
 		else
 		{
-			window->DrawTexture(mPosition, Textures::Ghost);
+			SetState(State::Roaming);
 		}
+		nextPos = mPathFinder->NextMove(maze, pacman);
 	}
+	mPosition = nextPos;
+}
 
-	Position Ghost::GetPosition() const
+void pac::Ghost::Draw(IWindow* window) const
+{
+	if (mState == State::Dead)
 	{
-		return mPosition;
+		// TODO: fix this after testing
+		window->DrawTexture(mPosition, Textures::DeadGhost);
+		return;
 	}
-
-	void Ghost::SetState(State state)
+	else if (mState == State::Scared)
 	{
-		if (mState == state)
-		{
-			return;
-		}
-
-		mState = state;
-		switch (mState)
-		{
-		case State::Hunting:
-			mPathFinder = std::make_unique<HuntPathFinder>(this);
-			break;
-		case State::Scared:
-			mPathFinder = std::make_unique<ScaredPathFinder>(this);
-			break;
-		case State::Roaming:
-			mPathFinder = std::make_unique<RoamingPathFinder>(this);
-			break;
-		case State::Dead:
-			mPathFinder = std::make_unique<WaitingPathFinder>(this, mRespawnDelay);
-			mPosition = mSpawnPosition;
-			break;
-		default:
-			throw std::runtime_error(std::format("State ( {} ) does not exist", (int)state));
-		}
+		window->DrawTexture(mPosition, Textures::ScaredGhost);
 	}
-
-	Ghost::State Ghost::GetState() const
+	else
 	{
-		return mState;
+		window->DrawTexture(mPosition, Textures::Ghost);
+	}
+}
+
+pac::Position pac::Ghost::GetPosition() const
+{
+	return mPosition;
+}
+
+void pac::Ghost::SetState(State state)
+{
+	if (mState == state)
+	{
+		return;
 	}
 
-	TickType Ghost::GetTick() const
+	mState = state;
+	switch (mState)
 	{
-		return mTick;
+	case State::Hunting:
+		mPathFinder = std::make_unique<HuntPathFinder>(this);
+		break;
+	case State::Scared:
+		mPathFinder = std::make_unique<ScaredPathFinder>(this);
+		break;
+	case State::Roaming:
+		mPathFinder = std::make_unique<RoamingPathFinder>(this);
+		break;
+	case State::Dead:
+		mPathFinder = std::make_unique<WaitingPathFinder>(this, mRespawnDelay);
+		mPosition = mSpawnPosition;
+		break;
+	default:
+		throw std::runtime_error(std::format("State ( {} ) does not exist", (int)state));
 	}
+}
+
+pac::Ghost::State pac::Ghost::GetState() const
+{
+	return mState;
+}
+
+pac::TickType pac::Ghost::GetTick() const
+{
+	return mTick;
 }

@@ -34,7 +34,13 @@ namespace pac
 		void Notify(IEvent* event) const override;
 
 	private:
+		SceneState HandleEvents();
+		SceneState HandleCollision(Ghost& ghost);
+		void HandleStateTransition(Ghost& ghost);
+
+	private:
 		CollisionType PacmanCollisionWith(const Ghost& ghost) const;
+		bool SeesPacman(Ghost& ghost) const;
 		bool IsGameWon() const;
 		void RemoveExpiredListeners();
 
