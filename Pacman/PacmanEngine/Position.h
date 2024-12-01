@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Dimensions.h"
+#include "typedefs.h"
 
 #include <limits>
 #include <utility>
@@ -10,21 +10,21 @@ namespace pac
 {
 	struct Position
 	{
-		decltype(Dimensions::rows) row = 0;
-		decltype(Dimensions::cols) col = 0;
+		PosType row = 0;
+		PosType col = 0;
 
 		static Position GetInvalid()
 		{
 			return {
-				std::numeric_limits<decltype(row)>::max(),
-				std::numeric_limits<decltype(col)>::max()
+				std::numeric_limits<PosType>::max(),
+				std::numeric_limits<PosType>::max()
 			};
 		}
 
 		bool IsValid() const
 		{
-			return row != std::numeric_limits<decltype(row)>::max() &&
-				col != std::numeric_limits<decltype(col)>::max();
+			return row != std::numeric_limits<PosType>::max() &&
+				col != std::numeric_limits<PosType>::max();
 		}
 
 		bool operator==(const Position& other) const
@@ -45,7 +45,7 @@ namespace pac
 
 
 
-		decltype(row) NumberOfCellsTo(Position other) const
+		PosType NumberOfCellsTo(Position other) const
 		{
 			Position max = {
 				std::max(row, other.row),

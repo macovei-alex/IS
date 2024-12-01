@@ -8,21 +8,21 @@ namespace pac
 {
 	struct Dimensions
 	{
-		uint16_t rows = 0;
-		uint16_t cols = 0;
+		PosType rows = 0;
+		PosType cols = 0;
 
 		static Dimensions GetInvalid()
 		{
 			return {
-				std::numeric_limits<decltype(rows)>::max(),
-				std::numeric_limits<decltype(cols)>::max()
+				std::numeric_limits<PosType>::max(),
+				std::numeric_limits<PosType>::max()
 			};
 		}
 
 		bool IsValid() const
 		{
-			return rows != std::numeric_limits<decltype(rows)>::max()
-				&& cols != std::numeric_limits<decltype(cols)>::max();
+			return rows != std::numeric_limits<PosType>::max()
+				&& cols != std::numeric_limits<PosType>::max();
 		}
 	};
 }

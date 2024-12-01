@@ -73,12 +73,12 @@ pac::SceneState pac::GameplayScene::NextTick()
 		}
 
 		mScore += mSettings.mScorePerPowerUp;
-		mCollectibleEntities--;
+		--mCollectibleEntities;
 	}
 	else if (temp == CellType::Coin)
 	{
 		mScore += mSettings.mScorePerCoin;
-		mCollectibleEntities--;
+		--mCollectibleEntities;
 	}
 
 	for (auto& ghost : mGhosts)
@@ -114,10 +114,7 @@ pac::SceneState pac::GameplayScene::HandleEvents()
 
 pac::SceneState pac::GameplayScene::HandleCollision(Ghost& ghost)
 {
-	// daca se intalnesc pacman si ghost
 	CollisionType collision = PacmanCollisionWith(ghost);
-
-	// this should be called when we verify LoseGame
 	if (collision == CollisionType::NoPowerUp)
 	{
 		return SceneState::Lost;
@@ -197,7 +194,7 @@ pac::CollisionType pac::GameplayScene::PacmanCollisionWith(const Ghost& ghost) c
 	return CollisionType::NoCollision;
 }
 
-bool pac::GameplayScene::SeesPacman(Ghost& ghost) const
+bool pac::GameplayScene::SeesPacman(const Ghost& ghost) const
 {
 	return mMaze.SeeEachOther(mPacman->GetPosition(), ghost.GetPosition());
 }
@@ -238,14 +235,13 @@ void pac::GameplayScene::AddListener(std::weak_ptr<IListener> listener, EventTyp
 	mListeners[eventType].push_back(listener);
 }
 
-void pac::GameplayScene::RemoveListener(std::weak_ptr<IListener> listener, EventType eventType)
+void pac::GameplayScene::RemoveListener(const IListener* listener, EventType eventType)
 {
-	auto listenerLocked = listener.lock();
 	auto& listeners = mListeners[eventType];
 	auto foundIterator = std::find_if(listeners.begin(), listeners.end(),
-		[&listenerLocked](const std::weak_ptr<IListener>& listenerElement)
+		[listener](const std::weak_ptr<IListener>& listenerElement)
 		{
-			return listenerElement.lock().get() == listenerLocked.get();
+			return listenerElement.lock().get() == listener;
 		});
 
 	if (foundIterator == listeners.end())

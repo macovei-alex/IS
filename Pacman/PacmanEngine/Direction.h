@@ -37,12 +37,6 @@ namespace pac
 
 		Direction Opposite() const
 		{
-			/*if (*this == Direction::Up()) return Direction::Down();
-			if (*this == Direction::Down()) return Direction::Up();
-			if (*this == Direction::Left()) return Direction::Right();
-			if (*this == Direction::Right()) return Direction::Left();
-			return Direction::Up();*/
-
 			return { static_cast<decltype(row)>(-row), static_cast<decltype(col)>(-col) };
 		}
 	};
@@ -50,8 +44,8 @@ namespace pac
 	inline Position Add(Position pos, Direction dir)
 	{
 		return {
-			static_cast<decltype(Position::row)>(pos.row + dir.row),
-			static_cast<decltype(Position::col)>(pos.col + dir.col)
+			static_cast<PosType>(pos.row + dir.row),
+			static_cast<PosType>(pos.col + dir.col)
 		};
 	}
 }

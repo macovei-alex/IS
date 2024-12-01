@@ -60,8 +60,8 @@ void pac::Maze::InitCells(std::vector<std::vector<pac::CellType>>&& cells)
 						mGhostSpawn.row, mGhostSpawn.col, row, col));
 				}
 				mGhostSpawn = {
-					static_cast<decltype(Position::row)>(row),
-					static_cast<decltype(Position::row)>(col)
+					static_cast<PosType>(row),
+					static_cast<PosType>(col)
 				};
 			}
 			else if (cells[row][col] == CellType::PacmanSpawn)
@@ -73,16 +73,16 @@ void pac::Maze::InitCells(std::vector<std::vector<pac::CellType>>&& cells)
 						mPacmanSpawn.row, mPacmanSpawn.col, row, col));
 				}
 				mPacmanSpawn = {
-					static_cast<decltype(Position::row)>(row),
-					static_cast<decltype(Position::row)>(col)
+					static_cast<PosType>(row),
+					static_cast<PosType>(col)
 				};
 			}
 
 			if (cells[row][col] != CellType::Wall)
 			{
 				mWalkablePositions.push_back({
-					static_cast<decltype(Position::row)>(row),
-					static_cast<decltype(Position::row)>(col)
+					static_cast<PosType>(row),
+					static_cast<PosType>(col)
 				});
 			}
 		}
@@ -188,8 +188,8 @@ pac::Dimensions pac::Maze::GetDimensions() const
 	}
 
 	return {
-		static_cast<decltype(Dimensions::rows)>(mCells.size()),
-		static_cast<decltype(Dimensions::cols)>(mCells[0].size())
+		static_cast<PosType>(mCells.size()),
+		static_cast<PosType>(mCells[0].size())
 	};
 }
 

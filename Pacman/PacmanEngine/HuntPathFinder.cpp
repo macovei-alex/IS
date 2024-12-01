@@ -2,10 +2,6 @@
 
 #include "Logger/Logger.h"
 
-#include <queue>
-#include <vector>
-#include <array>
-
 
 pac::HuntPathFinder::HuntPathFinder(const Ghost* ghost)
 	: mLastPacmanPosition(Position::GetInvalid())

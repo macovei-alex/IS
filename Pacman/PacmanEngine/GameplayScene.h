@@ -30,7 +30,7 @@ namespace pac
 		SceneState NextTick() override;
 
 		void AddListener(std::weak_ptr<IListener> listener, EventType eventType) override;
-		void RemoveListener(std::weak_ptr<IListener> listener, EventType eventType) override;
+		void RemoveListener(const IListener* listener, EventType eventType) override;
 		void Notify(IEvent* event) const override;
 
 	private:
@@ -40,7 +40,7 @@ namespace pac
 
 	private:
 		CollisionType PacmanCollisionWith(const Ghost& ghost) const;
-		bool SeesPacman(Ghost& ghost) const;
+		bool SeesPacman(const Ghost& ghost) const;
 		bool IsGameWon() const;
 		void RemoveExpiredListeners();
 
