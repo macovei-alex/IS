@@ -8,8 +8,7 @@
 
 #include <unordered_map>
 #include "Ghost.h"
-#include "HuntPathFinder.h"
-#include "ScaredPathFinder.h"
+
 
 
 namespace pac
