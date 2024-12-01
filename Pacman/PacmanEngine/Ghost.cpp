@@ -4,9 +4,27 @@
 #include "ScaredPathFinder.h"
 #include "RoamingPathFinder.h"
 #include "WaitingPathFinder.h"
+#include "Logger/Logger.h"
 
 #include <format>
 
+
+std::string_view pac::StateToStr(Ghost::State state)
+{
+	switch (state)
+	{
+	case Ghost::State::Hunting:
+		return "Hunting";
+	case Ghost::State::Scared:
+		return "Scared";
+	case Ghost::State::Roaming:
+		return "Roaming";
+	case Ghost::State::Dead:
+		return "Dead";
+	default:
+		throw std::runtime_error(std::format("State ( {} ) does not exist", (int)state));
+	}
+}
 
 pac::Ghost::Ghost(Position spawnPos, TickType firstSpawnDelay, const GameplaySettings& settings)
 	: mPosition(spawnPos)
@@ -70,7 +88,6 @@ void pac::Ghost::Draw(IWindow* window) const
 {
 	if (mState == State::Dead)
 	{
-		// TODO: fix this after testing
 		window->DrawTexture(mPosition, Textures::DeadGhost);
 		return;
 	}
@@ -95,8 +112,8 @@ void pac::Ghost::SetState(State state)
 	{
 		return;
 	}
-
 	mState = state;
+
 	switch (mState)
 	{
 	case State::Hunting:

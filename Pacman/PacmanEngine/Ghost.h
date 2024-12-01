@@ -46,4 +46,6 @@ namespace pac
 	private:
 		const Position mSpawnPosition;
 	};
+
+	std::string_view StateToStr(Ghost::State state);
 }

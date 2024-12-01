@@ -69,7 +69,10 @@ pac::SceneState pac::GameplayScene::NextTick()
 	{
 		for (auto& ghost : mGhosts)
 		{
-			ghost.SetState(Ghost::State::Scared);
+			if (ghost.GetState() != Ghost::State::Dead)
+			{
+				ghost.SetState(Ghost::State::Scared);
+			}
 		}
 
 		mScore += mSettings.mScorePerPowerUp;
