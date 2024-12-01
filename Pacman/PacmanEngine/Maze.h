@@ -35,12 +35,15 @@ namespace pac
 		bool SeeEachOther(Position p1, Position p2) const;
 		void ReadMazeFromFile(std::string_view filename);
 		void Draw(IWindow* window) const;
+		Position GetRandomWalkablePosition() const;
+		std::vector<Position> CalculateShortestPath(Position start, Position end) const;
 
 	private:
 		std::vector<std::vector<CellType>> mCells;
+		std::vector<Position> mWalkablePositions;
+		mutable std::vector<Position> mParentVec;
+		mutable std::vector<bool> mVisitedVec;
 		Position mGhostSpawn;
 		Position mPacmanSpawn;
-		ScoreType mCoinScore;
-		ScoreType mPowerUpScore;
 	};
 }

@@ -8,22 +8,18 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <queue>
+
+#define POS(pos) (pos.row * colCount + pos.col)
 
 
 pac::Maze::Maze()
 	: mGhostSpawn(pac::Position::GetInvalid())
 	, mPacmanSpawn(pac::Position::GetInvalid())
-	, mCoinScore(static_cast<ScoreType>(-1))
-	, mPowerUpScore(static_cast<ScoreType>(-1))
+	, mWalkablePositions()
 {
 	// empty
 }
-
-//void pac::Maze::InitScores(ScoreType coinScore, ScoreType powerUpScore)
-//{
-//	mCoinScore = coinScore;
-//	mPowerUpScore = powerUpScore;
-//}
 
 void pac::Maze::InitCells(std::vector<std::vector<pac::CellType>>&& cells)
 {
@@ -35,7 +31,7 @@ void pac::Maze::InitCells(std::vector<std::vector<pac::CellType>>&& cells)
 	if (cells.size() >= dimensions.rows)
 	{
 		throw std::runtime_error(std::format(
-			"Maze has too many rows ( {} ). The maximum number of rows is ( {} )", 
+			"Maze has too many rows ( {} ). The maximum number of rows is ( {} )",
 			cells.size(), dimensions.rows - 1));
 	}
 	if (cells[0].size() == 0)
@@ -48,6 +44,8 @@ void pac::Maze::InitCells(std::vector<std::vector<pac::CellType>>&& cells)
 			"Maze has too many columns ( {} ). The maximum number of columns is ( {} )",
 			cells[0].size(), dimensions.cols - 1));
 	}
+
+	mWalkablePositions.reserve(cells.size() * cells[0].size());
 
 	for (size_t row = 0; row < cells.size(); ++row)
 	{
@@ -78,6 +76,14 @@ void pac::Maze::InitCells(std::vector<std::vector<pac::CellType>>&& cells)
 					static_cast<decltype(Position::row)>(row),
 					static_cast<decltype(Position::row)>(col)
 				};
+			}
+
+			if (cells[row][col] != CellType::Wall)
+			{
+				mWalkablePositions.push_back({
+					static_cast<decltype(Position::row)>(row),
+					static_cast<decltype(Position::row)>(col)
+				});
 			}
 		}
 
@@ -149,7 +155,7 @@ pac::CellType pac::Maze::EatCell(Position pos)
 	}
 
 	CellType temp = mCells[pos.row][pos.col];
-	
+
 	mCells[pos.row][pos.col] = CellType::Empty;
 	return temp;
 }
@@ -189,34 +195,8 @@ pac::Dimensions pac::Maze::GetDimensions() const
 
 bool pac::Maze::SeeEachOther(Position p1, Position p2) const
 {
-	/*
-	if (p1.row == p2.row)  // Pe aceeași linie
-	{
-		int startCol = std::min(p1.col, p2.col);
-		int endCol = std::max(p1.col, p2.col);
-		for (int col = startCol + 1; col < endCol; ++col)
-		{
-			if (mCells[p1.row][col] == CellType::Wall)
-				return false;
-		}
-		return true;
-	}
-	else if (p1.col == p2.col)  // Pe aceeași coloană
-	{
-		int startRow = std::min(p1.row, p2.row);
-		int endRow = std::max(p1.row, p2.row);
-		for (int row = startRow + 1; row < endRow; ++row)
-		{
-			if (mCells[row][p1.col] == CellType::Wall)
-				return false;
-		}
-		return true;
-	}
-	*/
-
 	return p1.NumberOfCellsTo(p2) < 4;
 }
-
 
 void pac::Maze::ReadMazeFromFile(std::string_view filename)
 {
@@ -283,4 +263,75 @@ void pac::Maze::Draw(IWindow* window) const
 			}
 		}
 	}
+}
+
+pac::Position pac::Maze::GetRandomWalkablePosition() const
+{
+	if (mWalkablePositions.size() == 0)
+	{
+		throw std::runtime_error("There are no walkable positions in the maze");
+	}
+
+	return mWalkablePositions[std::rand() % mWalkablePositions.size()];
+}
+
+std::vector<pac::Position> pac::Maze::CalculateShortestPath(Position start, Position end) const
+{
+	const Dimensions dimensions = GetDimensions();
+	const size_t size = (size_t)dimensions.rows * dimensions.cols;
+
+	std::vector<Position> path;
+	path.reserve(size);
+
+	if (mParentVec.size() < size)
+	{
+		mParentVec.resize(size, Position::GetInvalid());
+		mVisitedVec.resize(size, false);
+	}
+
+	for (size_t i = 0; i < size; i++)
+	{
+		mVisitedVec[i] = false;
+		mParentVec[i] = Position::GetInvalid();
+	}
+
+	const auto colCount = dimensions.cols;
+
+	std::queue<Position> bfsQueue;
+
+	bfsQueue.push(start);
+	mVisitedVec[POS(start)] = true;
+
+	while (!bfsQueue.empty())
+	{
+		Position current = bfsQueue.front();
+		bfsQueue.pop();
+
+		if (current == end)
+		{
+			Position nextMove = mParentVec[POS(current)];
+			path.push_back(current);
+			while (nextMove != start && nextMove.IsValid())
+			{
+				current = nextMove;
+				nextMove = mParentVec[POS(nextMove)];
+				path.push_back(current);
+			}
+			break;
+		}
+
+		for (Direction direction : Direction::AllDirections())
+		{
+			Position neighbor = Add(current, direction);
+
+			if (!mVisitedVec[POS(neighbor)] && GetCellType(neighbor) != CellType::Wall)
+			{
+				bfsQueue.push(neighbor);
+				mVisitedVec[POS(neighbor)] = true;
+				mParentVec[POS(neighbor)] = current;
+			}
+		}
+	}
+
+	return path;
 }

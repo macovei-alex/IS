@@ -4,7 +4,6 @@
 #include "Ghost.h"
 
 
-
 namespace pac
 {
 	class RoamingPathFinder : public IPathFinder
@@ -14,8 +13,9 @@ namespace pac
 		Position NextMove(const Maze& maze, const Pacman& pacman) override;
 		void AttachTo(const Ghost* ghost) override;
 
-	protected:
+	private:
 		const Ghost* mGhost;
+		std::vector<Position> mPath;
 		Direction mCurrentDirection;
 	};
 }

@@ -1,45 +1,35 @@
 ﻿#include "RoamingPathFinder.h"
-#include <cstdlib> // for rand()
-#include <ctime>
-#include <vector>
 
-namespace pac
+
+pac::RoamingPathFinder::RoamingPathFinder(const Ghost* ghost)
+	: mCurrentDirection(Direction::Up())
 {
-	RoamingPathFinder::RoamingPathFinder(const Ghost* ghost)
-		: mCurrentDirection(Direction::Up())
+	AttachTo(ghost);
+}
+
+pac::Position pac::RoamingPathFinder::NextMove(const Maze& maze, const Pacman& pacman)
+{
+	if (mPath.empty())
 	{
-		AttachTo(ghost);
-	}
-
-	Position RoamingPathFinder::NextMove(const Maze& maze, const Pacman& pacman)
-	{
-		Position currentPosition = mGhost->GetPosition();
-
-		std::vector<Direction> directions = Direction::AllDirections();
-
-		directions.erase(std::remove(directions.begin(), directions.end(), mCurrentDirection.Opposite()), directions.end());
-
-		std::vector<Direction> validDirections;
-		for (Direction dir : directions)
+		Position target;
+		do
 		{
-			Position newPos = Add(currentPosition, dir);
-			if (maze.IsWalkable(newPos))
-			{
-				validDirections.push_back(dir);
-			}
-		}
+			target = maze.GetRandomWalkablePosition();
+		} while (target == mGhost->GetPosition());
 
-		if (!validDirections.empty())
+		mPath = maze.CalculateShortestPath(mGhost->GetPosition(), target);
+		if (mPath.empty())
 		{
-			mCurrentDirection = validDirections[std::rand() % validDirections.size()];
-			return Add(currentPosition, mCurrentDirection);
+			mPath.push_back(mGhost->GetPosition());
 		}
-
-		return currentPosition;
 	}
 
-	void RoamingPathFinder::AttachTo(const Ghost* ghost)
-	{
-		mGhost = ghost;
-	}
+	Position temp = mPath.back();
+	mPath.pop_back();
+	return temp;
+}
+
+void pac::RoamingPathFinder::AttachTo(const Ghost* ghost)
+{
+	mGhost = ghost;
 }

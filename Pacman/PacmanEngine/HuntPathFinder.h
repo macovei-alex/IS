@@ -16,11 +16,8 @@ namespace pac
 		void AttachTo(const Ghost* ghost) override;
 
 	private:
-		void UpdatePath(const Maze& maze, const Pacman& pacman);
-
-	private:
 		const Ghost* mGhost;
 		Position mLastPacmanPosition;
-		std::stack<Position> mPath;
+		std::vector<Position> mPath;
 	};
 }
