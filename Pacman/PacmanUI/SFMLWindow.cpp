@@ -16,7 +16,7 @@ pac::SFMLWindow::SFMLWindow(sf::RenderWindow& renderWindow, pac::AssetManager&& 
 	// EMPTY
 }
 
-void pac::SFMLWindow::DrawScore(int64_t score)
+void pac::SFMLWindow::DrawScore(ScoreType score)
 {
 	sf::Font font;
 	if (!font.loadFromFile("C:/Windows/Fonts/arial.ttf"))

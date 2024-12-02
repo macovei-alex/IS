@@ -15,8 +15,8 @@ namespace pac
 	{
 	public:
 		virtual ~IWindow() = default;
-		virtual void DrawScore(int64_t score) = 0;
-		virtual void DrawTexture(Position position, pac::Textures texture) = 0;
+		virtual void DrawScore(ScoreType score) = 0;
+		virtual void DrawTexture(Position position, Textures texture) = 0;
 		virtual bool IsOpen() const = 0;
 		virtual bool ShouldClose() const = 0;
 		virtual void Clear() const = 0;

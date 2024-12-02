@@ -15,7 +15,7 @@ namespace pac
 	{
 	public:
 		SFMLWindow(sf::RenderWindow& renderWindow, pac::AssetManager&& assetManager);
-		void DrawScore(int64_t score) override;
+		void DrawScore(ScoreType score) override;
 		void DrawTexture(pac::Position position, pac::Textures texture) override;
 		bool IsOpen() const override;
 		bool ShouldClose() const override;
