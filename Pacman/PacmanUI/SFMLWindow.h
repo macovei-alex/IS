@@ -4,6 +4,8 @@
 #include "PacmanEngine/Maze.h"
 #include "PacmanEngine/IWindow.h"
 #include "PacmanEngine/IEvent.h"
+#include <SFML/Audio.hpp>
+
 
 #include <memory>
 #include <vector>
@@ -30,6 +32,8 @@ namespace pac
 
 	private:
 		sf::RenderWindow& mRenderWindow;
+		sf::SoundBuffer buffer;
+		sf::Sound sound;
 		pac::AssetManager mAssetManager;
 		std::unique_ptr<std::thread> mSoundThread;
 		std::atomic<bool> mSoundPlaying;
