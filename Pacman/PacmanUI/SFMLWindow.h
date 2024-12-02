@@ -32,11 +32,13 @@ namespace pac
 
 	private:
 		sf::RenderWindow& mRenderWindow;
-		sf::SoundBuffer buffer;
-		sf::Sound sound;
 		pac::AssetManager mAssetManager;
+		bool mShouldClose;
+
+	private:
+		sf::SoundBuffer mSoundBuffer;
+		sf::Sound mSound;
 		std::unique_ptr<std::thread> mSoundThread;
 		std::atomic<bool> mSoundPlaying;
-		bool mShouldClose;
 	};
 }

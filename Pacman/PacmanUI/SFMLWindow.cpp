@@ -18,16 +18,15 @@ pac::SFMLWindow::SFMLWindow(sf::RenderWindow& renderWindow, pac::AssetManager&& 
 {
 	mSoundThread = std::make_unique<std::thread>([this]()
 		{
-			
 			try
 			{
-				if (!buffer.loadFromFile("assets/sounds/pacman-sound.wav"))
+				if (!mSoundBuffer.loadFromFile("assets/sounds/pacman-sound.wav"))
 				{
 					Logger::cout.Error("Could not load the sound");
 					return;
 				}
-				sound.setBuffer(buffer);
-				sound.play();
+				mSound.setBuffer(mSoundBuffer);
+				mSound.play();
 
 				while (this->mSoundPlaying)
 				{
@@ -36,6 +35,7 @@ pac::SFMLWindow::SFMLWindow(sf::RenderWindow& renderWindow, pac::AssetManager&& 
 			}
 			catch (...)
 			{
+				mSoundPlaying = false;
 				Logger::cout.Error("Error in sound thread");
 			}
 		});
@@ -91,10 +91,9 @@ void pac::SFMLWindow::Display()
 
 void pac::SFMLWindow::Close()
 {
-	sound.stop();
 	mSoundPlaying = false;
+	mSound.stop();
 	mSoundThread->join();
-	mSoundThread.reset();
 	mRenderWindow.close();
 }
 
