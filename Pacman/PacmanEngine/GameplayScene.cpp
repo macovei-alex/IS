@@ -228,7 +228,7 @@ void pac::GameplayScene::RemoveExpiredListeners()
 
 			auto count = listeners.end() - removeFrom;
 			Logger::cout.Debug(std::format("( {} ) listeners were removed for events of type ( {} )",
-				count, GetEventTypeName(event)));
+				count, EventTypeToStr(event)));
 		}
 	}
 }
@@ -249,11 +249,11 @@ void pac::GameplayScene::RemoveListener(const IListener* listener, EventType eve
 
 	if (foundIterator == listeners.end())
 	{
-		Logger::cout.Info(std::format("Listener for event type ( {} ) could not be found", GetEventTypeName(eventType)));
+		Logger::cout.Info(std::format("Listener for event type ( {} ) could not be found", EventTypeToStr(eventType)));
 	}
 
 	listeners.erase(foundIterator);
-	Logger::cout.Debug(std::format("An event listener for event type ( {} ) has successfuly been removed", GetEventTypeName(eventType)));
+	Logger::cout.Debug(std::format("An event listener for event type ( {} ) has successfuly been removed", EventTypeToStr(eventType)));
 }
 
 void pac::GameplayScene::Notify(IEvent* event) const

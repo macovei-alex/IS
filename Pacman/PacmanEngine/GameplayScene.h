@@ -5,10 +5,9 @@
 #include "Pacman.h"
 #include "Maze.h"
 #include "GameplaySettings.h"
-
-#include <unordered_map>
 #include "Ghost.h"
 
+#include <unordered_map>
 
 
 namespace pac

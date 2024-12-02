@@ -154,7 +154,6 @@
     <ClInclude Include="Ghost.h" />
     <ClInclude Include="HuntPathFinder.h" />
     <ClInclude Include="IEvent.h" />
-    <ClInclude Include="IGame.h" />
     <ClInclude Include="IListener.h" />
     <ClInclude Include="IPathFinder.h" />
     <ClInclude Include="IScene.h" />

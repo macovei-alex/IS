@@ -6,13 +6,11 @@
 #include <unordered_map>
 
 
-std::string_view pac::GetEventTypeName(EventType type)
+std::string_view pac::EventTypeToStr(EventType type)
 {
 	static const std::unordered_map<EventType, std::string_view> names = {
 		{ EventType::KeyPressed, "KeyPressed" },
-		{ EventType::PowerUp, "PowerUp" },
-		{ EventType::SceneOver, "SceneOver" },
-		{ EventType::WindowClosed, "WindowClosed" }
+		{ EventType::WindowClose, "WindowClose" }
 	};
 
 	auto found = names.find(type);

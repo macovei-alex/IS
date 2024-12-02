@@ -2,8 +2,6 @@
 
 #include "IScene.h"
 #include "IWindow.h"
-#include "IGame.h"
-#include "IListener.h"
 #include "Maze.h"
 #include "GameplaySettings.h"
 
@@ -12,12 +10,12 @@
 
 namespace pac
 {
-	class Game : public IGame
+	class Game
 	{
 	public:
-		Game(std::unique_ptr<IWindow> window, Maze&& maze, GameplaySettings settings, uint32_t randomSeed = 0);
+		Game(std::unique_ptr<IWindow> window, Maze&& maze, const GameplaySettings& settings, uint32_t randomSeed = 0);
 		void AddScene(std::unique_ptr<IScene> scene);
-		void Run() override;
+		void Run();
 		IScene* GetCurrentScene() const;
 
 	private:

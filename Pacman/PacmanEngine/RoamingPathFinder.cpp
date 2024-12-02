@@ -2,7 +2,6 @@
 
 
 pac::RoamingPathFinder::RoamingPathFinder(const Ghost* ghost)
-	: mCurrentDirection(Direction::Up())
 {
 	AttachTo(ghost);
 }

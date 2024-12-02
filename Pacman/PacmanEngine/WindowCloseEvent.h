@@ -8,6 +8,6 @@ namespace pac
 	class WindowCloseEvent : public IEvent
 	{
 	public:
-		EventType GetType() const override { return EventType::WindowClosed; }
+		EventType GetType() const override { return EventType::WindowClose; }
 	};
 }

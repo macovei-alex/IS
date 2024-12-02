@@ -95,9 +95,6 @@
     <ClInclude Include="IWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="IGame.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Pacman.h">
       <Filter>Header Files</Filter>
     </ClInclude>

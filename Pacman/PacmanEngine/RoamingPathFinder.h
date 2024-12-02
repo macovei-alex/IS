@@ -16,6 +16,5 @@ namespace pac
 	private:
 		const Ghost* mGhost;
 		std::vector<Position> mPath;
-		Direction mCurrentDirection;
 	};
 }

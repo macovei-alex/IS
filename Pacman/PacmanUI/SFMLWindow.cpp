@@ -81,7 +81,7 @@ std::vector<std::unique_ptr<pac::IEvent>> pac::SFMLWindow::GetEvents()
 			continue;
 		}
 
-		if (convertedEvent->GetType() == EventType::WindowClosed)
+		if (convertedEvent->GetType() == EventType::WindowClose)
 		{
 			mShouldClose = true;
 			continue;

@@ -1,8 +1,6 @@
 #include "Logger/Logger.h"
-#include "AssetManager.h"
 #include "SFMLWindow.h"
-#include "PacmanEngine/IScene.h"
-#include "PacmanEngine/IGame.h"
+
 #include "PacmanEngine/GameplayScene.h"
 #include "PacmanEngine/Game.h"
 
