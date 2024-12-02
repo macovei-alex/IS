@@ -7,13 +7,38 @@
 #include <memory>
 #include <format>
 #include <unordered_map>
+#include <thread>
 
 
 pac::SFMLWindow::SFMLWindow(sf::RenderWindow& renderWindow, pac::AssetManager&& assetManager)
 	: mRenderWindow(renderWindow)
 	, mAssetManager(std::move(assetManager))
+	, mShouldClose(false)
+	, mSoundPlaying(true)
 {
-	// EMPTY
+	mSoundThread = std::make_unique<std::thread>([this]()
+		{
+			
+			try
+			{
+				if (!buffer.loadFromFile("assets/sounds/pacman-sound.wav"))
+				{
+					Logger::cout.Error("Could not load the sound");
+					return;
+				}
+				sound.setBuffer(buffer);
+				sound.play();
+
+				while (this->mSoundPlaying)
+				{
+					std::this_thread::sleep_for(std::chrono::seconds(1));
+				}
+			}
+			catch (...)
+			{
+				Logger::cout.Error("Error in sound thread");
+			}
+		});
 }
 
 void pac::SFMLWindow::DrawScore(ScoreType score)
@@ -66,6 +91,10 @@ void pac::SFMLWindow::Display()
 
 void pac::SFMLWindow::Close()
 {
+	sound.stop();
+	mSoundPlaying = false;
+	mSoundThread->join();
+	mSoundThread.reset();
 	mRenderWindow.close();
 }
 
