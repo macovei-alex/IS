@@ -1,4 +1,5 @@
 #include "SFMLWindow.h"
+#include <SFML/Audio.hpp>
 
 #include "PacmanEngine/KeyPressedEvent.h"
 #include "PacmanEngine/WindowCloseEvent.h"
@@ -7,13 +8,38 @@
 #include <memory>
 #include <format>
 #include <unordered_map>
+#include <thread>
 
 
 pac::SFMLWindow::SFMLWindow(sf::RenderWindow& renderWindow, pac::AssetManager&& assetManager)
 	: mRenderWindow(renderWindow)
 	, mAssetManager(std::move(assetManager))
+	, mShouldClose(false)
+	, mSoundPlaying(true)
 {
-	// EMPTY
+	mSoundThread = std::make_unique<std::thread>([this]()
+		{
+			try
+			{
+				while (this->mSoundPlaying)
+				{
+					sf::SoundBuffer buffer;
+					if (!buffer.loadFromFile("assets/sounds/pacman-sound.wav"))
+					{
+						Logger::cout.Error("Could not load the sound");
+						return;
+					}
+
+					sf::Sound sound;
+					sound.setBuffer(buffer);
+					sound.play();
+				}
+			}
+			catch (...)
+			{
+				Logger::cout.Error("Error in sound thread");
+			}
+		});
 }
 
 void pac::SFMLWindow::DrawScore(int64_t score)
@@ -66,6 +92,9 @@ void pac::SFMLWindow::Display()
 
 void pac::SFMLWindow::Close()
 {
+	mSoundPlaying = false;
+	mSoundThread->join();
+	mSoundThread.reset();
 	mRenderWindow.close();
 }
 

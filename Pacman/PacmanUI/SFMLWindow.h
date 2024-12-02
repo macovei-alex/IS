@@ -7,6 +7,7 @@
 
 #include <memory>
 #include <vector>
+#include <thread>
 
 
 namespace pac
@@ -30,6 +31,8 @@ namespace pac
 	private:
 		sf::RenderWindow& mRenderWindow;
 		pac::AssetManager mAssetManager;
-		bool mShouldClose = false;
+		std::unique_ptr<std::thread> mSoundThread;
+		std::atomic<bool> mSoundPlaying;
+		bool mShouldClose;
 	};
 }

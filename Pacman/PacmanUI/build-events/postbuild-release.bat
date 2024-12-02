@@ -3,7 +3,7 @@
 xcopy "assets" "..\x64\Release\assets" /e /i /y
 
 REM Copy 1 file
-REM copy "..\_external\Assimp\bin\x64\assimp-vc143-mt.dll" "..\x64\Debug\assimp-vc143-mt.dll"
+copy "openal32.dll" "..\x64\Release\openal32.dll"
 
 REM Copy all the mentioned files from source to dest
 REM set "source=..\_external\Assimp\bin\x64\"
