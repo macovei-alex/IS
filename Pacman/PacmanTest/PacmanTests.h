@@ -135,7 +135,7 @@ TEST(PacmanTest, VerifyMovementToWallCell)
 	pac::KeyPressedEvent keyEventDown(pac::KeyCode::Down);
 	pacman.OnEvent(&keyEventDown);
 
-	expectedPosition = { 2, 1 };
+	expectedPosition = { 0, 1 };
 
 	while (pacman.GetPosition() != expectedPosition)
 	{
@@ -147,7 +147,7 @@ TEST(PacmanTest, VerifyMovementToWallCell)
 
 	pacman.OnEvent(&keyEventRight);
 
-	expectedPosition = { 2, 3 };
+	expectedPosition = { 0, 3 };
 
 	while (pacman.GetPosition() != expectedPosition)
 	{

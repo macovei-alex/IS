@@ -1,9 +1,9 @@
 #include "Game.h"
-
 #include "GameplayScene.h"
 #include "Logger/Logger.h"
+#include "LoggerInvoker.h"
+#include "LogCommand.h"
 #include "WindowCloseEvent.h"
-
 #include <thread>
 
 
@@ -21,7 +21,12 @@ pac::Game::Game(std::unique_ptr<IWindow> window, Maze&& maze, const GameplaySett
 	}
 
 	std::srand(randomSeed);
-	Logger::cout.Info(std::format("Game with seed ( {} ) started", randomSeed));
+
+	LoggerInvoker invoker;
+	std::string seedMessage = std::format("Game with seed ( {} ) started", randomSeed);
+	auto logCommand = std::make_unique<pac::LogCommand>(pac::Logger::GetInstance(), seedMessage, pac::Logger::Level::Info);
+	invoker.setCommand(std::move(logCommand));
+	invoker.executeCommand();
 }
 
 void pac::Game::AddScene(std::unique_ptr<pac::IScene> scene)
@@ -33,7 +38,10 @@ void pac::Game::Run()
 {
 	static const std::chrono::milliseconds sleepDuration(1000 / mSettings.mTicksPerSecond);
 
-	Logger::cout.Info("Game started");
+	LoggerInvoker invoker;
+	auto logCommand = std::make_unique<pac::LogCommand>(pac::Logger::GetInstance(), "Game started", pac::Logger::Level::Info);
+	invoker.setCommand(std::move(logCommand));
+	invoker.executeCommand();
 
 	while (true)
 	{
@@ -41,19 +49,25 @@ void pac::Game::Run()
 
 		if (sceneState == SceneState::Won)
 		{
-			Logger::cout.Info("--------  GAME WON  --------");
+			auto logCommand = std::make_unique<pac::LogCommand>(pac::Logger::GetInstance(), "--------  GAME WON  --------", pac::Logger::Level::Info);
+			invoker.setCommand(std::move(logCommand));
+			invoker.executeCommand();
 			mWindow->Close();
 			break;
 		}
 		else if (sceneState == SceneState::Lost)
 		{
-			Logger::cout.Info("--------  GAME LOST  --------");
+			auto logCommand = std::make_unique<pac::LogCommand>(pac::Logger::GetInstance(), "--------  GAME LOST  --------", pac::Logger::Level::Info);
+			invoker.setCommand(std::move(logCommand));
+			invoker.executeCommand();
 			mWindow->Close();
 			break;
 		}
 		else if (sceneState == SceneState::WindowClosed)
 		{
-			Logger::cout.Info("Window closed");
+			auto logCommand = std::make_unique<pac::LogCommand>(pac::Logger::GetInstance(), "Window closed", pac::Logger::Level::Info);
+			invoker.setCommand(std::move(logCommand));
+			invoker.executeCommand();
 			mWindow->Close();
 			break;
 		}

@@ -1,5 +1,7 @@
 ﻿#include "Maze.h"
 
+#include "LoggerInvoker.h"
+#include "LogCommand.h"
 #include "Logger/Logger.h"
 #include "Direction.h"
 #include "Pacman.h"
@@ -83,16 +85,19 @@ void pac::Maze::InitCells(std::vector<std::vector<pac::CellType>>&& cells)
 				mWalkablePositions.push_back({
 					static_cast<PosType>(row),
 					static_cast<PosType>(col)
-				});
+					});
 			}
 		}
 
 		if (cells[row].size() < cells[0].size())
 		{
-			Logger::cout.Warning(std::format(
+			std::string logMessage = std::format(
 				"Row with index ( {} ) has too few cells ( {} ). The expected number of columns is ( {} ). The row will be left padded with CellType::Wall cells.",
-				row, cells[row].size(), cells[0].size()));
-
+				row, cells[row].size(), cells[0].size());
+			LoggerInvoker invoker;
+			auto logCommand = std::make_unique<pac::LogCommand>(pac::Logger::GetInstance(), logMessage, pac::Logger::Level::Warning);
+			invoker.setCommand(std::move(logCommand));
+			invoker.executeCommand();
 			cells[row].resize(cells[0].size(), CellType::Wall);
 		}
 		else if (cells[row].size() < cells[0].size())

@@ -131,6 +131,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="LogCommand.cpp" />
+    <ClCompile Include="LoggerInvoker.cpp" />
     <ClCompile Include="WaitingPathFinder.cpp" />
     <ClCompile Include="WaitingPathFinder.h" />
     <ClCompile Include="EventType.cpp" />
@@ -153,6 +155,7 @@
     <ClInclude Include="GameplaySettings.h" />
     <ClInclude Include="Ghost.h" />
     <ClInclude Include="HuntPathFinder.h" />
+    <ClInclude Include="ICommand.h" />
     <ClInclude Include="IEvent.h" />
     <ClInclude Include="IListener.h" />
     <ClInclude Include="IPathFinder.h" />
@@ -160,6 +163,8 @@
     <ClInclude Include="ISubject.h" />
     <ClInclude Include="IWindow.h" />
     <ClInclude Include="KeyPressedEvent.h" />
+    <ClInclude Include="LogCommand.h" />
+    <ClInclude Include="LoggerInvoker.h" />
     <ClInclude Include="Pacman.h" />
     <ClInclude Include="Position.h" />
     <ClInclude Include="RoamingPathFinder.h" />

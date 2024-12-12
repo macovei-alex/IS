@@ -3,12 +3,13 @@
 #include "PacmanEngine/KeyPressedEvent.h"
 #include "PacmanEngine/WindowCloseEvent.h"
 #include "Logger/Logger.h"
+#include "PacmanEngine/LoggerInvoker.h"
+#include "PacmanEngine/LogCommand.h"
 
 #include <memory>
 #include <format>
 #include <unordered_map>
 #include <thread>
-
 
 pac::SFMLWindow::SFMLWindow(sf::RenderWindow& renderWindow, pac::AssetManager&& assetManager)
 	: mRenderWindow(renderWindow)
@@ -22,10 +23,14 @@ pac::SFMLWindow::SFMLWindow(sf::RenderWindow& renderWindow, pac::AssetManager&& 
 			{
 				if (!mSoundBuffer.loadFromFile("assets/sounds/pacman-sound.wav"))
 				{
-					Logger::cout.Error("Could not load the sound");
+					LoggerInvoker invoker;
+					auto logCommand = std::make_unique<pac::LogCommand>(pac::Logger::GetInstance(), "Could not load the sound", pac::Logger::Level::Error);
+					invoker.setCommand(std::move(logCommand));
+					invoker.executeCommand();
 					return;
 				}
 				mSound.setBuffer(mSoundBuffer);
+				mSound.setVolume(10);
 				mSound.play();
 
 				while (this->mSoundPlaying)
@@ -36,7 +41,10 @@ pac::SFMLWindow::SFMLWindow(sf::RenderWindow& renderWindow, pac::AssetManager&& 
 			catch (...)
 			{
 				mSoundPlaying = false;
-				Logger::cout.Error("Error in sound thread");
+				LoggerInvoker invoker;
+				auto logCommand = std::make_unique<pac::LogCommand>(pac::Logger::GetInstance(), "Error in sound thread", pac::Logger::Level::Error);
+				invoker.setCommand(std::move(logCommand));
+				invoker.executeCommand();
 			}
 		});
 }
@@ -52,7 +60,7 @@ void pac::SFMLWindow::DrawScore(ScoreType score)
 	sf::Text text;
 	text.setFont(font);
 	text.setString(std::to_string(score));
-	text.setCharacterSize(20);
+	text.setCharacterSize(00);
 	text.setFillColor(sf::Color::Blue);
 	text.setStyle(sf::Text::Bold);
 	text.setPosition(10, 10);
@@ -149,45 +157,3 @@ std::unique_ptr<pac::IEvent> pac::SFMLWindow::ConvertEvent(const sf::Event& even
 
 	return nullptr;
 }
-
-//void pac::SFMLWindow::Draw()
-//{
-//    auto [height, width] = mMaze.GetSize();
-//
-//    int a = 130;
-//
-//    for (size_t i = 0; i < height; ++i) {
-//        for (size_t j = 0; j < width; ++j) {
-//            sf::Sprite sprite;
-//            switch (mMaze.GetCellType(Position(i, j))) {
-//            case CellType::PacmanSpawn:
-//                sprite = mAssetManager.GetPacmanSprite();
-//                sprite.setPosition(j * a, i * a);
-//                sprite.setScale(0.1f, 0.1f);
-//                break;
-//            case CellType::GhostSpawn:
-//                sprite = mAssetManager.GetGhostSprite();
-//                sprite.setPosition(j * a, i * a);
-//                sprite.setScale(0.2f, 0.2f);
-//                break;
-//            case CellType::Wall:
-//                sprite = mAssetManager.GetWallSprite();
-//                sprite.setPosition(j * a, i * a);
-//                sprite.setScale(0.1f, 0.1f);
-//                break;
-//            case CellType::Coin:
-//                sprite = mAssetManager.GetCoinSprite();
-//                sprite.setPosition(j * a, i * a);
-//                sprite.setScale(0.1f, 0.1f);
-//                break;
-//            case CellType::PowerUp:
-//                sprite = mAssetManager.GetPowerUpSprite();
-//                sprite.setPosition(j * a, i * a);
-//                sprite.setScale(0.08f, 0.08f);
-//                break;
-//            }
-//            
-//            mWindow.draw(sprite);
-//        }
-//    }
-//}

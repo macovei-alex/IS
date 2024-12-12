@@ -1,6 +1,8 @@
 #include "Pacman.h"
 #include "Logger/Logger.h"
 #include "KeyPressedEvent.h"
+#include "LoggerInvoker.h"
+#include "LogCommand.h"
 
 
 pac::Pacman::Pacman(Position initialPosition, TickType ticksPerMove, TickType powerUpDuration)
@@ -103,6 +105,9 @@ void pac::Pacman::OnEvent(const IEvent* event)
 
 		Direction& pos = mDirection.IsValid() ? mNextDirection : mDirection;
 
+		LoggerInvoker invoker;
+		auto logCommand = std::make_unique<LogCommand>(Logger::GetInstance(), "Key pressed", Logger::Level::Info);
+
 		switch (keyEvent->GetKeyCode())
 		{
 		case KeyCode::Up:
@@ -122,10 +127,14 @@ void pac::Pacman::OnEvent(const IEvent* event)
 			pos = Direction::Right();
 			break;
 		case KeyCode::Unknown:
-			Logger::cout.Warning("Unknown key pressed");
+			logCommand = std::make_unique<LogCommand>(Logger::GetInstance(), "Unknown key pressed", Logger::Level::Warning);
+			invoker.setCommand(std::move(logCommand));
+			invoker.executeCommand();
 			break;
 		default:
-			Logger::cout.Warning("Unhandled key pressed");
+			logCommand = std::make_unique<LogCommand>(Logger::GetInstance(), "Unhandled key pressed", Logger::Level::Warning);
+			invoker.setCommand(std::move(logCommand));
+			invoker.executeCommand();
 			break;
 		}
 	}

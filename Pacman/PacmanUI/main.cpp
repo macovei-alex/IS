@@ -1,9 +1,7 @@
 #include "Logger/Logger.h"
 #include "SFMLWindow.h"
-
 #include "PacmanEngine/GameplayScene.h"
 #include "PacmanEngine/Game.h"
-
 
 int main()
 {

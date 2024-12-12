@@ -28,6 +28,12 @@
     <Filter Include="Header Files\PathFinders">
       <UniqueIdentifier>{cde394fe-523b-40e7-b53d-ffb2a65f620d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Command">
+      <UniqueIdentifier>{49e6b83b-f24d-4bfe-9d12-bb26364426cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Command">
+      <UniqueIdentifier>{5c77d86c-3d50-4dd3-8d7a-77dcd2fb271d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -71,6 +77,12 @@
     </ClCompile>
     <ClCompile Include="WaitingPathFinder.cpp">
       <Filter>Source Files\PathFinders</Filter>
+    </ClCompile>
+    <ClCompile Include="LogCommand.cpp">
+      <Filter>Source Files\Command</Filter>
+    </ClCompile>
+    <ClCompile Include="LoggerInvoker.cpp">
+      <Filter>Source Files\Command</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -130,6 +142,15 @@
     </ClInclude>
     <ClInclude Include="HuntPathFinder.h">
       <Filter>Header Files\PathFinders</Filter>
+    </ClInclude>
+    <ClInclude Include="ICommand.h">
+      <Filter>Header Files\Command</Filter>
+    </ClInclude>
+    <ClInclude Include="LogCommand.h">
+      <Filter>Header Files\Command</Filter>
+    </ClInclude>
+    <ClInclude Include="LoggerInvoker.h">
+      <Filter>Header Files\Command</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

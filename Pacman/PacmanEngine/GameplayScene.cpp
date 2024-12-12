@@ -1,7 +1,8 @@
 ﻿#include "GameplayScene.h"
 
 #include "Logger/Logger.h"
-
+#include "LoggerInvoker.h"
+#include "LogCommand.h"
 #include <format>
 
 
@@ -41,7 +42,11 @@ pac::GameplayScene::GameplayScene(IWindow* window, Maze&& maze, const GameplaySe
 		}
 	}
 
-	Logger::cout.Debug(std::format("The maximum collectable entities for this maze is ( {} )", mCollectibleEntities));
+	LoggerInvoker invoker;
+	std::string logMessage = std::format("The maximum collectable entities for this maze is ( {} )", mCollectibleEntities);
+	auto logCommand = std::make_unique<pac::LogCommand>(pac::Logger::GetInstance(), logMessage, pac::Logger::Level::Debug);
+	invoker.setCommand(std::move(logCommand));
+	invoker.executeCommand();
 }
 
 void pac::GameplayScene::Draw() const
@@ -180,16 +185,22 @@ void pac::GameplayScene::HandleStateTransition(Ghost& ghost)
 
 pac::CollisionType pac::GameplayScene::PacmanCollisionWith(const Ghost& ghost) const
 {
+	LoggerInvoker invoker;
+
 	if (mPacman->GetPosition() == ghost.GetPosition())
 	{
 		if (!mPacman->IsPoweredUp())
 		{
-			Logger::cout.Info("Pacman collided with a ghost. Game Over!");
+			auto logCommand = std::make_unique<pac::LogCommand>(pac::Logger::GetInstance(), "Pacman collided with a ghost. Game Over!", pac::Logger::Level::Info);
+			invoker.setCommand(std::move(logCommand));
+			invoker.executeCommand();
 			return CollisionType::NoPowerUp;
 		}
 		else
 		{
-			Logger::cout.Info("Pacman collided with a ghost. Ghost was eaten!");
+			auto logCommand = std::make_unique<pac::LogCommand>(pac::Logger::GetInstance(), "Pacman collided with a ghost. Ghost was eaten!", pac::Logger::Level::Info);
+			invoker.setCommand(std::move(logCommand));
+			invoker.executeCommand();
 			return CollisionType::PoweredUp;
 		}
 	}
@@ -227,8 +238,12 @@ void pac::GameplayScene::RemoveExpiredListeners()
 			listeners.erase(removeFrom, listeners.end());
 
 			auto count = listeners.end() - removeFrom;
-			Logger::cout.Debug(std::format("( {} ) listeners were removed for events of type ( {} )",
-				count, EventTypeToStr(event)));
+
+			LoggerInvoker invoker;
+			std::string logMessage = std::format("( {} ) listeners were removed for events of type ( {} )", count, EventTypeToStr(event));
+			auto logCommand = std::make_unique<pac::LogCommand>(pac::Logger::GetInstance(), logMessage, pac::Logger::Level::Debug);
+			invoker.setCommand(std::move(logCommand));
+			invoker.executeCommand();
 		}
 	}
 }
@@ -247,13 +262,22 @@ void pac::GameplayScene::RemoveListener(const IListener* listener, EventType eve
 			return listenerElement.lock().get() == listener;
 		});
 
+	LoggerInvoker invoker;
+
 	if (foundIterator == listeners.end())
 	{
-		Logger::cout.Info(std::format("Listener for event type ( {} ) could not be found", EventTypeToStr(eventType)));
+		std::string logMessage = std::format("Listener for event type ( {} ) could not be found", EventTypeToStr(eventType));
+		auto logCommand = std::make_unique<pac::LogCommand>(pac::Logger::GetInstance(), logMessage, pac::Logger::Level::Info);
+		invoker.setCommand(std::move(logCommand));
+		invoker.executeCommand();
 	}
 
 	listeners.erase(foundIterator);
-	Logger::cout.Debug(std::format("An event listener for event type ( {} ) has successfuly been removed", EventTypeToStr(eventType)));
+
+	std::string logMessage = std::format("An event listener for event type ( {} ) has successfuly been removed", EventTypeToStr(eventType));
+	auto logCommand = std::make_unique<pac::LogCommand>(pac::Logger::GetInstance(), logMessage, pac::Logger::Level::Debug);
+	invoker.setCommand(std::move(logCommand));
+	invoker.executeCommand();
 }
 
 void pac::GameplayScene::Notify(IEvent* event) const
@@ -270,7 +294,10 @@ void pac::GameplayScene::Notify(IEvent* event) const
 		auto locked = listener.lock();
 		if (!locked)
 		{
-			Logger::cout.Warning("Listener could not be locked for notification. Expired listeners are supposed to be removed before Notify() is called. Listener skipped, expecting removal before the next iteration");
+			LoggerInvoker invoker;
+			auto logCommand = std::make_unique<pac::LogCommand>(pac::Logger::GetInstance(), "Listener could not be locked for notification. Expired listeners are supposed to be removed before Notify() is called. Listener skipped, expecting removal before the next iteration", pac::Logger::Level::Warning);
+			invoker.setCommand(std::move(logCommand));
+			invoker.executeCommand();
 			continue;
 		}
 

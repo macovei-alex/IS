@@ -5,6 +5,8 @@
 #include <string_view>
 #include <string>
 #include <chrono>
+#include <memory>
+#include <mutex>
 
 namespace pac
 {
@@ -31,12 +33,19 @@ namespace pac
 
 		inline void SetMinimumLogLevel(Level level) { mMinimumLevel = level; }
 
-	public:
-		static Logger cout;
+		static Logger& GetInstance(std::ostream& os = std::cout, Level minimumLevel = Level::Debug)
+		{
+			static Logger instance(os, minimumLevel);
+			return instance;
+		}
 
 	private:
 		std::ostream& mOutStream;
 		std::ofstream mTempFileStream;
 		Level mMinimumLevel;
+
+		// Delete copy constructor and assignment operator to prevent copying
+		Logger(const Logger&) = delete;
+		Logger& operator=(const Logger&) = delete;
 	};
 }
