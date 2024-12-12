@@ -13,7 +13,7 @@ TEST(MazeTest, VerifyMazeInitialization)
 {
 	std::string_view mazeStr = R"(
 		1 1 1 1 1 1 1
-		1 0 0 3 4 5 1
+		1 0 2 3 4 5 1
 		1 1 1 1 1 1 1
 	)";
 
@@ -27,7 +27,7 @@ TEST(MazeTest, VerifyGetCellType)
 {
 	std::string_view mazeStr = R"(
 		1 1 1 1 1 1 1
-		1 0 0 3 4 5 1
+		1 0 2 3 4 5 1
 		1 1 1 1 1 1 1
 	)";
 
@@ -35,7 +35,7 @@ TEST(MazeTest, VerifyGetCellType)
 
 	EXPECT_EQ(maze.GetCellType({ 1, 0 }), pac::CellType::Wall);
 	EXPECT_EQ(maze.GetCellType({ 1, 1 }), pac::CellType::Empty);
-	EXPECT_EQ(maze.GetCellType({ 1, 0 }), pac::CellType::Coin);
+	EXPECT_EQ(maze.GetCellType({ 1, 2 }), pac::CellType::Coin);
 	EXPECT_EQ(maze.GetCellType({ 1, 3 }), pac::CellType::PowerUp);
 	EXPECT_EQ(maze.GetCellType({ 1, 4 }), pac::CellType::GhostSpawn);
 	EXPECT_EQ(maze.GetCellType({ 1, 5 }), pac::CellType::PacmanSpawn);
@@ -45,7 +45,7 @@ TEST(MazeTest, VerifyIsWalkable)
 {
 	std::string_view mazeStr = R"(
 		1 1 1 1 1 1 1
-		1 0 0 3 4 5 1
+		1 0 2 3 4 5 1
 		1 1 1 1 1 1 1
 	)";
 
@@ -53,7 +53,7 @@ TEST(MazeTest, VerifyIsWalkable)
 
 	EXPECT_EQ(maze.IsWalkable({ 1, 0 }), false);
 	EXPECT_EQ(maze.IsWalkable({ 1, 1 }), true);
-	EXPECT_EQ(maze.IsWalkable({ 1, 0 }), true);
+	EXPECT_EQ(maze.IsWalkable({ 1, 2 }), true);
 	EXPECT_EQ(maze.IsWalkable({ 1, 3 }), true);
 	EXPECT_EQ(maze.IsWalkable({ 1, 4 }), true);
 	EXPECT_EQ(maze.IsWalkable({ 1, 5 }), true);
@@ -63,15 +63,15 @@ TEST(MazeTest, VerifyEatCell)
 {
 	std::string_view mazeStr = R"(
 		1 1 1 1 1 1 1
-		1 0 0 3 4 5 1
+		1 0 2 3 4 5 1
 		1 1 1 1 1 1 1
 	)";
 
 	pac::Maze maze = pac::test::ReadMazeFromStr(mazeStr);
 	uint64_t score = 0;
 
-	maze.EatCell({ 1, 0 });
-	EXPECT_EQ(maze.GetCellType({ 1, 0 }), pac::CellType::Empty);
+	maze.EatCell({ 1, 2 });
+	EXPECT_EQ(maze.GetCellType({ 1, 2 }), pac::CellType::Empty);
 	maze.EatCell({ 1, 3 });
 	EXPECT_EQ(maze.GetCellType({ 1, 3 }), pac::CellType::Empty);
 
