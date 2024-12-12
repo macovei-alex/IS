@@ -22,12 +22,12 @@ TEST(ScaredPathFinderTest, MovesAwayFromPacmanInOpenMaze)
     pac::Maze maze = pac::test::ReadMazeFromStr(mazeStr);
     pac::GameplaySettings settings;
     pac::Pacman pacman({ 1, 1 }, settings.mPacmanTicksPerMove, settings.mPowerUpDuration);
-    pac::Ghost ghost({ 0, 0 }, 0, settings);
+    pac::Ghost ghost({ 2, 2 }, 0, settings);
     pac::ScaredPathFinder pathFinder(&ghost);
     pac::Position nextMove = pathFinder.NextMove(maze, pacman);
 
-    // {0, 3} or {3, 0} 
-    bool isValidMove = (nextMove.row == 0 && nextMove.col == 3) || (nextMove.row == 3 && nextMove.col == 0);
+    // {2, 3} or {3, 2} 
+    bool isValidMove = (nextMove.row == 2 && nextMove.col == 3) || (nextMove.row == 3 && nextMove.col == 2);
 
     EXPECT_TRUE(isValidMove);
 }
@@ -45,14 +45,14 @@ TEST(ScaredPathFinderTest, AvoidsWalls)
     pac::Maze maze = pac::test::ReadMazeFromStr(mazeStr);
     pac::GameplaySettings settings;
     pac::Pacman pacman({ 1, 1 }, settings.mPacmanTicksPerMove, settings.mPowerUpDuration);
-    pac::Ghost ghost({ 0, 0 }, 0, settings);
+    pac::Ghost ghost({ 2, 2 }, 0, settings);
 
     pac::ScaredPathFinder pathFinder(&ghost);
 
     pac::Position nextMove = pathFinder.NextMove(maze, pacman);
 
-    // Verify that the ghost avoids the wall and moves to {3, 0}
-    EXPECT_TRUE(nextMove.row == 3 && nextMove.col == 0);
+    // Verify that the ghost avoids the wall and moves to {3, 2}
+    EXPECT_TRUE(nextMove.row == 3 && nextMove.col == 2);
 }
 //tot cu pereti 
 TEST(ScaredPathFinderTest, AvoidsPacmanAndWalls)
@@ -68,11 +68,11 @@ TEST(ScaredPathFinderTest, AvoidsPacmanAndWalls)
     pac::Maze maze = pac::test::ReadMazeFromStr(mazeStr);
     pac::GameplaySettings settings;
     pac::Pacman pacman({ 1, 1 }, settings.mPacmanTicksPerMove, settings.mPowerUpDuration);
-    pac::Ghost ghost({ 3, 0 }, 0, settings);  // Fantoma este în colțul de jos
+    pac::Ghost ghost({ 3, 2 }, 0, settings);  // Fantoma este în colțul de jos
     pac::ScaredPathFinder pathFinder(&ghost);
 
     pac::Position nextMove = pathFinder.NextMove(maze, pacman);
-    bool isValidMove = (nextMove.row == 0 && nextMove.col == 0) || (nextMove.row == 3 && nextMove.col == 3);
+    bool isValidMove = (nextMove.row == 2 && nextMove.col == 2) || (nextMove.row == 3 && nextMove.col == 3);
     EXPECT_TRUE(isValidMove);
 }
 
@@ -94,7 +94,7 @@ TEST(HuntPathFinderTest, FindsShortestPathToPacmanInOpenMaze)
 
     pac::Position nextMove = pathFinder.NextMove(maze, pacman);
 
-    bool isCorrectMove = (nextMove.row == 0 && nextMove.col == 3);
+    bool isCorrectMove = (nextMove.row == 2 && nextMove.col == 3);
     EXPECT_TRUE(isCorrectMove);
 }
 
@@ -110,7 +110,7 @@ TEST(RoamingPathFinderTest, NavigatesMazeWithMultiplePaths)
 
     pac::Maze maze = pac::test::ReadMazeFromStr(mazeStr);
     pac::GameplaySettings settings;
-    pac::Ghost ghost({ 0, 0 }, 0, settings);
+    pac::Ghost ghost({ 2, 2 }, 0, settings);
     pac::RoamingPathFinder pathFinder(&ghost);
 
     pac::Position nextMove = pathFinder.NextMove(maze, pac::Pacman({ 1, 1 }, settings.mPacmanTicksPerMove, settings.mPowerUpDuration));
@@ -160,7 +160,7 @@ TEST(HuntPathFinderTest, AvoidsWallsWhenHuntingPacman)
     pac::HuntPathFinder pathFinder(&ghost);
 
     pac::Position nextMove = pathFinder.NextMove(maze, pacman);
-    bool isCloserToPacman = (nextMove.row == 0 && nextMove.col == 1); 
+    bool isCloserToPacman = (nextMove.row == 2 && nextMove.col == 1); 
     EXPECT_TRUE(isCloserToPacman);
 }
 
@@ -232,7 +232,7 @@ TEST(RoamingPathFinderTest, ChoosesRandomValidPosition)
 
     pac::Maze maze = pac::test::ReadMazeFromStr(mazeStr);
     pac::GameplaySettings settings;
-    pac::Ghost ghost({ 0, 0 }, 0, settings);
+    pac::Ghost ghost({ 2, 2 }, 0, settings);
     pac::RoamingPathFinder pathFinder(&ghost);
 
     pac::Position nextMove = pathFinder.NextMove(maze, pac::Pacman({ 1, 1 }, settings.mPacmanTicksPerMove, settings.mPowerUpDuration));
@@ -253,7 +253,7 @@ TEST(RoamingPathFinderTest, MovesTowardsRandomPosition)
 
     pac::Maze maze = pac::test::ReadMazeFromStr(mazeStr);
     pac::GameplaySettings settings;
-    pac::Ghost ghost({ 0, 0 }, 0, settings);
+    pac::Ghost ghost({ 2, 2 }, 0, settings);
     pac::RoamingPathFinder pathFinder(&ghost);
 
     pac::Position nextMove = pathFinder.NextMove(maze, pac::Pacman({ 1, 1 }, settings.mPacmanTicksPerMove, settings.mPowerUpDuration));
@@ -284,10 +284,10 @@ TEST(RoamingPathFinderTest, ChangesDirectionWhenReachingEndOfPath)
     pac::Position originalPosition = ghost.GetPosition();
 
     pac::Position nextMove1 = pathFinder.NextMove(maze, pac::Pacman({ 3, 3 }, settings.mPacmanTicksPerMove, settings.mPowerUpDuration));
-    pac::Position nextMove0 = pathFinder.NextMove(maze, pac::Pacman({ 3, 3 }, settings.mPacmanTicksPerMove, settings.mPowerUpDuration));
+    pac::Position nextMove2 = pathFinder.NextMove(maze, pac::Pacman({ 3, 3 }, settings.mPacmanTicksPerMove, settings.mPowerUpDuration));
 
 
-    EXPECT_NE(nextMove1, nextMove0); 
+    EXPECT_NE(nextMove1, nextMove2); 
 }
 
 TEST(RoamingPathFinderTest, ChoosesPathWithMultipleDirections)
@@ -302,7 +302,7 @@ TEST(RoamingPathFinderTest, ChoosesPathWithMultipleDirections)
 
     pac::Maze maze = pac::test::ReadMazeFromStr(mazeStr);
     pac::GameplaySettings settings;
-    pac::Ghost ghost({ 0, 0 }, 0, settings);
+    pac::Ghost ghost({ 2, 2 }, 0, settings);
     pac::RoamingPathFinder pathFinder(&ghost);
 
     pac::Position nextMove = pathFinder.NextMove(maze, pac::Pacman({ 3, 3 }, settings.mPacmanTicksPerMove, settings.mPowerUpDuration));
@@ -323,11 +323,11 @@ TEST(RoamingPathFinderTest, AvoidsWallsAndStaysWithinBounds)
 
     pac::Maze maze = pac::test::ReadMazeFromStr(mazeStr);
     pac::GameplaySettings settings;
-    pac::Ghost ghost({ 0, 0 }, 0, settings);  
+    pac::Ghost ghost({ 2, 2 }, 0, settings);  
     pac::RoamingPathFinder pathFinder(&ghost);
     pac::Position nextMove = pathFinder.NextMove(maze, pac::Pacman({ 1, 1 }, settings.mPacmanTicksPerMove, settings.mPowerUpDuration));
 
-    bool isValidMove = (nextMove.row == 3 && nextMove.col == 0) || (nextMove.row == 1 && nextMove.col == 0);
+    bool isValidMove = (nextMove.row == 3 && nextMove.col == 2) || (nextMove.row == 1 && nextMove.col == 2);
     EXPECT_TRUE(isValidMove);
 }
 
@@ -335,7 +335,7 @@ TEST(GhostTest, ChangesStateCorrectlyWithSetState)
 {
     pac::GameplaySettings settings;
     settings.mGhostTicksPerMove = 1;
-    pac::Ghost ghost({ 0, 0 }, 0, settings);
+    pac::Ghost ghost({ 2, 2 }, 0, settings);
 
     ghost.SetState(pac::Ghost::State::Hunting);
     EXPECT_EQ(ghost.GetState(), pac::Ghost::State::Hunting);
@@ -351,7 +351,7 @@ TEST(GhostTest, ChangesStateCorrectlyWithSetState)
 TEST(WaitingPathFinderTest, WaitsUntilTargetTick)
 {
 	pac::GameplaySettings settings;
-	pac::Ghost ghost({ 0, 0 }, 5, settings);
+	pac::Ghost ghost({ 2, 2 }, 5, settings);
 	pac::WaitingPathFinder pathFinder(&ghost, 5);
 	pac::Position nextMove = pathFinder.NextMove(pac::Maze(), pac::Pacman({ 1, 1 }, settings.mPacmanTicksPerMove, settings.mPowerUpDuration));
 	EXPECT_EQ(nextMove, ghost.GetPosition());
