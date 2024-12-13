@@ -3,6 +3,10 @@
 #include "PacmanEngine/GameplayScene.h"
 #include "PacmanEngine/Game.h"
 
+/**
+ * @brief Entry point of the Pacman game application.
+ * @return Exit status of the application.
+ */
 int main()
 {
 	sf::RenderWindow renderWindow(sf::VideoMode(1500, 1000), "Pacman Game");
