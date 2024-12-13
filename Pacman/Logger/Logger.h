@@ -1,6 +1,4 @@
 #pragma once
-#pragma once
-
 #include <iostream>
 #include <fstream>
 #include <string_view>
@@ -12,6 +10,7 @@
 namespace pac
 {
 	/**
+  * @class Logger
   * @brief A class for logging messages with different severity levels.
   */
 	class Logger
@@ -71,39 +70,29 @@ namespace pac
    * 
    * @param message The warning message to log.
    */
-#include <iostream>
-#include <fstream>
-#include <string_view>
-#include <string>
-#include <chrono>
-#include <memory>
-#include <mutex>
-
-namespace pac
-{
-	class Logger
-	{
-	public:
-		enum class Level {
-			Debug,
-			Info,
-			Warning,
-			Error
-		};
-
-	public:
-		Logger(std::ostream& os, Level minimumLevel = Level::Debug);
-		Logger(std::string_view filename, Level minimumLevel = Level::Debug);
-
-		void Log(std::string_view message, Level level);
-
-		inline void Debug(std::string_view message) { Log(message, Level::Debug); }
-		inline void Info(std::string_view message) { Log(message, Level::Info); }
 		inline void Warning(std::string_view message) { Log(message, Level::Warning); }
+
+		/**
+   * @brief Logs an error message.
+   * 
+   * @param message The error message to log.
+   */
 		inline void Error(std::string_view message) { Log(message, Level::Error); }
 
+		/**
+   * @brief Sets the minimum log level.
+   * 
+   * @param level The minimum log level to set.
+   */
 		inline void SetMinimumLogLevel(Level level) { mMinimumLevel = level; }
 
+		/**
+   * @brief Gets the singleton instance of the Logger.
+   * 
+   * @param os The output stream to log to.
+   * @param minimumLevel The minimum log level to log.
+   * @return The singleton instance of the Logger.
+   */
 		static Logger& GetInstance(std::ostream& os = std::cout, Level minimumLevel = Level::Debug)
 		{
 			static Logger instance(os, minimumLevel);
@@ -111,9 +100,9 @@ namespace pac
 		}
 
 	private:
-		std::ostream& mOutStream;
-		std::ofstream mTempFileStream;
-		Level mMinimumLevel;
+		std::ostream& mOutStream; ///< The output stream to log to.
+		std::ofstream mTempFileStream; ///< Temporary file stream for logging to a file.
+		Level mMinimumLevel; ///< The minimum log level.
 
 		// Delete copy constructor and assignment operator to prevent copying
 		Logger(const Logger&) = delete;

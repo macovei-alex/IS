@@ -8,6 +8,7 @@ var searchData=
   ['endofpacket_5',['endOfPacket',['../classsf_1_1_packet.html#a61e354fa670da053907c14b738839560',1,'sf::Packet']]],
   ['erase_6',['erase',['../classsf_1_1_string.html#aaa78a0a46b3fbe200a4ccdedc326eb93',1,'sf::String']]],
   ['err_7',['err',['../group__system.html#gad3cbfe676d6ca096c4a943bbd2ff3b83',1,'sf']]],
-  ['execute_8',['execute',['../classpac_1_1_log_command.html#a765ad8a021dcba144c3ae725e0dfb948',1,'pac::LogCommand']]],
-  ['executecommand_9',['executeCommand',['../class_logger_invoker.html#a29a7af5f885c1be831f3a92a56953106',1,'LoggerInvoker']]]
+  ['error_8',['Error',['../classpac_1_1_logger.html#adb0960c3cedb5898e9a3c98ab5a1a570',1,'pac::Logger']]],
+  ['execute_9',['execute',['../classpac_1_1_log_command.html#a765ad8a021dcba144c3ae725e0dfb948',1,'pac::LogCommand']]],
+  ['executecommand_10',['executeCommand',['../class_logger_invoker.html#a29a7af5f885c1be831f3a92a56953106',1,'LoggerInvoker']]]
 ];

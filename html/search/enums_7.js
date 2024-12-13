@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['primitivetype_0',['PrimitiveType',['../group__graphics.html#ga5ee56ac1339984909610713096283b1b',1,'sf']]]
+  ['method_0',['Method',['../classsf_1_1_http_1_1_request.html#a620f8bff6f43e1378f321bf53fbf5598',1,'sf::Http::Request']]]
 ];

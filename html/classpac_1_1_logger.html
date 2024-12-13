@@ -96,49 +96,388 @@ $(function(){ initResizable(false); });
   <div class="headertitle"><div class="title">pac::Logger Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>A class for logging messages with different severity levels.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_logger_8h_source.html">Logger.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:ab2ab7b2cf015d2ae6a59cfadf1284865" id="r_ab2ab7b2cf015d2ae6a59cfadf1284865"><td class="memItemLeft" align="right" valign="top"><a id="ab2ab7b2cf015d2ae6a59cfadf1284865" name="ab2ab7b2cf015d2ae6a59cfadf1284865"></a>enum class &#160;</td><td class="memItemRight" valign="bottom"><b>Level</b> { <b>Debug</b>
-, <b>Info</b>
-, <b>Warning</b>
-, <b>Error</b>
+<tr class="memitem:ab2ab7b2cf015d2ae6a59cfadf1284865" id="r_ab2ab7b2cf015d2ae6a59cfadf1284865"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab2ab7b2cf015d2ae6a59cfadf1284865">Level</a> { <a class="el" href="#ab2ab7b2cf015d2ae6a59cfadf1284865aa603905470e2a5b8c13e96b579ef0dba">Debug</a>
+, <a class="el" href="#ab2ab7b2cf015d2ae6a59cfadf1284865a4059b0251f66a18cb56f544728796875">Info</a>
+, <a class="el" href="#ab2ab7b2cf015d2ae6a59cfadf1284865a0eaadb4fcb48a0a0ed7bc9868be9fbaa">Warning</a>
+, <a class="el" href="#ab2ab7b2cf015d2ae6a59cfadf1284865a902b0d55fddef6f8d651fe1035b7d4bd">Error</a>
  }</td></tr>
+<tr class="memdesc:ab2ab7b2cf015d2ae6a59cfadf1284865"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enum representing the log levels.  <a href="#ab2ab7b2cf015d2ae6a59cfadf1284865">More...</a><br /></td></tr>
 <tr class="separator:ab2ab7b2cf015d2ae6a59cfadf1284865"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a3c4ed7678474466a1412c34ba0106e60" id="r_a3c4ed7678474466a1412c34ba0106e60"><td class="memItemLeft" align="right" valign="top"><a id="a3c4ed7678474466a1412c34ba0106e60" name="a3c4ed7678474466a1412c34ba0106e60"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Logger</b> (std::ostream &amp;os, Level minimumLevel=Level::Debug)</td></tr>
+<tr class="memitem:a3c4ed7678474466a1412c34ba0106e60" id="r_a3c4ed7678474466a1412c34ba0106e60"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3c4ed7678474466a1412c34ba0106e60">Logger</a> (std::ostream &amp;os, <a class="el" href="#ab2ab7b2cf015d2ae6a59cfadf1284865">Level</a> minimumLevel=<a class="el" href="#ab2ab7b2cf015d2ae6a59cfadf1284865aa603905470e2a5b8c13e96b579ef0dba">Level::Debug</a>)</td></tr>
+<tr class="memdesc:a3c4ed7678474466a1412c34ba0106e60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="classpac_1_1_logger.html" title="A class for logging messages with different severity levels.">Logger</a> object that logs to the given output stream.  <br /></td></tr>
 <tr class="separator:a3c4ed7678474466a1412c34ba0106e60"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab217ec6818839bcada4ee8dbe12c23e" id="r_aab217ec6818839bcada4ee8dbe12c23e"><td class="memItemLeft" align="right" valign="top"><a id="aab217ec6818839bcada4ee8dbe12c23e" name="aab217ec6818839bcada4ee8dbe12c23e"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Logger</b> (std::string_view filename, Level minimumLevel=Level::Debug)</td></tr>
+<tr class="memitem:aab217ec6818839bcada4ee8dbe12c23e" id="r_aab217ec6818839bcada4ee8dbe12c23e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aab217ec6818839bcada4ee8dbe12c23e">Logger</a> (std::string_view filename, <a class="el" href="#ab2ab7b2cf015d2ae6a59cfadf1284865">Level</a> minimumLevel=<a class="el" href="#ab2ab7b2cf015d2ae6a59cfadf1284865aa603905470e2a5b8c13e96b579ef0dba">Level::Debug</a>)</td></tr>
+<tr class="memdesc:aab217ec6818839bcada4ee8dbe12c23e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="classpac_1_1_logger.html" title="A class for logging messages with different severity levels.">Logger</a> object that logs to the given file.  <br /></td></tr>
 <tr class="separator:aab217ec6818839bcada4ee8dbe12c23e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a96012f078989b2cfd21d09b02ff53cab" id="r_a96012f078989b2cfd21d09b02ff53cab"><td class="memItemLeft" align="right" valign="top"><a id="a96012f078989b2cfd21d09b02ff53cab" name="a96012f078989b2cfd21d09b02ff53cab"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Log</b> (std::string_view message, Level level)</td></tr>
+<tr class="memitem:a96012f078989b2cfd21d09b02ff53cab" id="r_a96012f078989b2cfd21d09b02ff53cab"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a96012f078989b2cfd21d09b02ff53cab">Log</a> (std::string_view message, <a class="el" href="#ab2ab7b2cf015d2ae6a59cfadf1284865">Level</a> level)</td></tr>
+<tr class="memdesc:a96012f078989b2cfd21d09b02ff53cab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs a message with the given log level.  <br /></td></tr>
 <tr class="separator:a96012f078989b2cfd21d09b02ff53cab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab2a548dce803f69372b77996f4ff2061" id="r_ab2a548dce803f69372b77996f4ff2061"><td class="memItemLeft" align="right" valign="top"><a id="ab2a548dce803f69372b77996f4ff2061" name="ab2a548dce803f69372b77996f4ff2061"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Debug</b> (std::string_view message)</td></tr>
+<tr class="memitem:ab2a548dce803f69372b77996f4ff2061" id="r_ab2a548dce803f69372b77996f4ff2061"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab2a548dce803f69372b77996f4ff2061">Debug</a> (std::string_view message)</td></tr>
+<tr class="memdesc:ab2a548dce803f69372b77996f4ff2061"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs a debug message.  <br /></td></tr>
 <tr class="separator:ab2a548dce803f69372b77996f4ff2061"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7510a328224796ee50cf3b09a4042d3e" id="r_a7510a328224796ee50cf3b09a4042d3e"><td class="memItemLeft" align="right" valign="top"><a id="a7510a328224796ee50cf3b09a4042d3e" name="a7510a328224796ee50cf3b09a4042d3e"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Info</b> (std::string_view message)</td></tr>
+<tr class="memitem:a7510a328224796ee50cf3b09a4042d3e" id="r_a7510a328224796ee50cf3b09a4042d3e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7510a328224796ee50cf3b09a4042d3e">Info</a> (std::string_view message)</td></tr>
+<tr class="memdesc:a7510a328224796ee50cf3b09a4042d3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs an info message.  <br /></td></tr>
 <tr class="separator:a7510a328224796ee50cf3b09a4042d3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4bd416446442b6c479998892d1f983e7" id="r_a4bd416446442b6c479998892d1f983e7"><td class="memItemLeft" align="right" valign="top"><a id="a4bd416446442b6c479998892d1f983e7" name="a4bd416446442b6c479998892d1f983e7"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Warning</b> (std::string_view message)</td></tr>
+<tr class="memitem:a4bd416446442b6c479998892d1f983e7" id="r_a4bd416446442b6c479998892d1f983e7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4bd416446442b6c479998892d1f983e7">Warning</a> (std::string_view message)</td></tr>
+<tr class="memdesc:a4bd416446442b6c479998892d1f983e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs a warning message.  <br /></td></tr>
 <tr class="separator:a4bd416446442b6c479998892d1f983e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adb0960c3cedb5898e9a3c98ab5a1a570" id="r_adb0960c3cedb5898e9a3c98ab5a1a570"><td class="memItemLeft" align="right" valign="top"><a id="adb0960c3cedb5898e9a3c98ab5a1a570" name="adb0960c3cedb5898e9a3c98ab5a1a570"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Error</b> (std::string_view message)</td></tr>
+<tr class="memitem:adb0960c3cedb5898e9a3c98ab5a1a570" id="r_adb0960c3cedb5898e9a3c98ab5a1a570"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adb0960c3cedb5898e9a3c98ab5a1a570">Error</a> (std::string_view message)</td></tr>
+<tr class="memdesc:adb0960c3cedb5898e9a3c98ab5a1a570"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs an error message.  <br /></td></tr>
 <tr class="separator:adb0960c3cedb5898e9a3c98ab5a1a570"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6fe93769e0d39a457fa15afca017af4a" id="r_a6fe93769e0d39a457fa15afca017af4a"><td class="memItemLeft" align="right" valign="top"><a id="a6fe93769e0d39a457fa15afca017af4a" name="a6fe93769e0d39a457fa15afca017af4a"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>SetMinimumLogLevel</b> (Level level)</td></tr>
+<tr class="memitem:a6fe93769e0d39a457fa15afca017af4a" id="r_a6fe93769e0d39a457fa15afca017af4a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6fe93769e0d39a457fa15afca017af4a">SetMinimumLogLevel</a> (<a class="el" href="#ab2ab7b2cf015d2ae6a59cfadf1284865">Level</a> level)</td></tr>
+<tr class="memdesc:a6fe93769e0d39a457fa15afca017af4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the minimum log level.  <br /></td></tr>
 <tr class="separator:a6fe93769e0d39a457fa15afca017af4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a2d7e62254b805d04936cd1472aac0719" id="r_a2d7e62254b805d04936cd1472aac0719"><td class="memItemLeft" align="right" valign="top"><a id="a2d7e62254b805d04936cd1472aac0719" name="a2d7e62254b805d04936cd1472aac0719"></a>
-static <a class="el" href="classpac_1_1_logger.html">Logger</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>GetInstance</b> (std::ostream &amp;os=std::cout, Level minimumLevel=Level::Debug)</td></tr>
+<tr class="memitem:a2d7e62254b805d04936cd1472aac0719" id="r_a2d7e62254b805d04936cd1472aac0719"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classpac_1_1_logger.html">Logger</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2d7e62254b805d04936cd1472aac0719">GetInstance</a> (std::ostream &amp;os=std::cout, <a class="el" href="#ab2ab7b2cf015d2ae6a59cfadf1284865">Level</a> minimumLevel=<a class="el" href="#ab2ab7b2cf015d2ae6a59cfadf1284865aa603905470e2a5b8c13e96b579ef0dba">Level::Debug</a>)</td></tr>
+<tr class="memdesc:a2d7e62254b805d04936cd1472aac0719"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the singleton instance of the <a class="el" href="classpac_1_1_logger.html" title="A class for logging messages with different severity levels.">Logger</a>.  <br /></td></tr>
 <tr class="separator:a2d7e62254b805d04936cd1472aac0719"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>A class for logging messages with different severity levels. </p>
+</div><h2 class="groupheader">Member Enumeration Documentation</h2>
+<a id="ab2ab7b2cf015d2ae6a59cfadf1284865" name="ab2ab7b2cf015d2ae6a59cfadf1284865"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab2ab7b2cf015d2ae6a59cfadf1284865">&#9670;&#160;</a></span>Level</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum class <a class="el" href="#ab2ab7b2cf015d2ae6a59cfadf1284865">pac::Logger::Level</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Enum representing the log levels. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ab2ab7b2cf015d2ae6a59cfadf1284865aa603905470e2a5b8c13e96b579ef0dba" name="ab2ab7b2cf015d2ae6a59cfadf1284865aa603905470e2a5b8c13e96b579ef0dba"></a>Debug&#160;</td><td class="fielddoc"><p>Debug level. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ab2ab7b2cf015d2ae6a59cfadf1284865a4059b0251f66a18cb56f544728796875" name="ab2ab7b2cf015d2ae6a59cfadf1284865a4059b0251f66a18cb56f544728796875"></a>Info&#160;</td><td class="fielddoc"><p>Info level. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ab2ab7b2cf015d2ae6a59cfadf1284865a0eaadb4fcb48a0a0ed7bc9868be9fbaa" name="ab2ab7b2cf015d2ae6a59cfadf1284865a0eaadb4fcb48a0a0ed7bc9868be9fbaa"></a>Warning&#160;</td><td class="fielddoc"><p>Warning level. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ab2ab7b2cf015d2ae6a59cfadf1284865a902b0d55fddef6f8d651fe1035b7d4bd" name="ab2ab7b2cf015d2ae6a59cfadf1284865a902b0d55fddef6f8d651fe1035b7d4bd"></a>Error&#160;</td><td class="fielddoc"><p>Error level. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a3c4ed7678474466a1412c34ba0106e60" name="a3c4ed7678474466a1412c34ba0106e60"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3c4ed7678474466a1412c34ba0106e60">&#9670;&#160;</a></span>Logger() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">pac::Logger::Logger </td>
+          <td>(</td>
+          <td class="paramtype">std::ostream &amp;</td>          <td class="paramname"><span class="paramname"><em>os</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#ab2ab7b2cf015d2ae6a59cfadf1284865">Level</a></td>          <td class="paramname"><span class="paramname"><em>minimumLevel</em></span><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="#ab2ab7b2cf015d2ae6a59cfadf1284865aa603905470e2a5b8c13e96b579ef0dba">Level::Debug</a></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructs a <a class="el" href="classpac_1_1_logger.html" title="A class for logging messages with different severity levels.">Logger</a> object that logs to the given output stream. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">os</td><td>The output stream to log to. </td></tr>
+    <tr><td class="paramname">minimumLevel</td><td>The minimum log level to log. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aab217ec6818839bcada4ee8dbe12c23e" name="aab217ec6818839bcada4ee8dbe12c23e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aab217ec6818839bcada4ee8dbe12c23e">&#9670;&#160;</a></span>Logger() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">pac::Logger::Logger </td>
+          <td>(</td>
+          <td class="paramtype">std::string_view</td>          <td class="paramname"><span class="paramname"><em>filename</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#ab2ab7b2cf015d2ae6a59cfadf1284865">Level</a></td>          <td class="paramname"><span class="paramname"><em>minimumLevel</em></span><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="#ab2ab7b2cf015d2ae6a59cfadf1284865aa603905470e2a5b8c13e96b579ef0dba">Level::Debug</a></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructs a <a class="el" href="classpac_1_1_logger.html" title="A class for logging messages with different severity levels.">Logger</a> object that logs to the given file. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filename</td><td>The name of the file to log to. </td></tr>
+    <tr><td class="paramname">minimumLevel</td><td>The minimum log level to log. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="ab2a548dce803f69372b77996f4ff2061" name="ab2a548dce803f69372b77996f4ff2061"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab2a548dce803f69372b77996f4ff2061">&#9670;&#160;</a></span>Debug()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void pac::Logger::Debug </td>
+          <td>(</td>
+          <td class="paramtype">std::string_view</td>          <td class="paramname"><span class="paramname"><em>message</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Logs a debug message. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">message</td><td>The debug message to log. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="adb0960c3cedb5898e9a3c98ab5a1a570" name="adb0960c3cedb5898e9a3c98ab5a1a570"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adb0960c3cedb5898e9a3c98ab5a1a570">&#9670;&#160;</a></span>Error()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void pac::Logger::Error </td>
+          <td>(</td>
+          <td class="paramtype">std::string_view</td>          <td class="paramname"><span class="paramname"><em>message</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Logs an error message. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">message</td><td>The error message to log. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a2d7e62254b805d04936cd1472aac0719" name="a2d7e62254b805d04936cd1472aac0719"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2d7e62254b805d04936cd1472aac0719">&#9670;&#160;</a></span>GetInstance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="classpac_1_1_logger.html">Logger</a> &amp; pac::Logger::GetInstance </td>
+          <td>(</td>
+          <td class="paramtype">std::ostream &amp;</td>          <td class="paramname"><span class="paramname"><em>os</em></span><span class="paramdefsep"> = </span><span class="paramdefval">std::cout</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#ab2ab7b2cf015d2ae6a59cfadf1284865">Level</a></td>          <td class="paramname"><span class="paramname"><em>minimumLevel</em></span><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="#ab2ab7b2cf015d2ae6a59cfadf1284865aa603905470e2a5b8c13e96b579ef0dba">Level::Debug</a></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the singleton instance of the <a class="el" href="classpac_1_1_logger.html" title="A class for logging messages with different severity levels.">Logger</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">os</td><td>The output stream to log to. </td></tr>
+    <tr><td class="paramname">minimumLevel</td><td>The minimum log level to log. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The singleton instance of the <a class="el" href="classpac_1_1_logger.html" title="A class for logging messages with different severity levels.">Logger</a>. </dd></dl>
+
+</div>
+</div>
+<a id="a7510a328224796ee50cf3b09a4042d3e" name="a7510a328224796ee50cf3b09a4042d3e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7510a328224796ee50cf3b09a4042d3e">&#9670;&#160;</a></span>Info()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void pac::Logger::Info </td>
+          <td>(</td>
+          <td class="paramtype">std::string_view</td>          <td class="paramname"><span class="paramname"><em>message</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Logs an info message. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">message</td><td>The info message to log. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a96012f078989b2cfd21d09b02ff53cab" name="a96012f078989b2cfd21d09b02ff53cab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a96012f078989b2cfd21d09b02ff53cab">&#9670;&#160;</a></span>Log()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void pac::Logger::Log </td>
+          <td>(</td>
+          <td class="paramtype">std::string_view</td>          <td class="paramname"><span class="paramname"><em>message</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#ab2ab7b2cf015d2ae6a59cfadf1284865">Level</a></td>          <td class="paramname"><span class="paramname"><em>level</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Logs a message with the given log level. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">message</td><td>The message to log. </td></tr>
+    <tr><td class="paramname">level</td><td>The log level of the message. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a6fe93769e0d39a457fa15afca017af4a" name="a6fe93769e0d39a457fa15afca017af4a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6fe93769e0d39a457fa15afca017af4a">&#9670;&#160;</a></span>SetMinimumLogLevel()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void pac::Logger::SetMinimumLogLevel </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#ab2ab7b2cf015d2ae6a59cfadf1284865">Level</a></td>          <td class="paramname"><span class="paramname"><em>level</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets the minimum log level. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">level</td><td>The minimum log level to set. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a4bd416446442b6c479998892d1f983e7" name="a4bd416446442b6c479998892d1f983e7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4bd416446442b6c479998892d1f983e7">&#9670;&#160;</a></span>Warning()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void pac::Logger::Warning </td>
+          <td>(</td>
+          <td class="paramtype">std::string_view</td>          <td class="paramname"><span class="paramname"><em>message</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Logs a warning message. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">message</td><td>The warning message to log. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>Pacman/Logger/<a class="el" href="_logger_8h_source.html">Logger.h</a></li>
 <li>Pacman/Logger/<b>Logger.cpp</b></li>

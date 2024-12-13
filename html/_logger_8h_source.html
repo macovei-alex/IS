@@ -92,88 +92,79 @@ $(function(){ initResizable(false); });
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#pragma once</span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;fstream&gt;</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;string_view&gt;</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;chrono&gt;</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;memory&gt;</span></div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;mutex&gt;</span></div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">namespace </span>pac</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>{</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <span class="keyword">class </span>Logger</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    {</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        <span class="keyword">enum class</span> Level {</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>            Debug,   </div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>            Info,    </div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>            Warning, </div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>            Error    </div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        };</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        Logger(std::ostream&amp; os, Level minimumLevel = Level::Debug);</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        Logger(std::string_view filename, Level minimumLevel = Level::Debug);</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>        <span class="keywordtype">void</span> Log(std::string_view message, Level level);</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        <span class="keyword">inline</span> <span class="keywordtype">void</span> Debug(std::string_view message) { Log(message, Level::Debug); }</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        <span class="keyword">inline</span> <span class="keywordtype">void</span> Info(std::string_view message) { Log(message, Level::Info); }</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span><span class="preprocessor">#include &lt;fstream&gt;</span></div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span><span class="preprocessor">#include &lt;string_view&gt;</span></div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span><span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span><span class="preprocessor">#include &lt;chrono&gt;</span></div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span><span class="preprocessor">#include &lt;memory&gt;</span></div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span><span class="preprocessor">#include &lt;mutex&gt;</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;fstream&gt;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;string_view&gt;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;chrono&gt;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;memory&gt;</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;mutex&gt;</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">namespace </span>pac</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>{</div>
+<div class="foldopen" id="foldopen00016" data-start="{" data-end="};">
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="classpac_1_1_logger.html">   16</a></span>    <span class="keyword">class </span><a class="code hl_class" href="classpac_1_1_logger.html">Logger</a></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    {</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <span class="keyword">public</span>:</div>
+<div class="foldopen" id="foldopen00022" data-start="{" data-end="};">
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="classpac_1_1_logger.html#ab2ab7b2cf015d2ae6a59cfadf1284865">   22</a></span>        <span class="keyword">enum class</span> <a class="code hl_enumeration" href="classpac_1_1_logger.html#ab2ab7b2cf015d2ae6a59cfadf1284865">Level</a> {</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>            <a class="code hl_enumvalue" href="classpac_1_1_logger.html#ab2ab7b2cf015d2ae6a59cfadf1284865aa603905470e2a5b8c13e96b579ef0dba">Debug</a>,   </div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>            <a class="code hl_enumvalue" href="classpac_1_1_logger.html#ab2ab7b2cf015d2ae6a59cfadf1284865a4059b0251f66a18cb56f544728796875">Info</a>,    </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>            <a class="code hl_enumvalue" href="classpac_1_1_logger.html#ab2ab7b2cf015d2ae6a59cfadf1284865a0eaadb4fcb48a0a0ed7bc9868be9fbaa">Warning</a>, </div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>            <a class="code hl_enumvalue" href="classpac_1_1_logger.html#ab2ab7b2cf015d2ae6a59cfadf1284865a902b0d55fddef6f8d651fe1035b7d4bd">Error</a>    </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        };</div>
+</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        <a class="code hl_function" href="classpac_1_1_logger.html#a3c4ed7678474466a1412c34ba0106e60">Logger</a>(std::ostream&amp; os, <a class="code hl_enumeration" href="classpac_1_1_logger.html#ab2ab7b2cf015d2ae6a59cfadf1284865">Level</a> minimumLevel = <a class="code hl_enumvalue" href="classpac_1_1_logger.html#ab2ab7b2cf015d2ae6a59cfadf1284865aa603905470e2a5b8c13e96b579ef0dba">Level::Debug</a>);</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        <a class="code hl_function" href="classpac_1_1_logger.html#a3c4ed7678474466a1412c34ba0106e60">Logger</a>(std::string_view filename, <a class="code hl_enumeration" href="classpac_1_1_logger.html#ab2ab7b2cf015d2ae6a59cfadf1284865">Level</a> minimumLevel = <a class="code hl_enumvalue" href="classpac_1_1_logger.html#ab2ab7b2cf015d2ae6a59cfadf1284865aa603905470e2a5b8c13e96b579ef0dba">Level::Debug</a>);</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classpac_1_1_logger.html#a96012f078989b2cfd21d09b02ff53cab">Log</a>(std::string_view message, <a class="code hl_enumeration" href="classpac_1_1_logger.html#ab2ab7b2cf015d2ae6a59cfadf1284865">Level</a> level);</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno"><a class="line" href="classpac_1_1_logger.html#ab2a548dce803f69372b77996f4ff2061">   59</a></span>        <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classpac_1_1_logger.html#ab2a548dce803f69372b77996f4ff2061">Debug</a>(std::string_view message) { <a class="code hl_function" href="classpac_1_1_logger.html#a96012f078989b2cfd21d09b02ff53cab">Log</a>(message, <a class="code hl_enumvalue" href="classpac_1_1_logger.html#ab2ab7b2cf015d2ae6a59cfadf1284865aa603905470e2a5b8c13e96b579ef0dba">Level::Debug</a>); }</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno"><a class="line" href="classpac_1_1_logger.html#a7510a328224796ee50cf3b09a4042d3e">   66</a></span>        <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classpac_1_1_logger.html#a7510a328224796ee50cf3b09a4042d3e">Info</a>(std::string_view message) { <a class="code hl_function" href="classpac_1_1_logger.html#a96012f078989b2cfd21d09b02ff53cab">Log</a>(message, <a class="code hl_enumvalue" href="classpac_1_1_logger.html#ab2ab7b2cf015d2ae6a59cfadf1284865a4059b0251f66a18cb56f544728796875">Level::Info</a>); }</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno"><a class="line" href="classpac_1_1_logger.html#a4bd416446442b6c479998892d1f983e7">   73</a></span>        <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classpac_1_1_logger.html#a4bd416446442b6c479998892d1f983e7">Warning</a>(std::string_view message) { <a class="code hl_function" href="classpac_1_1_logger.html#a96012f078989b2cfd21d09b02ff53cab">Log</a>(message, <a class="code hl_enumvalue" href="classpac_1_1_logger.html#ab2ab7b2cf015d2ae6a59cfadf1284865a0eaadb4fcb48a0a0ed7bc9868be9fbaa">Level::Warning</a>); }</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno"><a class="line" href="classpac_1_1_logger.html#adb0960c3cedb5898e9a3c98ab5a1a570">   80</a></span>        <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classpac_1_1_logger.html#adb0960c3cedb5898e9a3c98ab5a1a570">Error</a>(std::string_view message) { <a class="code hl_function" href="classpac_1_1_logger.html#a96012f078989b2cfd21d09b02ff53cab">Log</a>(message, <a class="code hl_enumvalue" href="classpac_1_1_logger.html#ab2ab7b2cf015d2ae6a59cfadf1284865a902b0d55fddef6f8d651fe1035b7d4bd">Level::Error</a>); }</div>
 <div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> </div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span><span class="keyword">namespace </span>pac</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>{</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    <span class="keyword">class </span>Logger</div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    {</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>        <span class="keyword">enum class</span> Level {</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>            Debug,</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>            Info,</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>            Warning,</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>            Error</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>        };</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> </div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>        Logger(std::ostream&amp; os, Level minimumLevel = Level::Debug);</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>        Logger(std::string_view filename, Level minimumLevel = Level::Debug);</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span> </div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>        <span class="keywordtype">void</span> Log(std::string_view message, Level level);</div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>        <span class="keyword">inline</span> <span class="keywordtype">void</span> Debug(std::string_view message) { Log(message, Level::Debug); }</div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        <span class="keyword">inline</span> <span class="keywordtype">void</span> Info(std::string_view message) { Log(message, Level::Info); }</div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>        <span class="keyword">inline</span> <span class="keywordtype">void</span> Warning(std::string_view message) { Log(message, Level::Warning); }</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>        <span class="keyword">inline</span> <span class="keywordtype">void</span> Error(std::string_view message) { Log(message, Level::Error); }</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span> </div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>        <span class="keyword">inline</span> <span class="keywordtype">void</span> SetMinimumLogLevel(Level level) { mMinimumLevel = level; }</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno"><a class="line" href="classpac_1_1_logger.html#a6fe93769e0d39a457fa15afca017af4a">   87</a></span>        <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classpac_1_1_logger.html#a6fe93769e0d39a457fa15afca017af4a">SetMinimumLogLevel</a>(<a class="code hl_enumeration" href="classpac_1_1_logger.html#ab2ab7b2cf015d2ae6a59cfadf1284865">Level</a> level) { mMinimumLevel = level; }</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span> </div>
+<div class="foldopen" id="foldopen00096" data-start="{" data-end="}">
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno"><a class="line" href="classpac_1_1_logger.html#a2d7e62254b805d04936cd1472aac0719">   96</a></span>        <span class="keyword">static</span> <a class="code hl_class" href="classpac_1_1_logger.html">Logger</a>&amp; <a class="code hl_function" href="classpac_1_1_logger.html#a2d7e62254b805d04936cd1472aac0719">GetInstance</a>(std::ostream&amp; os = std::cout, <a class="code hl_enumeration" href="classpac_1_1_logger.html#ab2ab7b2cf015d2ae6a59cfadf1284865">Level</a> minimumLevel = <a class="code hl_enumvalue" href="classpac_1_1_logger.html#ab2ab7b2cf015d2ae6a59cfadf1284865aa603905470e2a5b8c13e96b579ef0dba">Level::Debug</a>)</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>        {</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>            <span class="keyword">static</span> <a class="code hl_class" href="classpac_1_1_logger.html">Logger</a> instance(os, minimumLevel);</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>            <span class="keywordflow">return</span> instance;</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>        }</div>
+</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span> </div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>        std::ostream&amp; mOutStream; </div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>        std::ofstream mTempFileStream; </div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>        <a class="code hl_enumeration" href="classpac_1_1_logger.html#ab2ab7b2cf015d2ae6a59cfadf1284865">Level</a> mMinimumLevel; </div>
 <div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span> </div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>        <span class="keyword">static</span> Logger&amp; GetInstance(std::ostream&amp; os = std::cout, Level minimumLevel = Level::Debug)</div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>        {</div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>            <span class="keyword">static</span> Logger instance(os, minimumLevel);</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>            <span class="keywordflow">return</span> instance;</div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>        }</div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span> </div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>    <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>        std::ostream&amp; mOutStream;</div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>        std::ofstream mTempFileStream;</div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>        Level mMinimumLevel;</div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span> </div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>        <span class="comment">// Delete copy constructor and assignment operator to prevent copying</span></div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>        Logger(<span class="keyword">const</span> Logger&amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>        Logger&amp; operator=(<span class="keyword">const</span> Logger&amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>    };</div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>}</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>        <span class="comment">// Delete copy constructor and assignment operator to prevent copying</span></div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>        <a class="code hl_function" href="classpac_1_1_logger.html#a3c4ed7678474466a1412c34ba0106e60">Logger</a>(<span class="keyword">const</span> <a class="code hl_class" href="classpac_1_1_logger.html">Logger</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>        <a class="code hl_class" href="classpac_1_1_logger.html">Logger</a>&amp; operator=(<span class="keyword">const</span> <a class="code hl_class" href="classpac_1_1_logger.html">Logger</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    };</div>
+</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>}</div>
+<div class="ttc" id="aclasspac_1_1_logger_html"><div class="ttname"><a href="classpac_1_1_logger.html">pac::Logger</a></div><div class="ttdoc">A class for logging messages with different severity levels.</div><div class="ttdef"><b>Definition</b> Logger.h:17</div></div>
+<div class="ttc" id="aclasspac_1_1_logger_html_a2d7e62254b805d04936cd1472aac0719"><div class="ttname"><a href="classpac_1_1_logger.html#a2d7e62254b805d04936cd1472aac0719">pac::Logger::GetInstance</a></div><div class="ttdeci">static Logger &amp; GetInstance(std::ostream &amp;os=std::cout, Level minimumLevel=Level::Debug)</div><div class="ttdoc">Gets the singleton instance of the Logger.</div><div class="ttdef"><b>Definition</b> Logger.h:96</div></div>
+<div class="ttc" id="aclasspac_1_1_logger_html_a3c4ed7678474466a1412c34ba0106e60"><div class="ttname"><a href="classpac_1_1_logger.html#a3c4ed7678474466a1412c34ba0106e60">pac::Logger::Logger</a></div><div class="ttdeci">Logger(std::ostream &amp;os, Level minimumLevel=Level::Debug)</div><div class="ttdoc">Constructs a Logger object that logs to the given output stream.</div><div class="ttdef"><b>Definition</b> Logger.cpp:22</div></div>
+<div class="ttc" id="aclasspac_1_1_logger_html_a4bd416446442b6c479998892d1f983e7"><div class="ttname"><a href="classpac_1_1_logger.html#a4bd416446442b6c479998892d1f983e7">pac::Logger::Warning</a></div><div class="ttdeci">void Warning(std::string_view message)</div><div class="ttdoc">Logs a warning message.</div><div class="ttdef"><b>Definition</b> Logger.h:73</div></div>
+<div class="ttc" id="aclasspac_1_1_logger_html_a6fe93769e0d39a457fa15afca017af4a"><div class="ttname"><a href="classpac_1_1_logger.html#a6fe93769e0d39a457fa15afca017af4a">pac::Logger::SetMinimumLogLevel</a></div><div class="ttdeci">void SetMinimumLogLevel(Level level)</div><div class="ttdoc">Sets the minimum log level.</div><div class="ttdef"><b>Definition</b> Logger.h:87</div></div>
+<div class="ttc" id="aclasspac_1_1_logger_html_a7510a328224796ee50cf3b09a4042d3e"><div class="ttname"><a href="classpac_1_1_logger.html#a7510a328224796ee50cf3b09a4042d3e">pac::Logger::Info</a></div><div class="ttdeci">void Info(std::string_view message)</div><div class="ttdoc">Logs an info message.</div><div class="ttdef"><b>Definition</b> Logger.h:66</div></div>
+<div class="ttc" id="aclasspac_1_1_logger_html_a96012f078989b2cfd21d09b02ff53cab"><div class="ttname"><a href="classpac_1_1_logger.html#a96012f078989b2cfd21d09b02ff53cab">pac::Logger::Log</a></div><div class="ttdeci">void Log(std::string_view message, Level level)</div><div class="ttdoc">Logs a message with the given log level.</div><div class="ttdef"><b>Definition</b> Logger.cpp:37</div></div>
+<div class="ttc" id="aclasspac_1_1_logger_html_ab2a548dce803f69372b77996f4ff2061"><div class="ttname"><a href="classpac_1_1_logger.html#ab2a548dce803f69372b77996f4ff2061">pac::Logger::Debug</a></div><div class="ttdeci">void Debug(std::string_view message)</div><div class="ttdoc">Logs a debug message.</div><div class="ttdef"><b>Definition</b> Logger.h:59</div></div>
+<div class="ttc" id="aclasspac_1_1_logger_html_ab2ab7b2cf015d2ae6a59cfadf1284865"><div class="ttname"><a href="classpac_1_1_logger.html#ab2ab7b2cf015d2ae6a59cfadf1284865">pac::Logger::Level</a></div><div class="ttdeci">Level</div><div class="ttdoc">Enum representing the log levels.</div><div class="ttdef"><b>Definition</b> Logger.h:22</div></div>
+<div class="ttc" id="aclasspac_1_1_logger_html_ab2ab7b2cf015d2ae6a59cfadf1284865a0eaadb4fcb48a0a0ed7bc9868be9fbaa"><div class="ttname"><a href="classpac_1_1_logger.html#ab2ab7b2cf015d2ae6a59cfadf1284865a0eaadb4fcb48a0a0ed7bc9868be9fbaa">pac::Logger::Level::Warning</a></div><div class="ttdeci">@ Warning</div><div class="ttdoc">Warning level.</div></div>
+<div class="ttc" id="aclasspac_1_1_logger_html_ab2ab7b2cf015d2ae6a59cfadf1284865a4059b0251f66a18cb56f544728796875"><div class="ttname"><a href="classpac_1_1_logger.html#ab2ab7b2cf015d2ae6a59cfadf1284865a4059b0251f66a18cb56f544728796875">pac::Logger::Level::Info</a></div><div class="ttdeci">@ Info</div><div class="ttdoc">Info level.</div></div>
+<div class="ttc" id="aclasspac_1_1_logger_html_ab2ab7b2cf015d2ae6a59cfadf1284865a902b0d55fddef6f8d651fe1035b7d4bd"><div class="ttname"><a href="classpac_1_1_logger.html#ab2ab7b2cf015d2ae6a59cfadf1284865a902b0d55fddef6f8d651fe1035b7d4bd">pac::Logger::Level::Error</a></div><div class="ttdeci">@ Error</div><div class="ttdoc">Error level.</div></div>
+<div class="ttc" id="aclasspac_1_1_logger_html_ab2ab7b2cf015d2ae6a59cfadf1284865aa603905470e2a5b8c13e96b579ef0dba"><div class="ttname"><a href="classpac_1_1_logger.html#ab2ab7b2cf015d2ae6a59cfadf1284865aa603905470e2a5b8c13e96b579ef0dba">pac::Logger::Level::Debug</a></div><div class="ttdeci">@ Debug</div><div class="ttdoc">Debug level.</div></div>
+<div class="ttc" id="aclasspac_1_1_logger_html_adb0960c3cedb5898e9a3c98ab5a1a570"><div class="ttname"><a href="classpac_1_1_logger.html#adb0960c3cedb5898e9a3c98ab5a1a570">pac::Logger::Error</a></div><div class="ttdeci">void Error(std::string_view message)</div><div class="ttdoc">Logs an error message.</div><div class="ttdef"><b>Definition</b> Logger.h:80</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

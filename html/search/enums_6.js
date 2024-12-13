@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['method_0',['Method',['../classsf_1_1_http_1_1_request.html#a620f8bff6f43e1378f321bf53fbf5598',1,'sf::Http::Request']]]
+  ['level_0',['Level',['../classpac_1_1_logger.html#ab2ab7b2cf015d2ae6a59cfadf1284865',1,'pac::Logger']]]
 ];

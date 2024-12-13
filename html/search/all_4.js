@@ -24,7 +24,7 @@ var searchData=
   ['equation_21',['Equation',['../structsf_1_1_blend_mode.html#a7bce470e2e384c4f9c8d9595faef7c32',1,'sf::BlendMode']]],
   ['erase_22',['erase',['../classsf_1_1_string.html#aaa78a0a46b3fbe200a4ccdedc326eb93',1,'sf::String']]],
   ['err_23',['err',['../group__system.html#gad3cbfe676d6ca096c4a943bbd2ff3b83',1,'sf']]],
-  ['error_24',['Error',['../classsf_1_1_socket.html#a51bf0fd51057b98a10fbb866246176dca1dc9854433a28c22e192721179a2df5d',1,'sf::Socket']]],
+  ['error_24',['Error',['../classsf_1_1_socket.html#a51bf0fd51057b98a10fbb866246176dca1dc9854433a28c22e192721179a2df5d',1,'sf::Socket::Error'],['../classpac_1_1_logger.html#adb0960c3cedb5898e9a3c98ab5a1a570',1,'pac::Logger::Error(std::string_view message)'],['../classpac_1_1_logger.html#ab2ab7b2cf015d2ae6a59cfadf1284865a902b0d55fddef6f8d651fe1035b7d4bd',1,'pac::Logger::Error']]],
   ['escape_25',['Escape',['../structsf_1_1_keyboard_1_1_scan.html#aa42fbf6954d6f81f7606e566c7abe875ac8409d6faf55c88bc01c722c51e99b93',1,'sf::Keyboard::Scan::Escape'],['../classsf_1_1_keyboard.html#acb4cacd7cc5802dec45724cf3314a142a64b7ecb543c5d03bec8383dde123c95d',1,'sf::Keyboard::Escape']]],
   ['event_26',['Event',['../classsf_1_1_event.html',1,'sf']]],
   ['eventtype_27',['EventType',['../classsf_1_1_event.html#af41fa9ed45c02449030699f671331d4a',1,'sf::Event']]],

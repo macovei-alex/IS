@@ -13,7 +13,7 @@ var searchData=
   ['implbase_10',['ImplBase',['../structtesting_1_1internal_1_1_impl_base.html',1,'testing::internal']]],
   ['indexsequence_11',['IndexSequence',['../structtesting_1_1internal_1_1_index_sequence.html',1,'testing::internal']]],
   ['indexsequence_3c_3e_12',['IndexSequence&lt;&gt;',['../structtesting_1_1internal_1_1_index_sequence.html',1,'testing::internal']]],
-  ['info_13',['Info',['../structsf_1_1_font_1_1_info.html',1,'sf::Font::Info'],['../structsf_1_1_sound_file_reader_1_1_info.html',1,'sf::SoundFileReader::Info']]],
+  ['info_13',['Info',['../structsf_1_1_font_1_1_info.html',1,'sf::Font::Info'],['../structsf_1_1_sound_file_reader_1_1_info.html',1,'sf::SoundFileReader::Info'],['../classpac_1_1_logger.html#a7510a328224796ee50cf3b09a4042d3e',1,'pac::Logger::Info(std::string_view message)'],['../classpac_1_1_logger.html#ab2ab7b2cf015d2ae6a59cfadf1284865a4059b0251f66a18cb56f544728796875',1,'pac::Logger::Info']]],
   ['initcells_14',['InitCells',['../classpac_1_1_maze.html#a5b86dc26a6d307fa50b0ae0f2e1bcf3f',1,'pac::Maze']]],
   ['initialize_15',['initialize',['../classsf_1_1_sound_stream.html#a9c351711198ee1aa77c2fefd3ced4d2c',1,'sf::SoundStream::initialize()'],['../classsf_1_1_render_target.html#af530274b34159d644e509b4b4dc43eb7',1,'sf::RenderTarget::initialize()']]],
   ['inputsoundfile_16',['InputSoundFile',['../classsf_1_1_input_sound_file.html',1,'sf::InputSoundFile'],['../classsf_1_1_input_sound_file.html#a3b95347de25d1d93a3230287cf47a077',1,'sf::InputSoundFile::InputSoundFile()']]],

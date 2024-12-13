@@ -6,7 +6,7 @@ var searchData=
   ['enter_3',['Enter',['../structsf_1_1_keyboard_1_1_scan.html#aa42fbf6954d6f81f7606e566c7abe875adb4984ca4b4e90eae95e32bb0de29c8e',1,'sf::Keyboard::Scan::Enter'],['../classsf_1_1_keyboard.html#acb4cacd7cc5802dec45724cf3314a142a59e26db0965305492875d7da68f6a990',1,'sf::Keyboard::Enter']]],
   ['enteringpassivemode_4',['EnteringPassiveMode',['../classsf_1_1_ftp_1_1_response.html#af81738f06b6f571761696291276acb3ba48314fc47a72ad0aacdea93b91756f6e',1,'sf::Ftp::Response']]],
   ['equal_5',['Equal',['../structsf_1_1_keyboard_1_1_scan.html#aa42fbf6954d6f81f7606e566c7abe875a6cd11681bbd83c0565c9c63e4d512a86',1,'sf::Keyboard::Scan::Equal'],['../classsf_1_1_keyboard.html#acb4cacd7cc5802dec45724cf3314a142ae55c35f6b6417e1dbbfa351c64dfc743',1,'sf::Keyboard::Equal']]],
-  ['error_6',['Error',['../classsf_1_1_socket.html#a51bf0fd51057b98a10fbb866246176dca1dc9854433a28c22e192721179a2df5d',1,'sf::Socket']]],
+  ['error_6',['Error',['../classsf_1_1_socket.html#a51bf0fd51057b98a10fbb866246176dca1dc9854433a28c22e192721179a2df5d',1,'sf::Socket::Error'],['../classpac_1_1_logger.html#ab2ab7b2cf015d2ae6a59cfadf1284865a902b0d55fddef6f8d651fe1035b7d4bd',1,'pac::Logger::Error']]],
   ['escape_7',['Escape',['../structsf_1_1_keyboard_1_1_scan.html#aa42fbf6954d6f81f7606e566c7abe875ac8409d6faf55c88bc01c722c51e99b93',1,'sf::Keyboard::Scan::Escape'],['../classsf_1_1_keyboard.html#acb4cacd7cc5802dec45724cf3314a142a64b7ecb543c5d03bec8383dde123c95d',1,'sf::Keyboard::Escape']]],
   ['execute_8',['Execute',['../structsf_1_1_keyboard_1_1_scan.html#aa42fbf6954d6f81f7606e566c7abe875a12c94b4dc55153a952283aff554ae3a0',1,'sf::Keyboard::Scan']]]
 ];

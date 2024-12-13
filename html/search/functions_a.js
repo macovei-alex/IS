@@ -14,6 +14,8 @@ var searchData=
   ['localize_11',['localize',['../classsf_1_1_keyboard.html#a4f77c97de21fbb14b9df79e320b12d9a',1,'sf::Keyboard']]],
   ['lock_12',['Lock',['../classsf_1_1_lock.html#a1a4c5d7a15da61103d85c9aa7f118920',1,'sf::Lock']]],
   ['lock_13',['lock',['../classsf_1_1_mutex.html#a1a16956a6bbea764480c1b80f2e45763',1,'sf::Mutex']]],
-  ['logcommand_14',['LogCommand',['../classpac_1_1_log_command.html#a6ceb25b41454dcaa4e9cfd92083f421d',1,'pac::LogCommand']]],
-  ['login_15',['login',['../classsf_1_1_ftp.html#a686262bc377584cd50e52e1576aa3a9b',1,'sf::Ftp::login()'],['../classsf_1_1_ftp.html#a99d8114793c1659e9d51d45cecdcd965',1,'sf::Ftp::login(const std::string &amp;name, const std::string &amp;password)']]]
+  ['log_14',['Log',['../classpac_1_1_logger.html#a96012f078989b2cfd21d09b02ff53cab',1,'pac::Logger']]],
+  ['logcommand_15',['LogCommand',['../classpac_1_1_log_command.html#a6ceb25b41454dcaa4e9cfd92083f421d',1,'pac::LogCommand']]],
+  ['logger_16',['Logger',['../classpac_1_1_logger.html#a3c4ed7678474466a1412c34ba0106e60',1,'pac::Logger::Logger(std::ostream &amp;os, Level minimumLevel=Level::Debug)'],['../classpac_1_1_logger.html#aab217ec6818839bcada4ee8dbe12c23e',1,'pac::Logger::Logger(std::string_view filename, Level minimumLevel=Level::Debug)']]],
+  ['login_17',['login',['../classsf_1_1_ftp.html#a686262bc377584cd50e52e1576aa3a9b',1,'sf::Ftp::login()'],['../classsf_1_1_ftp.html#a99d8114793c1659e9d51d45cecdcd965',1,'sf::Ftp::login(const std::string &amp;name, const std::string &amp;password)']]]
 ];
